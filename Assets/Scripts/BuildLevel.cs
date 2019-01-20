@@ -6,6 +6,7 @@ public class BuildLevel : MonoBehaviour
 {
     public GameObject brick00;
     public GameObject docent;
+    public static GameObject docent_instance;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class BuildLevel : MonoBehaviour
             Instantiate(brick00, new Vector3(11, i, 0), Quaternion.identity);
         }
 
-        Instantiate(docent, new Vector3(1, 1, 0), Quaternion.identity);
+        docent_instance = Instantiate(docent, new Vector3(1, 1, 0), Quaternion.identity);
     }
 
     // Update is called once per frame

@@ -5,17 +5,39 @@ using UnityEditor;
 
 public class Player : MonoBehaviour
 {
+    public void StepRight()
+    {
+        Debug.Log("Stepping right!");
+        perform_step_right();
+    }
+
+    public void StepLeft()
+    {
+        Debug.Log("Stepping left!");
+        preform_step_left();
+    }
+
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            Vector3 position_change = new Vector3(-1, 0, 0);
-            this.gameObject.transform.position += position_change;
+            preform_step_left();
         } else if(Input.GetKeyUp(KeyCode.RightArrow))
         {
-            Vector3 position_change = new Vector3(1, 0, 0);
-            this.gameObject.transform.position += position_change;
+            perform_step_right();
         }
+    }
+
+    void perform_step_right()
+    {
+        Vector3 position_change = new Vector3(1, 0, 0);
+        this.gameObject.transform.position += position_change;
+    }
+
+    void preform_step_left()
+    {
+        Vector3 position_change = new Vector3(-1, 0, 0);
+        this.gameObject.transform.position += position_change;
     }
 }
