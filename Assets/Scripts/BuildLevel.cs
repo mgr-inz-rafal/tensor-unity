@@ -6,7 +6,6 @@ public class BuildLevel : MonoBehaviour
 {
     public GameObject brick00;
     public GameObject docent;
-    public GameObject leftButton;
 
     // Start is called before the first frame update
     void Start()
@@ -23,13 +22,6 @@ public class BuildLevel : MonoBehaviour
         }
 
         Instantiate(docent, new Vector3(1, 1, 0), Quaternion.identity);
-
-        // Make the button 1/4 height of the screen
-        int buttonHeight = Screen.height / 4;
-        Debug.Log(buttonHeight);
-        leftButton.transform.localScale = new Vector3(2, 2, 2);
-
-        Instantiate(leftButton, new Vector3(3, 3, 3), Quaternion.identity);
     }
 
     // Update is called once per frame
