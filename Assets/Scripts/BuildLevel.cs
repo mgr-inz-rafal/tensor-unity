@@ -11,18 +11,36 @@ public class BuildLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TextAsset bindata = Resources.Load("Maps/v4") as TextAsset;
+        if(bindata == null)
+        {
+            return;
+        }
         for(int i = 0; i < 12; ++i)
         {
-            Instantiate(brick00, new Vector3(i, 0, 0), Quaternion.identity);
-            Instantiate(brick00, new Vector3(i, 11, 0), Quaternion.identity);
-        }
-        for(int i = 1; i < 11; ++i)
-        {
-            Instantiate(brick00, new Vector3(0, i, 0), Quaternion.identity);
-            Instantiate(brick00, new Vector3(11, i, 0), Quaternion.identity);
+            for(int j = 0; j < 12; ++j) {
+                WorldState.levelmap[j, 11-i] = bindata.bytes[12*i+j];
+                Debug.Log(WorldState.levelmap[j, i]);
+            }
         }
 
-        docent_instance = Instantiate(docent, new Vector3(1, 1, 0), Quaternion.identity);
+        for(int i = 0; i < 12; ++i)
+        {
+            for(int j = 0; j < 12; ++j) {
+                switch(WorldState.levelmap[j, i]) {
+                    case 0:
+                        break;
+                    case 1:
+                        docent_instance = Instantiate(docent, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
+                    default:
+                        Instantiate(brick00, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
+                }
+            }
+        }
+
+        ;
     }
 
     // Update is called once per frame
