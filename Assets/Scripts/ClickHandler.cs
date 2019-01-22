@@ -4,13 +4,34 @@ using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
 {
-    Camera camera;
+    int current_angle = 0;
+    int target_angle;
+    int rotation_direction = 0;
 
     public void OnClick_Rotate_Right() {
+        if(rotation_direction != 0) {
+            return;
+        }
         Debug.Log("Rotating world clockwise");
 
-        camera = Camera.main;
-        camera.transform.Rotate(new Vector3(0.0f, 0.0f, 100.0f));
+        rotation_direction = 1;
+        target_angle = current_angle + 90;
+        if(target_angle == 360) {
+            target_angle = 0;
+        }
+    }
+
+    public void OnClick_Rotate_Left() {
+        if(rotation_direction != 0) {
+            return;
+        }
+        Debug.Log("Rotating world counter-clockwise");
+
+        rotation_direction = -1;
+        target_angle = current_angle - 90;
+        if(target_angle < 0) {
+            target_angle += 360;
+        }
     }
 
     public void OnClick_RightArrow()
@@ -37,6 +58,40 @@ public class ClickHandler : MonoBehaviour
         {
             playerScript.SendMessage("StepLeft");
         }
-        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        switch(rotation_direction) {
+            case 0:
+                break;
+            case 1:
+                current_angle += 5;
+                if(current_angle == 360) {
+                    current_angle = 0;
+                }
+                do_camera_rotation();
+                if(current_angle == target_angle) {
+                    rotation_direction = 0;
+                }
+                Debug.Log(current_angle + "/" + target_angle);
+                break;
+            case -1:
+                current_angle -= 5;
+                if(current_angle == -5) {
+                    current_angle = 360-5;
+                }
+                do_camera_rotation();
+                if(current_angle == target_angle) {
+                    rotation_direction = 0;
+                }
+                Debug.Log(current_angle + "/" + target_angle);
+                break;
+        }
+    }
+
+    void do_camera_rotation() {
+        Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, current_angle));
     }
 }
