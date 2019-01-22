@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
 {
+    Camera camera;
+
+    public void OnClick_Rotate_Right() {
+        Debug.Log("Rotating world clockwise");
+
+        camera = Camera.main;
+        camera.transform.Rotate(new Vector3(0.0f, 0.0f, 100.0f));
+    }
+
     public void OnClick_RightArrow()
     {
         Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();       

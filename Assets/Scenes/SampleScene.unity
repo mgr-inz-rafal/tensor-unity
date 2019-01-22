@@ -835,7 +835,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1882443969}
-        m_MethodName: OnClick_LeftArrow
+        m_MethodName: OnClick_Rotate_Right
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
