@@ -40,4 +40,16 @@ public class Player : MonoBehaviour
         Vector3 position_change = new Vector3(-1, 0, 0);
         this.gameObject.transform.position += position_change;
     }
+
+    void SetVerticalCollider() {
+        Debug.Log("SetVerticalCollider");
+        BoxCollider2D x = this.gameObject.GetComponent<BoxCollider2D>();
+        x.size = new Vector2(0.6f, 1.0f);
+    }
+
+    void SetHorizontalCollider() {
+        Debug.Log("SetHorizontalCollider");
+        BoxCollider2D x = this.gameObject.GetComponent<BoxCollider2D>();
+        x.size = new Vector2(1.0f, 0.6f);
+    }
 }

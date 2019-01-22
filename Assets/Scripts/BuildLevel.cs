@@ -20,7 +20,6 @@ public class BuildLevel : MonoBehaviour
         {
             for(int j = 0; j < 12; ++j) {
                 WorldState.levelmap[j, 11-i] = bindata.bytes[12*i+j];
-                Debug.Log(WorldState.levelmap[j, i]);
             }
         }
 

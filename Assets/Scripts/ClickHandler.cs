@@ -92,21 +92,31 @@ public class ClickHandler : MonoBehaviour
     void finish_rotation() {
         rotation_direction = 0;
 
+        Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();       
+        if(playerScript == null)
+        {
+            Debug.Log("Unable to find Player");
+        }
+
+        BoxCollider2D collider = BuildLevel.docent_instance.GetComponent<BoxCollider2D>();
         switch(current_angle) {
             case 90:
                 Physics2D.gravity = new Vector3(9.8f, 0.0f, 0.0f);
+                playerScript.SendMessage("SetHorizontalCollider");
                 break;
             case 180:
                 Physics2D.gravity = new Vector3(0.0f, 9.8f, 0.0f);
+                playerScript.SendMessage("SetVerticalCollider");
                 break;
             case 270:
                 Physics2D.gravity = new Vector3(-9.8f, 0.0f, 0.0f);
+                playerScript.SendMessage("SetHorizontalCollider");
                 break;
             case 0:
                 Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
+                playerScript.SendMessage("SetVerticalCollider");
                 break;
         }
-        Debug.Log(Physics.gravity);
     }
 
     void do_camera_rotation() {
