@@ -73,9 +73,8 @@ public class ClickHandler : MonoBehaviour
                 }
                 do_camera_rotation();
                 if(current_angle == target_angle) {
-                    rotation_direction = 0;
+                    finish_rotation();
                 }
-                Debug.Log(current_angle + "/" + target_angle);
                 break;
             case -1:
                 current_angle -= 5;
@@ -84,11 +83,30 @@ public class ClickHandler : MonoBehaviour
                 }
                 do_camera_rotation();
                 if(current_angle == target_angle) {
-                    rotation_direction = 0;
+                    finish_rotation();
                 }
-                Debug.Log(current_angle + "/" + target_angle);
                 break;
         }
+    }
+
+    void finish_rotation() {
+        rotation_direction = 0;
+
+        switch(current_angle) {
+            case 90:
+                Physics2D.gravity = new Vector3(9.8f, 0.0f, 0.0f);
+                break;
+            case 180:
+                Physics2D.gravity = new Vector3(0.0f, 9.8f, 0.0f);
+                break;
+            case 270:
+                Physics2D.gravity = new Vector3(-9.8f, 0.0f, 0.0f);
+                break;
+            case 0:
+                Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
+                break;
+        }
+        Debug.Log(Physics.gravity);
     }
 
     void do_camera_rotation() {
