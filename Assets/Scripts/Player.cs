@@ -41,15 +41,11 @@ public class Player : MonoBehaviour
         this.gameObject.transform.position += position_change;
     }
 
-    void SetVerticalCollider() {
-        Debug.Log("SetVerticalCollider");
-        BoxCollider2D x = this.gameObject.GetComponent<BoxCollider2D>();
-        x.size = new Vector2(0.6f, 1.0f);
+    void RotateLeft() {
+        this.transform.Rotate(new Vector3(0, 0, 1), 90);
     }
 
-    void SetHorizontalCollider() {
-        Debug.Log("SetHorizontalCollider");
-        BoxCollider2D x = this.gameObject.GetComponent<BoxCollider2D>();
-        x.size = new Vector2(1.0f, 0.6f);
+    void RotateRight() {
+        this.transform.Rotate(new Vector3(0, 0, 1), -90);
     }
 }

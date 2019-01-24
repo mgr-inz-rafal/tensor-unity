@@ -7,31 +7,34 @@ public class ClickHandler : MonoBehaviour
     int current_angle = 0;
     int target_angle;
     int rotation_direction = 0;
+    bool rotate_player_left = false;
 
     public void OnClick_Rotate_Right() {
         if(rotation_direction != 0) {
             return;
         }
-        Debug.Log("Rotating world clockwise");
 
         rotation_direction = 1;
         target_angle = current_angle + 90;
         if(target_angle == 360) {
             target_angle = 0;
         }
+
+        rotate_player_left = true;
     }
 
     public void OnClick_Rotate_Left() {
         if(rotation_direction != 0) {
             return;
         }
-        Debug.Log("Rotating world counter-clockwise");
 
         rotation_direction = -1;
         target_angle = current_angle - 90;
         if(target_angle < 0) {
             target_angle += 360;
         }
+
+        rotate_player_left = false;
     }
 
     public void OnClick_RightArrow()
@@ -96,38 +99,29 @@ public class ClickHandler : MonoBehaviour
         switch(current_angle) {
             case 90:
                 Physics2D.gravity = new Vector3(9.8f, 0.0f, 0.0f);
-                SetHorizontalCollider();
                 break;
             case 180:
                 Physics2D.gravity = new Vector3(0.0f, 9.8f, 0.0f);
-                SetVerticalCollider();
                 break;
             case 270:
                 Physics2D.gravity = new Vector3(-9.8f, 0.0f, 0.0f);
-                SetHorizontalCollider();
                 break;
             case 0:
                 Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
-                SetVerticalCollider();
                 break;
         }
+
+        DealWithActorRotations();
+        rotation_direction = 0;
     }
 
-    void SetHorizontalCollider() {
-        Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();       
-        playerScript.SendMessage("SetHorizontalCollider");
+    void DealWithActorRotations() {
+        string message = rotate_player_left ? "RotateLeft" : "RotateRight";
+        Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
+        playerScript.SendMessage(message);
         foreach(GameObject o in BuildLevel.amygdalas_instances) {
             Amygdala amygdalaScript = o.GetComponent<Amygdala>();
-            amygdalaScript.SendMessage("SetHorizontalCollider");
-        }
-    }
-
-    void SetVerticalCollider() {
-        Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();       
-        playerScript.SendMessage("SetVerticalCollider");
-        foreach(GameObject o in BuildLevel.amygdalas_instances) {
-            Amygdala amygdalaScript = o.GetComponent<Amygdala>();
-            amygdalaScript.SendMessage("SetVerticalCollider");
+            amygdalaScript.SendMessage(message);
         }
     }
 
