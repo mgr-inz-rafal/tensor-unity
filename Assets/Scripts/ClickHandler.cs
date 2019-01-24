@@ -103,18 +103,34 @@ public class ClickHandler : MonoBehaviour
             case 90:
                 Physics2D.gravity = new Vector3(9.8f, 0.0f, 0.0f);
                 playerScript.SendMessage("SetHorizontalCollider");
+                foreach(GameObject o in BuildLevel.amygdalas_instances) {
+                    Amygdala amygdalaScript = o.GetComponent<Amygdala>();
+                    amygdalaScript.SendMessage("SetHorizontalCollider");
+                }
                 break;
             case 180:
                 Physics2D.gravity = new Vector3(0.0f, 9.8f, 0.0f);
                 playerScript.SendMessage("SetVerticalCollider");
+                foreach(GameObject o in BuildLevel.amygdalas_instances) {
+                    Amygdala amygdalaScript = o.GetComponent<Amygdala>();
+                    amygdalaScript.SendMessage("SetVerticalCollider");
+                }
                 break;
             case 270:
                 Physics2D.gravity = new Vector3(-9.8f, 0.0f, 0.0f);
                 playerScript.SendMessage("SetHorizontalCollider");
+                foreach(GameObject o in BuildLevel.amygdalas_instances) {
+                    Amygdala amygdalaScript = o.GetComponent<Amygdala>();
+                    amygdalaScript.SendMessage("SetHorizontalCollider");
+                }
                 break;
             case 0:
                 Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
                 playerScript.SendMessage("SetVerticalCollider");
+                foreach(GameObject o in BuildLevel.amygdalas_instances) {
+                    Amygdala amygdalaScript = o.GetComponent<Amygdala>();
+                    amygdalaScript.SendMessage("SetVerticalCollider");
+                }
                 break;
         }
     }

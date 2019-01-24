@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4223718187155325831}
   - component: {fileID: 8253854413341835435}
   - component: {fileID: 3455064396843495720}
+  - component: {fileID: 6388114267414426418}
   m_Layer: 0
   m_Name: amygdala_heart
   m_TagString: Untagged
@@ -128,3 +129,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &6388114267414426418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6522577085587819262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: e1c11e56de4e4c342b0c3efba2d496cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
