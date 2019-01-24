@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
 {
+    const int ROTATION_LOCK_COUNT = 30;
+
     int current_angle = 0;
     int target_angle;
     int rotation_direction = 0;
     bool rotate_player_left = false;
+    bool lock_rotation = false;
+    int rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
 
     public void OnClick_Rotate_Right() {
         if(rotation_direction != 0) {
             return;
         }
+
+        if(lock_rotation) {
+            return;
+        }
+        rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
+        lock_rotation = true;
+        Debug.Log("Locking rotation");
 
         rotation_direction = 1;
         target_angle = current_angle + 90;
@@ -27,6 +38,12 @@ public class ClickHandler : MonoBehaviour
         if(rotation_direction != 0) {
             return;
         }
+
+        if(lock_rotation) {
+            return;
+        }
+        rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
+        lock_rotation = true;
 
         rotation_direction = -1;
         target_angle = current_angle - 90;
@@ -63,9 +80,7 @@ public class ClickHandler : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void AdjustRotation() {
         switch(rotation_direction) {
             case 0:
                 break;
@@ -90,6 +105,41 @@ public class ClickHandler : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    bool DocentNotMoving() {
+        Rigidbody2D rb = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
+        return rb.velocity.sqrMagnitude <= 0.10f;
+    }
+
+    bool AmygdalasNotMoving() {
+        foreach(GameObject o in BuildLevel.amygdalas_instances) {
+            Rigidbody2D rb = o.GetComponent<Rigidbody2D>();
+            if(rb.velocity.sqrMagnitude >= 0.10f) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void UnlockRotation() {
+        if(!lock_rotation) {
+            return;
+        }
+        rotation_unlock_frame_count--;
+        if(rotation_unlock_frame_count > 0) {
+            return;
+        }
+
+        if(DocentNotMoving() && AmygdalasNotMoving()) {
+            lock_rotation = false;
+        }
+    }
+
+    void Update()
+    {
+        AdjustRotation();
+        UnlockRotation();
     }
 
     void finish_rotation() {
