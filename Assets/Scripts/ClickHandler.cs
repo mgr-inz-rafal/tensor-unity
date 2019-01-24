@@ -23,7 +23,6 @@ public class ClickHandler : MonoBehaviour
         }
         rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
         lock_rotation = true;
-        Debug.Log("Locking rotation");
 
         rotation_direction = 1;
         target_angle = current_angle + 90;
