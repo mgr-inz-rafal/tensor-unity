@@ -6,7 +6,9 @@ public class BuildLevel : MonoBehaviour
 {
     public GameObject brick00;
     public GameObject docent;
+    public GameObject amygdala_heart;
     public static GameObject docent_instance;
+    public static List<GameObject> amygdalas_instances = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,9 @@ public class BuildLevel : MonoBehaviour
             for(int j = 0; j < 12; ++j) {
                 switch(WorldState.levelmap[j, i]) {
                     case 0:
+                        break;
+                    case 2:
+                        amygdalas_instances.Add(Instantiate(amygdala_heart, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 1:
                         docent_instance = Instantiate(docent, new Vector3(j, i, 0), Quaternion.identity);

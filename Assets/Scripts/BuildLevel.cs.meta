@@ -3,7 +3,10 @@ guid: 8577fdaa222b118498cee5983a6bc8ab
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - brick00: {instanceID: 0}
+  - docent: {instanceID: 0}
+  - amygdala_heart: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
