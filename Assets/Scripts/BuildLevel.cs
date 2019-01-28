@@ -36,6 +36,8 @@ public class BuildLevel : MonoBehaviour
                         break;
                     case 1:
                         docent_instance = Instantiate(docent, new Vector3(j, i, 0), Quaternion.identity);
+                        Player playerScript = docent_instance.GetComponent<Player>();
+                        playerScript.SendMessage("stop_animation");
                         break;
                     default:
                         Instantiate(brick00, new Vector3(j, i, 0), Quaternion.identity);

@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 222782287}
   - component: {fileID: 222782286}
   - component: {fileID: 222782285}
+  - component: {fileID: 222782288}
   m_Layer: 5
   m_Name: LeftButton
   m_TagString: Untagged
@@ -336,6 +337,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222782283}
   m_CullTransparentMesh: 0
+--- !u!95 &222782288
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222782283}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fd917f03914ef2d4ab7e4685d864a67c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &515408416
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brick00: {fileID: 334585658355685901, guid: 15a0c29e76251fa43ab3d759cecd9cf9, type: 3}
-  docent: {fileID: 6631909713226800642, guid: f14aaa0b37c71594b8b31aeb03b66e61, type: 3}
+  docent: {fileID: 1552134953, guid: 76eb423a456587f49a11d5d0cd59a3a7, type: 3}
   amygdala_heart: {fileID: 6522577085587819262, guid: 6bd3b3b719aa1434380638ade09c9e0d,
     type: 3}
 --- !u!20 &519420031
