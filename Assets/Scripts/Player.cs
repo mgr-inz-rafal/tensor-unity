@@ -19,19 +19,16 @@ public class Player : MonoBehaviour
 
     public void StepLeft()
     {
-        SpriteRenderer r = GetComponent<SpriteRenderer>();
-        r.flipX = true;
-
-
+        face_left();
         DoStep();
     }
 
     void face_right() {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
+        r.flipX = false;
         Debug.Log(WorldState.current_angle);
         switch(WorldState.current_angle) {
             case 0:
-                r.flipX = false;
                 player_movement_modifier = new Tuple<float, float>(1.0f/MOVE_COUNT, 0.0f);
                 break;
             case 90:
@@ -39,10 +36,31 @@ public class Player : MonoBehaviour
                 break;
             case 180:
                 player_movement_modifier = new Tuple<float, float>(-(1.0f/MOVE_COUNT), 0.0f);
-                r.flipX = false;
                 break;
             case 270:
                 player_movement_modifier = new Tuple<float, float>(0.0f, -(1.0f/MOVE_COUNT));
+                break;
+        }
+    }
+
+    void face_left() {
+        SpriteRenderer r = GetComponent<SpriteRenderer>();
+        r.flipX = true;
+        Debug.Log(WorldState.current_angle);
+        switch(WorldState.current_angle) {
+            case 0:
+                r.flipX = true;
+                player_movement_modifier = new Tuple<float, float>(-(1.0f/MOVE_COUNT), 0.0f);
+                break;
+            case 90:
+                player_movement_modifier = new Tuple<float, float>(0.0f, -(1.0f/MOVE_COUNT));
+                break;
+            case 180:
+                player_movement_modifier = new Tuple<float, float>(1.0f/MOVE_COUNT, 0.0f);
+                r.flipX = true;
+                break;
+            case 270:
+                player_movement_modifier = new Tuple<float, float>(0.0f, 1.0f/MOVE_COUNT);
                 break;
         }
     }
@@ -79,7 +97,7 @@ public class Player : MonoBehaviour
     void perform_step()
     {
         Vector3 position_change = new Vector3(player_movement_modifier.Item1, player_movement_modifier.Item2, 0.0f);
-        this.gameObject.transform.position += position_change;
+        gameObject.transform.position += position_change;
     }
 
     void RotateLeft() {
