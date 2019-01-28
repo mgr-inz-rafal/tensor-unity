@@ -8,25 +8,32 @@ public class Player : MonoBehaviour
     const int MOVE_COUNT = 8;
 
     int player_movement_count = 0;
+    float player_movement_modifier;
 
     public void StepRight()
     {
+        player_movement_modifier = 1.0f/MOVE_COUNT;
+        DoStep();
+    }
+
+    public void StepLeft()
+    {
+        player_movement_modifier = -(1.0f/MOVE_COUNT);
+        DoStep();
+    }
+
+    public void DoStep() {
         if(player_movement_count == 0) {
             player_movement_count = MOVE_COUNT;
             start_animation();
         }
     }
 
-    public void StepLeft()
-    {
-        preform_step_left();
-    }
-
     // Update is called once per frame
     void Update()
     {
         if(player_movement_count > 0) {
-            perform_step_right();
+            perform_step();
             player_movement_count--;
             if(player_movement_count == 0) {
                 stop_animation();
@@ -44,15 +51,9 @@ public class Player : MonoBehaviour
         */
     }
 
-    void perform_step_right()
+    void perform_step()
     {
-        Vector3 position_change = new Vector3(1.0f/MOVE_COUNT, 0.0f, 0.0f);
-        this.gameObject.transform.position += position_change;
-    }
-
-    void preform_step_left()
-    {
-        Vector3 position_change = new Vector3(-1, 0, 0);
+        Vector3 position_change = new Vector3(player_movement_modifier, 0.0f, 0.0f);
         this.gameObject.transform.position += position_change;
     }
 
