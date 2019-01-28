@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
         r.flipX = false;
 
         player_movement_modifier = 1.0f/MOVE_COUNT;
+
         DoStep();
     }
 
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
         r.flipX = true;
 
         player_movement_modifier = -(1.0f/MOVE_COUNT);
+
         DoStep();
     }
 

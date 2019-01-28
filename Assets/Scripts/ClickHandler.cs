@@ -6,15 +6,13 @@ public class ClickHandler : MonoBehaviour
 {
     const int ROTATION_LOCK_COUNT = 30;
 
-    int current_angle = 0;
     int target_angle;
-    int rotation_direction = 0;
     bool rotate_player_left = false;
     bool lock_rotation = false;
     int rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
 
     public void OnClick_Rotate_Right() {
-        if(rotation_direction != 0) {
+        if(WorldState.rotation_direction != 0) {
             return;
         }
 
@@ -24,8 +22,8 @@ public class ClickHandler : MonoBehaviour
         rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
         lock_rotation = true;
 
-        rotation_direction = 1;
-        target_angle = current_angle + 90;
+        WorldState.rotation_direction = 1;
+        target_angle = WorldState.current_angle + 90;
         if(target_angle == 360) {
             target_angle = 0;
         }
@@ -34,7 +32,7 @@ public class ClickHandler : MonoBehaviour
     }
 
     public void OnClick_Rotate_Left() {
-        if(rotation_direction != 0) {
+        if(WorldState.rotation_direction != 0) {
             return;
         }
 
@@ -44,8 +42,8 @@ public class ClickHandler : MonoBehaviour
         rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
         lock_rotation = true;
 
-        rotation_direction = -1;
-        target_angle = current_angle - 90;
+        WorldState.rotation_direction = -1;
+        target_angle = WorldState.current_angle - 90;
         if(target_angle < 0) {
             target_angle += 360;
         }
@@ -80,26 +78,26 @@ public class ClickHandler : MonoBehaviour
     }
 
     void AdjustRotation() {
-        switch(rotation_direction) {
+        switch(WorldState.rotation_direction) {
             case 0:
                 break;
             case 1:
-                current_angle += 5;
-                if(current_angle == 360) {
-                    current_angle = 0;
+                WorldState.current_angle += 5;
+                if(WorldState.current_angle == 360) {
+                    WorldState.current_angle = 0;
                 }
                 do_camera_rotation();
-                if(current_angle == target_angle) {
+                if(WorldState.current_angle == target_angle) {
                     finish_rotation();
                 }
                 break;
             case -1:
-                current_angle -= 5;
-                if(current_angle == -5) {
-                    current_angle = 360-5;
+                WorldState.current_angle -= 5;
+                if(WorldState.current_angle == -5) {
+                    WorldState.current_angle = 360-5;
                 }
                 do_camera_rotation();
-                if(current_angle == target_angle) {
+                if(WorldState.current_angle == target_angle) {
                     finish_rotation();
                 }
                 break;
@@ -142,10 +140,10 @@ public class ClickHandler : MonoBehaviour
     }
 
     void finish_rotation() {
-        rotation_direction = 0;
+        WorldState.rotation_direction = 0;
 
         BoxCollider2D collider = BuildLevel.docent_instance.GetComponent<BoxCollider2D>();
-        switch(current_angle) {
+        switch(WorldState.current_angle) {
             case 90:
                 Physics2D.gravity = new Vector3(9.8f, 0.0f, 0.0f);
                 break;
@@ -161,7 +159,7 @@ public class ClickHandler : MonoBehaviour
         }
 
         DealWithActorRotations();
-        rotation_direction = 0;
+        WorldState.rotation_direction = 0;
     }
 
     void DealWithActorRotations() {
@@ -175,6 +173,6 @@ public class ClickHandler : MonoBehaviour
     }
 
     void do_camera_rotation() {
-        Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, current_angle));
+        Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.current_angle));
     }
 }

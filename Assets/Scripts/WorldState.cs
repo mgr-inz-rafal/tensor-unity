@@ -5,6 +5,8 @@ using UnityEngine;
 public class WorldState : MonoBehaviour
 {
     public static byte[,] levelmap = new byte[12,12];
+    public static int rotation_direction = 0;
+    public static int current_angle = 0;
 
     // Start is called before the first frame update
     void Start()
