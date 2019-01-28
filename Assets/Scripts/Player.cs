@@ -12,12 +12,18 @@ public class Player : MonoBehaviour
 
     public void StepRight()
     {
+        SpriteRenderer r = GetComponent<SpriteRenderer>();
+        r.flipX = false;
+
         player_movement_modifier = 1.0f/MOVE_COUNT;
         DoStep();
     }
 
     public void StepLeft()
     {
+        SpriteRenderer r = GetComponent<SpriteRenderer>();
+        r.flipX = true;
+
         player_movement_modifier = -(1.0f/MOVE_COUNT);
         DoStep();
     }
