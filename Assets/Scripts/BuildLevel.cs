@@ -13,7 +13,7 @@ public class BuildLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TextAsset bindata = Resources.Load("Maps/v19") as TextAsset;
+        TextAsset bindata = Resources.Load("Maps/v1") as TextAsset;
         if(bindata == null)
         {
             return;

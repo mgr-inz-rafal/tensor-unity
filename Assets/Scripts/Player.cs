@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class Player : MonoBehaviour
 {
     const int MOVE_COUNT = 8;
 
     int player_movement_count = 0;
-    float player_movement_modifier;
+    Tuple<float, float> player_movement_modifier = new Tuple<float, float>(0.0f, 0.0f);
 
     public void StepRight()
     {
-        SpriteRenderer r = GetComponent<SpriteRenderer>();
-        r.flipX = false;
-
-        player_movement_modifier = 1.0f/MOVE_COUNT;
-
+        face_right();
         DoStep();
     }
 
@@ -25,9 +22,29 @@ public class Player : MonoBehaviour
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.flipX = true;
 
-        player_movement_modifier = -(1.0f/MOVE_COUNT);
 
         DoStep();
+    }
+
+    void face_right() {
+        SpriteRenderer r = GetComponent<SpriteRenderer>();
+        Debug.Log(WorldState.current_angle);
+        switch(WorldState.current_angle) {
+            case 0:
+                r.flipX = false;
+                player_movement_modifier = new Tuple<float, float>(1.0f/MOVE_COUNT, 0.0f);
+                break;
+            case 90:
+                player_movement_modifier = new Tuple<float, float>(0.0f, 1.0f/MOVE_COUNT);
+                break;
+            case 180:
+                player_movement_modifier = new Tuple<float, float>(-(1.0f/MOVE_COUNT), 0.0f);
+                r.flipX = false;
+                break;
+            case 270:
+                player_movement_modifier = new Tuple<float, float>(0.0f, -(1.0f/MOVE_COUNT));
+                break;
+        }
     }
 
     public void DoStep() {
@@ -61,7 +78,7 @@ public class Player : MonoBehaviour
 
     void perform_step()
     {
-        Vector3 position_change = new Vector3(player_movement_modifier, 0.0f, 0.0f);
+        Vector3 position_change = new Vector3(player_movement_modifier.Item1, player_movement_modifier.Item2, 0.0f);
         this.gameObject.transform.position += position_change;
     }
 
