@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
     {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.flipX = false;
-        Debug.Log(WorldState.current_angle);
         switch (WorldState.current_angle)
         {
             case 0:
@@ -68,7 +67,6 @@ public class Player : MonoBehaviour
     {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.flipX = true;
-        Debug.Log(WorldState.current_angle);
         switch (WorldState.current_angle)
         {
             case 0:
