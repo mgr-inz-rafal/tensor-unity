@@ -151,15 +151,35 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        GameObject collided = col.gameObject;
-
         foreach (GameObject g in BuildLevel.amygdalas_instances)
         {
             if (g == col.gameObject)
             {
-                BuildLevel.amygdalas_instances.Remove(g);
-                Destroy(g, 0.0f);
-                return;
+                float amygdala_pos = 0;
+                float player_pos = 0;
+                switch (WorldState.current_angle)
+                {
+                    case 0:
+                    case 180:
+                        amygdala_pos = g.transform.position.y;
+                        player_pos = gameObject.transform.position.y;
+                        break;
+                    case 90:
+                    case 270:
+                        amygdala_pos = g.transform.position.x;
+                        player_pos = gameObject.transform.position.x;
+                        break;
+                }
+
+                Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
+
+                if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
+                {
+
+                    BuildLevel.amygdalas_instances.Remove(g);
+                    Destroy(g, 0.0f);
+                    return;
+                }
             }
         }
 
