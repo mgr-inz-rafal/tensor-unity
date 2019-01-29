@@ -14,6 +14,11 @@ public class Player : MonoBehaviour
 
     public void StepRight()
     {
+        if (WorldState.lock_rotation)
+        {
+            // Waiting until all rigid bodies settle on the ground
+            return;
+        }
         if (false == block_next_step)
         {
             block_next_step = true;
@@ -24,6 +29,11 @@ public class Player : MonoBehaviour
 
     public void StepLeft()
     {
+        if (WorldState.lock_rotation)
+        {
+            // Waiting until all rigid bodies settle on the ground
+            return;
+        }
         if (false == block_next_step)
         {
             block_next_step = true;
@@ -98,6 +108,7 @@ public class Player : MonoBehaviour
             {
                 stop_animation();
                 block_next_step = false;
+                WorldState.lock_rotation = true;
             }
         }
 
