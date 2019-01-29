@@ -157,7 +157,6 @@ public class Player : MonoBehaviour
         {
             if (g == col.gameObject)
             {
-                Debug.Log("Collided with amygdala");
                 BuildLevel.amygdalas_instances.Remove(g);
                 Destroy(g, 0.0f);
                 return;
