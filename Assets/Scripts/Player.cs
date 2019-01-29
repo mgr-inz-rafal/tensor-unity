@@ -148,4 +148,21 @@ public class Player : MonoBehaviour
         Animator anim = GetComponent<Animator>();
         anim.speed = 0.0f;
     }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        GameObject collided = col.gameObject;
+
+        foreach (GameObject g in BuildLevel.amygdalas_instances)
+        {
+            if (g == col.gameObject)
+            {
+                Debug.Log("Collided with amygdala");
+                BuildLevel.amygdalas_instances.Remove(g);
+                Destroy(g, 0.0f);
+                return;
+            }
+        }
+
+    }
 }
