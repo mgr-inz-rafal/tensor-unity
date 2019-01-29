@@ -13,22 +13,25 @@ public class BuildLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TextAsset bindata = Resources.Load("Maps/v1") as TextAsset;
-        if(bindata == null)
+        TextAsset bindata = Resources.Load("Maps/v20") as TextAsset;
+        if (bindata == null)
         {
             return;
         }
-        for(int i = 0; i < 12; ++i)
+        for (int i = 0; i < 12; ++i)
         {
-            for(int j = 0; j < 12; ++j) {
-                WorldState.levelmap[j, 11-i] = bindata.bytes[12*i+j];
+            for (int j = 0; j < 12; ++j)
+            {
+                WorldState.levelmap[j, 11 - i] = bindata.bytes[12 * i + j];
             }
         }
 
-        for(int i = 0; i < 12; ++i)
+        for (int i = 0; i < 12; ++i)
         {
-            for(int j = 0; j < 12; ++j) {
-                switch(WorldState.levelmap[j, i]) {
+            for (int j = 0; j < 12; ++j)
+            {
+                switch (WorldState.levelmap[j, i])
+                {
                     case 0:
                         break;
                     case 2:
@@ -52,6 +55,6 @@ public class BuildLevel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
