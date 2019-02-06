@@ -20,7 +20,7 @@ public class MapSpot : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            int x = BuildLevel.map_spots[i];
+            WorldState.current_player_pos = BuildLevel.map_spots[gameObject.GetInstanceID()];
         }
     }
 

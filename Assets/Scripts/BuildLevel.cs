@@ -11,7 +11,7 @@ public class BuildLevel : MonoBehaviour
     public GameObject location_spot;
     public static GameObject docent_instance;
     public static List<GameObject> amygdalas_instances = new List<GameObject>();
-    public static Dictionary<int, int> map_spots = new Dictionary<int, int>();
+    public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class BuildLevel : MonoBehaviour
             for (int j = 0; j < LEVEL_DIMENSION; ++j)
             {
                 GameObject spot = Instantiate(location_spot, new Vector3(j, i, 0), Quaternion.identity);
-                map_spots[spot.GetInstanceID()] = 666;
+                map_spots[spot.GetInstanceID()] = (j, i);
 
                 switch (WorldState.levelmap[j, i])
                 {
