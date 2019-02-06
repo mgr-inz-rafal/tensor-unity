@@ -151,9 +151,9 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        foreach (GameObject g in BuildLevel.amygdalas_instances)
+        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
         {
-            if (g == col.gameObject)
+            if (amyg == col.gameObject)
             {
                 float amygdala_pos = 0;
                 float player_pos = 0;
@@ -161,12 +161,12 @@ public class Player : MonoBehaviour
                 {
                     case 0:
                     case 180:
-                        amygdala_pos = g.transform.position.y;
+                        amygdala_pos = amyg.transform.position.y;
                         player_pos = gameObject.transform.position.y;
                         break;
                     case 90:
                     case 270:
-                        amygdala_pos = g.transform.position.x;
+                        amygdala_pos = amyg.transform.position.x;
                         player_pos = gameObject.transform.position.x;
                         break;
                 }
@@ -176,12 +176,11 @@ public class Player : MonoBehaviour
                 if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
                 {
 
-                    BuildLevel.amygdalas_instances.Remove(g);
-                    Destroy(g, 0.0f);
+                    BuildLevel.amygdalas_instances.Remove(amyg);
+                    Destroy(amyg, 0.0f);
                     return;
                 }
             }
         }
-
     }
 }

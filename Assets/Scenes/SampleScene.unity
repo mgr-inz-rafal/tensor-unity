@@ -480,6 +480,8 @@ MonoBehaviour:
   docent: {fileID: 1552134953, guid: 76eb423a456587f49a11d5d0cd59a3a7, type: 3}
   amygdala_heart: {fileID: 6522577085587819262, guid: 6bd3b3b719aa1434380638ade09c9e0d,
     type: 3}
+  location_spot: {fileID: 1362540954468315154, guid: 5a8c25895baa0ab41bc1cf838904934c,
+    type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

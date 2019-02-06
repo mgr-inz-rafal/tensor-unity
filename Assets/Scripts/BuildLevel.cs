@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class BuildLevel : MonoBehaviour
 {
+    public const int LEVEL_DIMENSION = 12;
+
     public GameObject brick00;
     public GameObject docent;
     public GameObject amygdala_heart;
+    public GameObject location_spot;
     public static GameObject docent_instance;
     public static List<GameObject> amygdalas_instances = new List<GameObject>();
+    public static Dictionary<int, int> map_spots = new Dictionary<int, int>();
 
     // Start is called before the first frame update
     void Start()
@@ -18,18 +21,21 @@ public class BuildLevel : MonoBehaviour
         {
             return;
         }
-        for (int i = 0; i < 12; ++i)
+        for (int i = 0; i < LEVEL_DIMENSION; ++i)
         {
-            for (int j = 0; j < 12; ++j)
+            for (int j = 0; j < LEVEL_DIMENSION; ++j)
             {
-                WorldState.levelmap[j, 11 - i] = bindata.bytes[12 * i + j];
+                WorldState.levelmap[j, (LEVEL_DIMENSION - 1) - i] = bindata.bytes[LEVEL_DIMENSION * i + j];
             }
         }
 
-        for (int i = 0; i < 12; ++i)
+        for (int i = 0; i < LEVEL_DIMENSION; ++i)
         {
-            for (int j = 0; j < 12; ++j)
+            for (int j = 0; j < LEVEL_DIMENSION; ++j)
             {
+                GameObject spot = Instantiate(location_spot, new Vector3(j, i, 0), Quaternion.identity);
+                map_spots[spot.GetInstanceID()] = 666;
+
                 switch (WorldState.levelmap[j, i])
                 {
                     case 0:
@@ -39,6 +45,7 @@ public class BuildLevel : MonoBehaviour
                         break;
                     case 1:
                         docent_instance = Instantiate(docent, new Vector3(j, i, 0), Quaternion.identity);
+                        docent_instance.tag = "Player";
                         Player playerScript = docent_instance.GetComponent<Player>();
                         playerScript.SendMessage("stop_animation");
                         break;
