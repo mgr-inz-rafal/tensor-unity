@@ -22,6 +22,10 @@ public class MapSpot : MonoBehaviour
         {
             WorldState.current_player_pos = BuildLevel.map_spots[gameObject.GetInstanceID()];
         }
+        else if (col.gameObject.CompareTag("Amygdala"))
+        {
+            Debug.Log("Crashed into Amygdala with ID = " + col.gameObject.GetInstanceID());
+        }
     }
 
 }

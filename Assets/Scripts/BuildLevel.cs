@@ -16,7 +16,7 @@ public class BuildLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TextAsset bindata = Resources.Load("Maps/v21") as TextAsset;
+        TextAsset bindata = Resources.Load("Maps/v1") as TextAsset;
         if (bindata == null)
         {
             return;
@@ -41,7 +41,10 @@ public class BuildLevel : MonoBehaviour
                     case 0:
                         break;
                     case 2:
-                        amygdalas_instances.Add(Instantiate(amygdala_heart, new Vector3(j, i, 0), Quaternion.identity));
+                        GameObject amygdala_instance = Instantiate(amygdala_heart, new Vector3(j, i, 0), Quaternion.identity);
+                        amygdala_instance.tag = "Amygdala";
+                        Debug.Log("Spawning Amygdala with ID=" + amygdala_instance.GetInstanceID());
+                        amygdalas_instances.Add(amygdala_instance);
                         break;
                     case 1:
                         docent_instance = Instantiate(docent, new Vector3(j, i, 0), Quaternion.identity);

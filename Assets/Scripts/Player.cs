@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         Tuple<int, int> modifier = get_player_position_modifiers(m);
         int targetx = WorldState.current_player_pos.Item1 + modifier.Item1;
         int targety = WorldState.current_player_pos.Item2 + modifier.Item2;
-        Debug.Log("My pos: (" + WorldState.current_player_pos.Item1 + "," + WorldState.current_player_pos.Item2 + ")  --- Wanna go to: (" + targetx + "," + targety + ")");
+        //Debug.Log("My pos: (" + WorldState.current_player_pos.Item1 + "," + WorldState.current_player_pos.Item2 + ")  --- Wanna go to: (" + targetx + "," + targety + ")");
 
         if (WorldState.levelmap[targetx, targety] == 0)
         {
