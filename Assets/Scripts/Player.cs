@@ -19,6 +19,14 @@ public class Player : MonoBehaviour
             // Waiting until all rigid bodies settle on the ground
             return;
         }
+
+        Tuple<int, int> modifier = get_player_position_modifiers_right();
+
+        int targetx = WorldState.current_player_pos.Item1 + modifier.Item1;
+        int targety = WorldState.current_player_pos.Item2 + modifier.Item2;
+
+        Debug.Log("My pos: (" + WorldState.current_player_pos.Item1 + "," + WorldState.current_player_pos.Item2 + ")  --- Wanna go to: (" + targetx + "," + targety + ")");
+
         if (false == block_next_step)
         {
             block_next_step = true;
@@ -41,49 +49,67 @@ public class Player : MonoBehaviour
             DoStep();
         }
     }
+    Tuple<int, int> get_player_position_modifiers_right()
+    {
+        switch (WorldState.current_angle)
+        {
+            case 0:
+                return new Tuple<int, int>(1, 0);
+            case 90:
+                return new Tuple<int, int>(0, 1);
+            case 180:
+                return new Tuple<int, int>(-1, 0);
+            default:
+                return new Tuple<int, int>(0, -1);
+        }
+    }
+
+    Tuple<int, int> get_player_position_modifiers_left()
+    {
+        switch (WorldState.current_angle)
+        {
+            case 0:
+                return new Tuple<int, int>(-1, 0);
+            case 90:
+                return new Tuple<int, int>(0, -1);
+            case 180:
+                return new Tuple<int, int>(1, 0);
+            default:
+                return new Tuple<int, int>(0, 1);
+        }
+    }
+
+    void initialize_player_movement(Tuple<int, int> modifiers)
+    {
+        switch (WorldState.current_angle)
+        {
+            case 0:
+                player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1 / MOVE_COUNT, (float)modifiers.Item2);
+                break;
+            case 90:
+                player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1, (float)modifiers.Item2 / MOVE_COUNT);
+                break;
+            case 180:
+                player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1 / MOVE_COUNT, (float)modifiers.Item2);
+                break;
+            default:
+                player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1, (float)modifiers.Item2 / MOVE_COUNT);
+                break;
+        }
+    }
 
     void face_right()
     {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.flipX = false;
-        switch (WorldState.current_angle)
-        {
-            case 0:
-                player_movement_modifier = new Tuple<float, float>(1.0f / MOVE_COUNT, 0.0f);
-                break;
-            case 90:
-                player_movement_modifier = new Tuple<float, float>(0.0f, 1.0f / MOVE_COUNT);
-                break;
-            case 180:
-                player_movement_modifier = new Tuple<float, float>(-(1.0f / MOVE_COUNT), 0.0f);
-                break;
-            case 270:
-                player_movement_modifier = new Tuple<float, float>(0.0f, -(1.0f / MOVE_COUNT));
-                break;
-        }
+        initialize_player_movement(get_player_position_modifiers_right());
     }
 
     void face_left()
     {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.flipX = true;
-        switch (WorldState.current_angle)
-        {
-            case 0:
-                r.flipX = true;
-                player_movement_modifier = new Tuple<float, float>(-(1.0f / MOVE_COUNT), 0.0f);
-                break;
-            case 90:
-                player_movement_modifier = new Tuple<float, float>(0.0f, -(1.0f / MOVE_COUNT));
-                break;
-            case 180:
-                player_movement_modifier = new Tuple<float, float>(1.0f / MOVE_COUNT, 0.0f);
-                r.flipX = true;
-                break;
-            case 270:
-                player_movement_modifier = new Tuple<float, float>(0.0f, 1.0f / MOVE_COUNT);
-                break;
-        }
+        initialize_player_movement(get_player_position_modifiers_left());
     }
 
     public void DoStep()
