@@ -6,7 +6,7 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    enum Move_Direction { Left, Right };
+    public enum Move_Direction { Left, Right };
 
     Dictionary<int, Tuple<int, int>> moves_right = new Dictionary<int, Tuple<int, int>>()
     {
@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
         { 180, new Tuple<int, int>(-1, 0) },
         { 270, new Tuple<int, int>(0, -1) }
     };
-
     Dictionary<int, Tuple<int, int>> moves_left = new Dictionary<int, Tuple<int, int>>()
     {
         { 0, new Tuple<int, int>(-1, 0) },
@@ -23,6 +22,7 @@ public class Player : MonoBehaviour
         { 180, new Tuple<int, int>(1, 0) },
         { 270, new Tuple<int, int>(0, 1) }
     };
+    Dictionary<Move_Direction, Dictionary<int, Tuple<int, int>>> moves_definition = new Dictionary<Move_Direction, Dictionary<int, Tuple<int, int>>>();
 
     const int MOVE_COUNT = 8;
 
@@ -38,19 +38,29 @@ public class Player : MonoBehaviour
             return;
         }
 
-        Tuple<int, int> modifier = get_player_position_modifiers_right();
+        if (false == obstacles_on_the_way(Move_Direction.Right))
+        {
+            if (false == block_next_step)
+            {
+                block_next_step = true;
+                face_right();
+                DoStep();
+            }
+        }
+    }
 
+    bool obstacles_on_the_way(Move_Direction m)
+    {
+        Tuple<int, int> modifier = get_player_position_modifiers(m);
         int targetx = WorldState.current_player_pos.Item1 + modifier.Item1;
         int targety = WorldState.current_player_pos.Item2 + modifier.Item2;
-
         Debug.Log("My pos: (" + WorldState.current_player_pos.Item1 + "," + WorldState.current_player_pos.Item2 + ")  --- Wanna go to: (" + targetx + "," + targety + ")");
 
-        if (false == block_next_step)
+        if (WorldState.levelmap[targetx, targety] == 0)
         {
-            block_next_step = true;
-            face_right();
-            DoStep();
+            return false;
         }
+        return true;
     }
 
     public void StepLeft()
@@ -60,21 +70,20 @@ public class Player : MonoBehaviour
             // Waiting until all rigid bodies settle on the ground
             return;
         }
-        if (false == block_next_step)
+
+        if (false == obstacles_on_the_way(Move_Direction.Left))
         {
-            block_next_step = true;
-            face_left();
-            DoStep();
+            if (false == block_next_step)
+            {
+                block_next_step = true;
+                face_left();
+                DoStep();
+            }
         }
     }
-    Tuple<int, int> get_player_position_modifiers_right()
+    Tuple<int, int> get_player_position_modifiers(Move_Direction m)
     {
-        return moves_right[WorldState.current_angle];
-    }
-
-    Tuple<int, int> get_player_position_modifiers_left()
-    {
-        return moves_left[WorldState.current_angle];
+        return moves_definition[m][WorldState.current_angle];
     }
 
     void initialize_player_movement(Tuple<int, int> modifiers)
@@ -96,14 +105,14 @@ public class Player : MonoBehaviour
     {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.flipX = false;
-        initialize_player_movement(get_player_position_modifiers_right());
+        initialize_player_movement(get_player_position_modifiers(Move_Direction.Right));
     }
 
     void face_left()
     {
         SpriteRenderer r = GetComponent<SpriteRenderer>();
         r.flipX = true;
-        initialize_player_movement(get_player_position_modifiers_left());
+        initialize_player_movement(get_player_position_modifiers(Move_Direction.Left));
     }
 
     public void DoStep()
@@ -167,6 +176,12 @@ public class Player : MonoBehaviour
     {
         Animator anim = GetComponent<Animator>();
         anim.speed = 0.0f;
+    }
+
+    public Player()
+    {
+        moves_definition.Add(Move_Direction.Left, moves_left);
+        moves_definition.Add(Move_Direction.Right, moves_right);
     }
 
     void OnCollisionEnter2D(Collision2D col)
