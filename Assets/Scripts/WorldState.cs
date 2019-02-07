@@ -19,7 +19,7 @@ public class WorldState : MonoBehaviour
             {
                 if (levelmap[j, i] == 2)   // Amygdala
                 {
-                    Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
+                    //Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
                     levelmap[j, i] = 0;
                 }
             }

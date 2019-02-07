@@ -7,7 +7,6 @@ using System;
 public class Player : MonoBehaviour
 {
     public enum Move_Direction { Left, Right };
-
     Dictionary<int, Tuple<int, int>> moves_right = new Dictionary<int, Tuple<int, int>>()
     {
         { 0, new Tuple<int, int>(1, 0) },
@@ -56,7 +55,10 @@ public class Player : MonoBehaviour
         int targety = WorldState.current_player_pos.Item2 + modifier.Item2;
         //Debug.Log("My pos: (" + WorldState.current_player_pos.Item1 + "," + WorldState.current_player_pos.Item2 + ")  --- Wanna go to: (" + targetx + "," + targety + ")");
 
-        if (WorldState.levelmap[targetx, targety] == 0)
+        byte item = WorldState.levelmap[targetx, targety];
+        //Debug.Log("Item at target: " + item + " --- " + ((item != 1) && (item != 2)));
+
+        if ((item == 0) || (item == 1) || (item == 2))
         {
             return false;
         }
