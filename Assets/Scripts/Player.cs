@@ -84,14 +84,10 @@ public class Player : MonoBehaviour
         switch (WorldState.current_angle)
         {
             case 0:
-                player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1 / MOVE_COUNT, (float)modifiers.Item2);
-                break;
-            case 90:
-                player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1, (float)modifiers.Item2 / MOVE_COUNT);
-                break;
             case 180:
                 player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1 / MOVE_COUNT, (float)modifiers.Item2);
                 break;
+            case 90:
             default:
                 player_movement_modifier = new Tuple<float, float>((float)modifiers.Item1, (float)modifiers.Item2 / MOVE_COUNT);
                 break;
