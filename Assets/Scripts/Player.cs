@@ -6,6 +6,24 @@ using System;
 
 public class Player : MonoBehaviour
 {
+    enum Move_Direction { Left, Right };
+
+    Dictionary<int, Tuple<int, int>> moves_right = new Dictionary<int, Tuple<int, int>>()
+    {
+        { 0, new Tuple<int, int>(1, 0) },
+        { 90, new Tuple<int, int>(0, 1) },
+        { 180, new Tuple<int, int>(-1, 0) },
+        { 270, new Tuple<int, int>(0, -1) }
+    };
+
+    Dictionary<int, Tuple<int, int>> moves_left = new Dictionary<int, Tuple<int, int>>()
+    {
+        { 0, new Tuple<int, int>(-1, 0) },
+        { 90, new Tuple<int, int>(0, -1) },
+        { 180, new Tuple<int, int>(1, 0) },
+        { 270, new Tuple<int, int>(0, 1) }
+    };
+
     const int MOVE_COUNT = 8;
 
     bool block_next_step = false;
@@ -51,32 +69,12 @@ public class Player : MonoBehaviour
     }
     Tuple<int, int> get_player_position_modifiers_right()
     {
-        switch (WorldState.current_angle)
-        {
-            case 0:
-                return new Tuple<int, int>(1, 0);
-            case 90:
-                return new Tuple<int, int>(0, 1);
-            case 180:
-                return new Tuple<int, int>(-1, 0);
-            default:
-                return new Tuple<int, int>(0, -1);
-        }
+        return moves_right[WorldState.current_angle];
     }
 
     Tuple<int, int> get_player_position_modifiers_left()
     {
-        switch (WorldState.current_angle)
-        {
-            case 0:
-                return new Tuple<int, int>(-1, 0);
-            case 90:
-                return new Tuple<int, int>(0, -1);
-            case 180:
-                return new Tuple<int, int>(1, 0);
-            default:
-                return new Tuple<int, int>(0, 1);
-        }
+        return moves_left[WorldState.current_angle];
     }
 
     void initialize_player_movement(Tuple<int, int> modifiers)
