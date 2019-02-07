@@ -212,7 +212,7 @@ public class Player : MonoBehaviour
 
                 if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
                 {
-
+                    WorldState.amygdala_map_positions.Remove(amyg.GetInstanceID());
                     BuildLevel.amygdalas_instances.Remove(amyg);
                     Destroy(amyg, 0.0f);
                     return;
