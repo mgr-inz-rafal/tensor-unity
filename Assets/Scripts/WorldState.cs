@@ -9,4 +9,5 @@ public class WorldState : MonoBehaviour
     public static int current_angle = 0;
     public static bool lock_rotation = false;
     public static (int, int) current_player_pos = (0, 0);
+    public static Dictionary<int, (int, int)> amygdala_map_positions = new Dictionary<int, (int, int)>();
 }
