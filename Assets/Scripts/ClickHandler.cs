@@ -150,6 +150,7 @@ public class ClickHandler : MonoBehaviour
 
         if (DocentNotMoving() && AmygdalasNotMoving())
         {
+            WorldState.recalculate_amygdala_positions();
             WorldState.lock_rotation = false;
         }
     }

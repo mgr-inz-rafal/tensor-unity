@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
                         break;
                 }
 
-                Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
+                //Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
 
                 if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
                 {
