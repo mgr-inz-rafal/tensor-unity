@@ -11,6 +11,12 @@ public class BuildLevel : MonoBehaviour
     public GameObject brick09;
     public GameObject brick10;
     public GameObject brick11;
+    public GameObject brick05p;
+    public GameObject brick06p;
+    public GameObject brick08p;
+    public GameObject brick09p;
+    public GameObject brick10p;
+    public GameObject brick11p;
     public GameObject docent;
     public GameObject amygdala_heart;
     public GameObject location_spot;
@@ -58,30 +64,43 @@ public class BuildLevel : MonoBehaviour
                         playerScript.SendMessage("stop_animation");
                         break;
                     case 5:
-                    case 5 + 64 + 64 + 64:
                         Instantiate(brick05, new Vector3(j, i, 0), Quaternion.identity);
                         break;
+                    case 5 + 64 + 64 + 64:
+                        Instantiate(brick05p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
                     case 6:
-                    case 7 + 64 + 64 + 64:
                         Instantiate(brick06, new Vector3(j, i, 0), Quaternion.identity);
                         break;
+                    case 6 + 64 + 64 + 64:
+                        Instantiate(brick06p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
                     case 8:
-                    case 8 + 64 + 64 + 64:
                         Instantiate(brick08, new Vector3(j, i, 0), Quaternion.identity);
                         break;
+                    case 8 + 64 + 64 + 64:
+                        Instantiate(brick08p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
                     case 9:
-                    case 9 + 64 + 64 + 64:
                         Instantiate(brick09, new Vector3(j, i, 0), Quaternion.identity);
                         break;
+                    case 9 + 64 + 64 + 64:
+                        Instantiate(brick09p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
                     case 10:
-                    case 10 + 64 + 64 + 64:
                         Instantiate(brick10, new Vector3(j, i, 0), Quaternion.identity);
                         break;
+                    case 10 + 64 + 64 + 64:
+                        Instantiate(brick10p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
                     case 11:
-                    case 11 + 64 + 64 + 64:
                         Instantiate(brick11, new Vector3(j, i, 0), Quaternion.identity);
                         break;
+                    case 11 + 64 + 64 + 64:
+                        Instantiate(brick11p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
                     default:
+                        Debug.Log("Unsupported map element: " + WorldState.levelmap[j, i]);
                         break;
                 }
             }
