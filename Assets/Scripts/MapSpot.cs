@@ -27,6 +27,11 @@ public class MapSpot : MonoBehaviour
             //Debug.Log("Crashed into Amygdala with ID = " + col.gameObject.GetInstanceID());
             WorldState.amygdala_map_positions[col.gameObject.GetInstanceID()] = BuildLevel.map_spots[gameObject.GetInstanceID()];
         }
+        else if (col.gameObject.CompareTag("Obstacle"))
+        {
+            //Debug.Log("Crashed into Amygdala with ID = " + col.gameObject.GetInstanceID());
+            WorldState.obstacle_map_positions[col.gameObject.GetInstanceID()] = BuildLevel.map_spots[gameObject.GetInstanceID()];
+        }
     }
 
 }

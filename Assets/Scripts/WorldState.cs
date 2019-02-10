@@ -10,6 +10,7 @@ public class WorldState : MonoBehaviour
     public static bool lock_rotation = false;
     public static (int, int) current_player_pos = (0, 0);
     public static Dictionary<int, (int, int)> amygdala_map_positions = new Dictionary<int, (int, int)>();
+    public static Dictionary<int, (int, int)> obstacle_map_positions = new Dictionary<int, (int, int)>();
 
     public static void recalculate_amygdala_positions()
     {
@@ -17,7 +18,7 @@ public class WorldState : MonoBehaviour
         {
             for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
             {
-                if (levelmap[j, i] == 2)   // Amygdala
+                if ((levelmap[j, i] == 2) || (levelmap[j, i] == 131) || (levelmap[j, i] == 132)) // Amygdala or Obstacle
                 {
                     //Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
                     levelmap[j, i] = 0;
@@ -29,6 +30,12 @@ public class WorldState : MonoBehaviour
         {
             //Debug.Log("Respawning amygdala at (" + amygdala.Value.Item1 + "," + amygdala.Value.Item2 + ")");
             levelmap[amygdala.Value.Item1, amygdala.Value.Item2] = 2;
+        }
+
+        foreach (KeyValuePair<int, (int, int)> obstacle in obstacle_map_positions)
+        {
+            //Debug.Log("Respawning obstacle at (" + amygdala.Value.Item1 + "," + amygdala.Value.Item2 + ")");
+            levelmap[obstacle.Value.Item1, obstacle.Value.Item2] = 131;
         }
     }
 }
