@@ -7,6 +7,7 @@ public class BuildLevel : MonoBehaviour
 
     public GameObject brick05;
     public GameObject brick06;
+    public GameObject brick07;
     public GameObject brick08;
     public GameObject brick09;
     public GameObject brick10;
@@ -20,6 +21,7 @@ public class BuildLevel : MonoBehaviour
     public GameObject brick18;
     public GameObject brick05p;
     public GameObject brick06p;
+    public GameObject brick07p;
     public GameObject brick08p;
     public GameObject brick09p;
     public GameObject brick10p;
@@ -43,7 +45,7 @@ public class BuildLevel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TextAsset bindata = Resources.Load("Maps/v1") as TextAsset;
+        TextAsset bindata = Resources.Load("Maps/v19") as TextAsset;
         if (bindata == null)
         {
             return;
@@ -90,6 +92,12 @@ public class BuildLevel : MonoBehaviour
                         break;
                     case 6 + 64 + 64 + 64:
                         Instantiate(brick06p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
+                    case 7:
+                        Instantiate(brick07, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
+                    case 7 + 64 + 64 + 64:
+                        Instantiate(brick07p, new Vector3(j, i, 0), Quaternion.identity);
                         break;
                     case 8:
                         Instantiate(brick08, new Vector3(j, i, 0), Quaternion.identity);

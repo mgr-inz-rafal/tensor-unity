@@ -27,7 +27,7 @@ public class WorldState : MonoBehaviour
 
         foreach (KeyValuePair<int, (int, int)> amygdala in amygdala_map_positions)
         {
-            Debug.Log("Respawning amygdala at (" + amygdala.Value.Item1 + "," + amygdala.Value.Item2 + ")");
+            //Debug.Log("Respawning amygdala at (" + amygdala.Value.Item1 + "," + amygdala.Value.Item2 + ")");
             levelmap[amygdala.Value.Item1, amygdala.Value.Item2] = 2;
         }
     }
