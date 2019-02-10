@@ -31,6 +31,8 @@ public class BuildLevel : MonoBehaviour
     public GameObject brick16p;
     public GameObject brick17p;
     public GameObject brick18p;
+    public GameObject obstacle00;
+    public GameObject obstacle01;
     public GameObject docent;
     public GameObject amygdala_heart;
     public GameObject location_spot;
@@ -154,6 +156,16 @@ public class BuildLevel : MonoBehaviour
                         break;
                     case 18 + 64 + 64 + 64:
                         Instantiate(brick18p, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
+                    case 131:
+                        GameObject obstacle_instance_01 = Instantiate(obstacle00, new Vector3(j, i, 0), Quaternion.identity);
+                        obstacle_instance_01.tag = "Obstacle";
+                        amygdalas_instances.Add(obstacle_instance_01);
+                        break;
+                    case 132:
+                        GameObject obstacle_instance_02 = Instantiate(obstacle01, new Vector3(j, i, 0), Quaternion.identity);
+                        obstacle_instance_02.tag = "Obstacle";
+                        amygdalas_instances.Add(obstacle_instance_02);
                         break;
                     default:
                         Debug.Log("Unsupported map element: " + WorldState.levelmap[j, i]);
