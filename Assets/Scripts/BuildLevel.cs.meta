@@ -4,9 +4,11 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - brick00: {instanceID: 0}
+  - brick05: {instanceID: 0}
+  - brick06: {instanceID: 0}
   - docent: {instanceID: 0}
   - amygdala_heart: {instanceID: 0}
+  - location_spot: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

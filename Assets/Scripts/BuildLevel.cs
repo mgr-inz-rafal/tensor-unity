@@ -5,7 +5,8 @@ public class BuildLevel : MonoBehaviour
 {
     public const int LEVEL_DIMENSION = 12;
 
-    public GameObject brick00;
+    public GameObject brick05;
+    public GameObject brick06;
     public GameObject docent;
     public GameObject amygdala_heart;
     public GameObject location_spot;
@@ -52,8 +53,14 @@ public class BuildLevel : MonoBehaviour
                         Player playerScript = docent_instance.GetComponent<Player>();
                         playerScript.SendMessage("stop_animation");
                         break;
+                    case 5:
+                        GameObject dupa = Instantiate(brick05, new Vector3(j, i, 0), Quaternion.identity);
+                        Debug.Log(dupa.GetInstanceID());
+                        break;
+                    case 6:
+                        Instantiate(brick06, new Vector3(j, i, 0), Quaternion.identity);
+                        break;
                     default:
-                        Instantiate(brick00, new Vector3(j, i, 0), Quaternion.identity);
                         break;
                 }
             }
