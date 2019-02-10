@@ -190,6 +190,11 @@ public class Player : MonoBehaviour
     {
         foreach (GameObject amyg in BuildLevel.amygdalas_instances)
         {
+            if (amyg.CompareTag("Obstacle"))
+            {
+                // This is not really an amygdala
+                continue;
+            }
             if (amyg == col.gameObject)
             {
                 float amygdala_pos = 0;
