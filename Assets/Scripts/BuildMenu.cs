@@ -8,7 +8,7 @@ public class BuildMenu : MonoBehaviour
 
     void Start()
     {
-        Instantiate(splashScreen, new Vector3(0, 0, 0), Quaternion.identity);
+        Instantiate(splashScreen, new Vector3(5.5f, 5.5f, 0), Quaternion.identity);
     }
 
     void Update()
