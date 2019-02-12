@@ -50,6 +50,8 @@ public class BuildLevel : MonoBehaviour
         amygdalas_instances.Clear();
         foreach (GameObject g in wall_instances) { Destroy(g); };
         wall_instances.Clear();
+
+        WorldState.Reset();
     }
 
     public void PerformBuild()

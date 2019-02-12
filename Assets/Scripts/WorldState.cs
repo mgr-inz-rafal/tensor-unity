@@ -15,6 +15,16 @@ public class WorldState : MonoBehaviour
     public static Dictionary<int, (int, int)> amygdala_map_positions = new Dictionary<int, (int, int)>();
     public static Dictionary<int, (int, int)> obstacle_map_positions = new Dictionary<int, (int, int)>();
 
+    public static void Reset()
+    {
+        rotation_direction = 0;
+        current_angle = 0;
+        lock_rotation = false;
+        amygdala_map_positions.Clear();
+        obstacle_map_positions.Clear();
+        Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
+    }
+
     public static void recalculate_amygdala_positions()
     {
         for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)

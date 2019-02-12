@@ -156,6 +156,8 @@ public class Player : MonoBehaviour
                 return;
             }
             buildLevel.PerformDestroy();
+            Debug.Log(WorldState.current_angle);
+            Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.current_angle));
 
             BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
             if (buildMenu == null)
