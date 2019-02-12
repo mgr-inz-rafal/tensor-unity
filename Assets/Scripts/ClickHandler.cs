@@ -10,33 +10,37 @@ public class ClickHandler : MonoBehaviour
     bool rotate_player_left = false;
     int rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
 
+    void Handle_ClickOnSplashScreen()
+    {
+        Camera cameraObj = Camera.main;
+        if (cameraObj == null)
+        {
+            Debug.Log("Unable to access main Camera");
+            return;
+        }
+        BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
+        if (buildMenu == null)
+        {
+            Debug.Log("Unable to access BuildMenu");
+            return;
+        }
+        Destroy(buildMenu.splashScreen_instance);
+        BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
+        if (buildLevel == null)
+        {
+            Debug.Log("Unable to access BuildLevel");
+            return;
+        }
+        buildLevel.PerformBuild();
+        WorldState.gameState = WorldState.GameState.Game;
+    }
+
     public void OnClick_Rotate_Right()
     {
         switch (WorldState.gameState)
         {
             case WorldState.GameState.SplashScreen:
-                Camera cameraObj = Camera.main;
-                if (cameraObj == null)
-                {
-                    Debug.Log("Unable to access main Camera");
-                    return;
-                }
-                BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
-                if (buildMenu == null)
-                {
-                    Debug.Log("Unable to access BuildMenu");
-                    return;
-                }
-                Destroy(buildMenu.splashScreen_instance);
-                BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
-                if (buildLevel == null)
-                {
-                    Debug.Log("Unable to access BuildLevel");
-                    return;
-                }
-                buildLevel.PerformBuild();
-                WorldState.gameState = WorldState.GameState.Game;
-
+                Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
                 if (WorldState.rotation_direction != 0)
@@ -67,6 +71,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.SplashScreen:
+                Handle_ClickOnSplashScreen();
+                break;
             case WorldState.GameState.Game:
                 if (WorldState.rotation_direction != 0)
                 {
@@ -96,6 +103,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.SplashScreen:
+                Handle_ClickOnSplashScreen();
+                break;
             case WorldState.GameState.Game:
                 Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
                 if (playerScript == null)
@@ -114,6 +124,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.SplashScreen:
+                Handle_ClickOnSplashScreen();
+                break;
             case WorldState.GameState.Game:
                 Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
                 if (playerScript == null)
