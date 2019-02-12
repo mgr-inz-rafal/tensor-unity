@@ -43,7 +43,7 @@ public class BuildLevel : MonoBehaviour
     public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
 
     // Start is called before the first frame update
-    void Start()
+    public void PerformBuild()
     {
         TextAsset bindata = Resources.Load("Maps/v43") as TextAsset;
         if (bindata == null)

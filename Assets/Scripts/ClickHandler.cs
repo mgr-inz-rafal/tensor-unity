@@ -12,75 +12,120 @@ public class ClickHandler : MonoBehaviour
 
     public void OnClick_Rotate_Right()
     {
-        if (WorldState.rotation_direction != 0)
+        switch (WorldState.gameState)
         {
-            return;
-        }
+            case WorldState.GameState.SplashScreen:
+                Debug.Log("Clicked!");
+                Camera cameraObj = Camera.main;
+                if (cameraObj == null)
+                {
+                    Debug.Log("Unable to access main Camera");
+                    return;
+                }
+                BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
+                if (buildMenu == null)
+                {
+                    Debug.Log("Unable to access BuildMenu");
+                    return;
+                }
+                Destroy(buildMenu.splashScreen_instance);
+                BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
+                if (buildLevel == null)
+                {
+                    Debug.Log("Unable to access BuildLevel");
+                    return;
+                }
+                buildLevel.PerformBuild();
+                WorldState.gameState = WorldState.GameState.Game;
 
-        if (WorldState.lock_rotation)
-        {
-            return;
-        }
-        rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
-        WorldState.lock_rotation = true;
+                break;
+            case WorldState.GameState.Game:
+                if (WorldState.rotation_direction != 0)
+                {
+                    return;
+                }
 
-        WorldState.rotation_direction = 1;
-        target_angle = WorldState.current_angle + 90;
-        if (target_angle == 360)
-        {
-            target_angle = 0;
-        }
+                if (WorldState.lock_rotation)
+                {
+                    return;
+                }
+                rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
+                WorldState.lock_rotation = true;
 
-        rotate_player_left = true;
+                WorldState.rotation_direction = 1;
+                target_angle = WorldState.current_angle + 90;
+                if (target_angle == 360)
+                {
+                    target_angle = 0;
+                }
+
+                rotate_player_left = true;
+                break;
+        }
     }
 
     public void OnClick_Rotate_Left()
     {
-        if (WorldState.rotation_direction != 0)
+        switch (WorldState.gameState)
         {
-            return;
-        }
+            case WorldState.GameState.Game:
+                if (WorldState.rotation_direction != 0)
+                {
+                    return;
+                }
 
-        if (WorldState.lock_rotation)
-        {
-            return;
-        }
-        rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
-        WorldState.lock_rotation = true;
+                if (WorldState.lock_rotation)
+                {
+                    return;
+                }
+                rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
+                WorldState.lock_rotation = true;
 
-        WorldState.rotation_direction = -1;
-        target_angle = WorldState.current_angle - 90;
-        if (target_angle < 0)
-        {
-            target_angle += 360;
-        }
+                WorldState.rotation_direction = -1;
+                target_angle = WorldState.current_angle - 90;
+                if (target_angle < 0)
+                {
+                    target_angle += 360;
+                }
 
-        rotate_player_left = false;
+                rotate_player_left = false;
+                break;
+        }
     }
 
     public void OnClick_RightArrow()
     {
-        Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
-        if (playerScript == null)
+        switch (WorldState.gameState)
         {
-            Debug.Log("Unable to find Player");
-        }
-        else
-        {
-            playerScript.SendMessage("StepRight");
+            case WorldState.GameState.Game:
+                Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
+                if (playerScript == null)
+                {
+                    Debug.Log("Unable to find Player");
+                }
+                else
+                {
+                    playerScript.SendMessage("StepRight");
+                }
+                break;
         }
     }
 
     public void OnClick_LeftArrow()
     {
-        Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
-        if (playerScript == null)
+        switch (WorldState.gameState)
         {
-            Debug.Log("Unable to find Player");
-        }
-        else
-        {
-            playerScript.SendMessage("StepLeft");
+            case WorldState.GameState.Game:
+                Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
+                if (playerScript == null)
+                {
+                    Debug.Log("Unable to find Player");
+                }
+                else
+                {
+                    playerScript.SendMessage("StepLeft");
+                }
+                break;
         }
     }
 
@@ -157,8 +202,13 @@ public class ClickHandler : MonoBehaviour
 
     void Update()
     {
-        AdjustRotation();
-        UnlockRotation();
+        switch (WorldState.gameState)
+        {
+            case WorldState.GameState.Game:
+                AdjustRotation();
+                UnlockRotation();
+                break;
+        }
     }
 
     void finish_rotation()

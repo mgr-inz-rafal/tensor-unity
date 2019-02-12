@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
+    public enum GameState { SplashScreen, Menu, Game };
+    public static GameState gameState = GameState.SplashScreen;
+
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
     public static int rotation_direction = 0;
     public static int current_angle = 0;
