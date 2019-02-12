@@ -15,7 +15,6 @@ public class ClickHandler : MonoBehaviour
         switch (WorldState.gameState)
         {
             case WorldState.GameState.SplashScreen:
-                Debug.Log("Clicked!");
                 Camera cameraObj = Camera.main;
                 if (cameraObj == null)
                 {

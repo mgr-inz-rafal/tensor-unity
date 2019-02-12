@@ -7,7 +7,7 @@ public class BuildMenu : MonoBehaviour
     public GameObject splashScreen;
     public GameObject splashScreen_instance;
 
-    void Start()
+    public void Start()
     {
         splashScreen_instance = Instantiate(splashScreen, new Vector3(5.5f, 5.5f, 0), Quaternion.identity);
     }

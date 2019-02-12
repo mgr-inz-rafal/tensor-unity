@@ -39,10 +39,19 @@ public class BuildLevel : MonoBehaviour
     public GameObject amygdala_heart;
     public GameObject location_spot;
     public static GameObject docent_instance;
+    public static List<GameObject> wall_instances = new List<GameObject>();
     public static List<GameObject> amygdalas_instances = new List<GameObject>();
     public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
 
-    // Start is called before the first frame update
+    public void PerformDestroy()
+    {
+        Destroy(docent_instance);
+        foreach (GameObject g in amygdalas_instances) { Destroy(g); };
+        amygdalas_instances.Clear();
+        foreach (GameObject g in wall_instances) { Destroy(g); };
+        wall_instances.Clear();
+    }
+
     public void PerformBuild()
     {
         TextAsset bindata = Resources.Load("Maps/v43") as TextAsset;
@@ -82,88 +91,88 @@ public class BuildLevel : MonoBehaviour
                         playerScript.SendMessage("stop_animation");
                         break;
                     case 5:
-                        Instantiate(brick05, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick05, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 5 + 64 + 64 + 64:
-                        Instantiate(brick05p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick05p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 6:
-                        Instantiate(brick06, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick06, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 6 + 64 + 64 + 64:
-                        Instantiate(brick06p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick06p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 7:
-                        Instantiate(brick07, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick07, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 7 + 64 + 64 + 64:
-                        Instantiate(brick07p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick07p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 8:
-                        Instantiate(brick08, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick08, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 8 + 64 + 64 + 64:
-                        Instantiate(brick08p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick08p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 9:
-                        Instantiate(brick09, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick09, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 9 + 64 + 64 + 64:
-                        Instantiate(brick09p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick09p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 10:
-                        Instantiate(brick10, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick10, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 10 + 64 + 64 + 64:
-                        Instantiate(brick10p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick10p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 11:
-                        Instantiate(brick11, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick11, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 11 + 64 + 64 + 64:
-                        Instantiate(brick11p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick11p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 12:
-                        Instantiate(brick12, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick12, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 12 + 64 + 64 + 64:
-                        Instantiate(brick12p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick12p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 13:
-                        Instantiate(brick13, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick13, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 13 + 64 + 64 + 64:
-                        Instantiate(brick13p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick13p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 14:
-                        Instantiate(brick14, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick14, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 14 + 64 + 64 + 64:
-                        Instantiate(brick14p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick14p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 15:
-                        Instantiate(brick15, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick15, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 15 + 64 + 64 + 64:
-                        Instantiate(brick15p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick15p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 16:
-                        Instantiate(brick16, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick16, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 16 + 64 + 64 + 64:
-                        Instantiate(brick16p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick16p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 17:
-                        Instantiate(brick17, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick17, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 17 + 64 + 64 + 64:
-                        Instantiate(brick17p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick17p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 18:
-                        Instantiate(brick18, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick18, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 18 + 64 + 64 + 64:
-                        Instantiate(brick18p, new Vector3(j, i, 0), Quaternion.identity);
+                        wall_instances.Add(Instantiate(brick18p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 131:
                         GameObject obstacle_instance_01 = Instantiate(obstacle00, new Vector3(j, i, 0), Quaternion.identity);

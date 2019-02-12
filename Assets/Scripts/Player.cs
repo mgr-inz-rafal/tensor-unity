@@ -141,6 +141,34 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Camera cameraObj = Camera.main;
+            if (cameraObj == null)
+            {
+                Debug.Log("Unable to access main Camera");
+                return;
+            }
+            BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
+            if (buildLevel == null)
+            {
+                Debug.Log("Unable to access BuildLevel");
+                return;
+            }
+            buildLevel.PerformDestroy();
+
+            BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
+            if (buildMenu == null)
+            {
+                Debug.Log("Unable to access BuildMenu");
+                return;
+            }
+            buildMenu.Start();
+
+            Debug.Log("Going back to menu");
+            WorldState.gameState = WorldState.GameState.SplashScreen;
+        }
+
         /*
         if(Input.GetKeyUp(KeyCode.LeftArrow))
         {
