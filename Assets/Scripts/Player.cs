@@ -165,10 +165,10 @@ public class Player : MonoBehaviour
                 Debug.Log("Unable to access BuildMenu");
                 return;
             }
-            buildMenu.Start();
+            buildMenu.PerformMenu();
 
             Debug.Log("Going back to menu");
-            WorldState.gameState = WorldState.GameState.SplashScreen;
+            WorldState.gameState = WorldState.GameState.Menu;
         }
 
         /*
