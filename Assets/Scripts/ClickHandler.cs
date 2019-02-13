@@ -25,6 +25,10 @@ public class ClickHandler : MonoBehaviour
             return;
         }
         Destroy(buildMenu.splashScreen_instance);
+        buildMenu.PerformMenu();
+
+        WorldState.gameState = WorldState.GameState.Menu;
+        /*
         BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
         if (buildLevel == null)
         {
@@ -32,7 +36,7 @@ public class ClickHandler : MonoBehaviour
             return;
         }
         buildLevel.PerformBuild();
-        WorldState.gameState = WorldState.GameState.Game;
+        */
     }
 
     public void OnClick_Rotate_Right()
