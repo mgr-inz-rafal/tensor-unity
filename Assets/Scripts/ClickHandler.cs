@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClickHandler : MonoBehaviour
 {
@@ -180,6 +181,27 @@ public class ClickHandler : MonoBehaviour
     {
         int current_level = WorldState.DoLevelDown();
         Debug.Log("Level down. Current level=" + current_level);
+
+        GameObject dupa = GameObject.FindWithTag("DigitRight");
+        if (dupa == null)
+        {
+            Debug.Log("Dupa");
+            return;
+        }
+        RawImage ri = dupa.GetComponent<RawImage>();
+        if (ri == null)
+        {
+            Debug.Log("Dupa1");
+            return;
+        }
+
+        Texture2D myGUITexture = (Texture2D)Resources.Load("Digits/0");
+        if (myGUITexture == null)
+        {
+            Debug.Log("Dupa2");
+            return;
+        }
+        ri.texture = myGUITexture;
     }
 
     public void OnClick_LevelUp()
