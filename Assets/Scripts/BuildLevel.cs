@@ -56,7 +56,7 @@ public class BuildLevel : MonoBehaviour
 
     public void PerformBuild()
     {
-        TextAsset bindata = Resources.Load("Maps/v43") as TextAsset;
+        TextAsset bindata = Resources.Load("Maps/v" + WorldState.current_level) as TextAsset;
         if (bindata == null)
         {
             return;
