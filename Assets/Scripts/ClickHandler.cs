@@ -26,6 +26,7 @@ public class ClickHandler : MonoBehaviour
             return;
         }
         Destroy(buildMenu.splashScreen_instance);
+        UpdateLevelNumber();
         buildMenu.PerformMenu();
         buildMenu.ShowNavigationButtons();
 
@@ -177,12 +178,9 @@ public class ClickHandler : MonoBehaviour
         }
     }
 
-    public void OnClick_LevelDown()
+    public void SetDigit(string tag, int number)
     {
-        int current_level = WorldState.DoLevelDown();
-        Debug.Log("Level down. Current level=" + current_level);
-
-        GameObject dupa = GameObject.FindWithTag("DigitRight");
+        GameObject dupa = GameObject.FindWithTag(tag);
         if (dupa == null)
         {
             Debug.Log("Dupa");
@@ -195,7 +193,7 @@ public class ClickHandler : MonoBehaviour
             return;
         }
 
-        Texture2D myGUITexture = (Texture2D)Resources.Load("Digits/0");
+        Texture2D myGUITexture = (Texture2D)Resources.Load("Digits/" + number);
         if (myGUITexture == null)
         {
             Debug.Log("Dupa2");
@@ -204,9 +202,23 @@ public class ClickHandler : MonoBehaviour
         ri.texture = myGUITexture;
     }
 
+    public void UpdateLevelNumber()
+    {
+        SetDigit("DigitRight", WorldState.current_level % 10);
+        SetDigit("DigitLeft", WorldState.current_level / 10);
+    }
+
+    public void OnClick_LevelDown()
+    {
+        int current_level = WorldState.DoLevelDown();
+        UpdateLevelNumber();
+        Debug.Log("Level down. Current level=" + current_level);
+    }
+
     public void OnClick_LevelUp()
     {
         int current_level = WorldState.DoLevelUp();
+        UpdateLevelNumber();
         Debug.Log("Level up. Current level=" + current_level);
     }
 
