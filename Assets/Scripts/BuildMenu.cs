@@ -11,17 +11,27 @@ public class BuildMenu : MonoBehaviour
 
     public GameObject splashScreen_instance;
 
+    public void HideNavigationButtons()
+    {
+        menuNavigation.alpha = 0.0f;
+        menuNavigation.blocksRaycasts = false;
+    }
+
+    public void ShowNavigationButtons()
+    {
+        menuNavigation.alpha = 1.0f;
+        menuNavigation.blocksRaycasts = true;
+    }
+
     public void Start()
     {
         splashScreen_instance = Instantiate(splashScreen, new Vector3(5.5f, 5.5f, 100), Quaternion.identity);
-        menuNavigation.alpha = 0.0f;
-        menuNavigation.blocksRaycasts = false;
+        HideNavigationButtons();
     }
 
     public void PerformMenu()
     {
         splashScreen_instance = Instantiate(menu, new Vector3(5.5f, 5.5f, 100), Quaternion.identity);
-        menuNavigation.alpha = 1.0f;
-        menuNavigation.blocksRaycasts = true;
+        ShowNavigationButtons();
     }
 }

@@ -26,6 +26,7 @@ public class ClickHandler : MonoBehaviour
         }
         Destroy(buildMenu.splashScreen_instance);
         buildMenu.PerformMenu();
+        buildMenu.ShowNavigationButtons();
 
         WorldState.gameState = WorldState.GameState.Menu;
         /*
@@ -39,10 +40,40 @@ public class ClickHandler : MonoBehaviour
         */
     }
 
+    void Handle_ClickOnMenuScreen()
+    {
+        Camera cameraObj = Camera.main;
+        if (cameraObj == null)
+        {
+            Debug.Log("Unable to access main Camera");
+            return;
+        }
+        BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
+        if (buildMenu == null)
+        {
+            Debug.Log("Unable to access BuildMenu");
+            return;
+        }
+        Destroy(buildMenu.splashScreen_instance);
+        buildMenu.HideNavigationButtons();
+
+        WorldState.gameState = WorldState.GameState.Game;
+        BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
+        if (buildLevel == null)
+        {
+            Debug.Log("Unable to access BuildLevel");
+            return;
+        }
+        buildLevel.PerformBuild();
+    }
+
     public void OnClick_Rotate_Right()
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Menu:
+                Handle_ClickOnMenuScreen();
+                break;
             case WorldState.GameState.SplashScreen:
                 Handle_ClickOnSplashScreen();
                 break;
