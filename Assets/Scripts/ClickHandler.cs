@@ -29,15 +29,6 @@ public class ClickHandler : MonoBehaviour
         buildMenu.ShowNavigationButtons();
 
         WorldState.gameState = WorldState.GameState.Menu;
-        /*
-        BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
-        if (buildLevel == null)
-        {
-            Debug.Log("Unable to access BuildLevel");
-            return;
-        }
-        buildLevel.PerformBuild();
-        */
     }
 
     void Handle_ClickOnMenuScreen()
@@ -106,6 +97,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Menu:
+                Handle_ClickOnMenuScreen();
+                break;
             case WorldState.GameState.SplashScreen:
                 Handle_ClickOnSplashScreen();
                 break;
@@ -138,6 +132,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Menu:
+                Handle_ClickOnMenuScreen();
+                break;
             case WorldState.GameState.SplashScreen:
                 Handle_ClickOnSplashScreen();
                 break;
@@ -159,6 +156,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Menu:
+                Handle_ClickOnMenuScreen();
+                break;
             case WorldState.GameState.SplashScreen:
                 Handle_ClickOnSplashScreen();
                 break;
