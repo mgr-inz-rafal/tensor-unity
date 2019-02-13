@@ -176,6 +176,18 @@ public class ClickHandler : MonoBehaviour
         }
     }
 
+    public void OnClick_LevelDown()
+    {
+        int current_level = WorldState.DoLevelDown();
+        Debug.Log("Level down. Current level=" + current_level);
+    }
+
+    public void OnClick_LevelUp()
+    {
+        int current_level = WorldState.DoLevelUp();
+        Debug.Log("Level up. Current level=" + current_level);
+    }
+
     void AdjustRotation()
     {
         switch (WorldState.rotation_direction)

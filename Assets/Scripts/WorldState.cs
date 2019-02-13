@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
+    public const int MAX_LEVEL_NUMBER = 51;
+
     public enum GameState { SplashScreen, Menu, Game };
     public static GameState gameState = GameState.SplashScreen;
+
+    public static int current_level = 1;
 
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
     public static int rotation_direction = 0;
@@ -23,6 +27,26 @@ public class WorldState : MonoBehaviour
         amygdala_map_positions.Clear();
         obstacle_map_positions.Clear();
         Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
+    }
+
+    public static int DoLevelDown()
+    {
+        current_level--;
+        if (0 == current_level)
+        {
+            current_level = 1;
+        }
+        return current_level;
+    }
+
+    public static int DoLevelUp()
+    {
+        current_level++;
+        if (current_level == MAX_LEVEL_NUMBER + 1)
+        {
+            current_level = MAX_LEVEL_NUMBER;
+        }
+        return current_level;
     }
 
     public static void recalculate_amygdala_positions()
