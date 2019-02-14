@@ -7,6 +7,8 @@ public class WorldState : MonoBehaviour
     public static int current_level = 1;
     public const int MAX_LEVEL_NUMBER = 51;
 
+    public const float ELEVATOR_POSITION_CHANGE = 0.23f;
+
     public static int total_amygdalas = 0;
 
     public enum GameState { SplashScreen, Menu, Game, Elevator };
@@ -76,6 +78,31 @@ public class WorldState : MonoBehaviour
         {
             //Debug.Log("Respawning obstacle at (" + amygdala.Value.Item1 + "," + amygdala.Value.Item2 + ")");
             levelmap[obstacle.Value.Item1, obstacle.Value.Item2] = 131;
+        }
+    }
+
+    void Update()
+    {
+        switch (WorldState.gameState)
+        {
+            case WorldState.GameState.Elevator:
+                switch (WorldState.current_angle)
+                {
+                    case 0:
+                        Vector3 position_change = new Vector3(0.0f, ELEVATOR_POSITION_CHANGE, 0.0f);
+                        BuildLevel.elevator_instance.transform.position += position_change;
+                        break;
+                        // case 180:
+                        //     pos.y = LEVEL_DIMENSION - 1 + 3;
+                        //     break;
+                        // case 90:
+                        //     pos.x = LEVEL_DIMENSION - 1 + 3;
+                        //     break;
+                        // case 270:
+                        //     pos.x = -3;
+                        //     break;
+                }
+                break;
         }
     }
 }

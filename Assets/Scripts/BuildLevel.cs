@@ -59,7 +59,6 @@ public class BuildLevel : MonoBehaviour
 
     public void SpawnElevator()
     {
-
         Vector3 pos = WorldState.last_amygdala_position;
         switch (WorldState.current_angle)
         {
@@ -76,7 +75,7 @@ public class BuildLevel : MonoBehaviour
                 pos.x = -3;
                 break;
         }
-        GameObject elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
+        elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
         switch (WorldState.current_angle)
         {
             case 90:
@@ -218,10 +217,6 @@ public class BuildLevel : MonoBehaviour
                     case 132:
                         GameObject obstacle_instance_02 = Instantiate(obstacle01, new Vector3(j, i, 0), Quaternion.identity);
                         obstacle_instance_02.tag = "Obstacle";
-                        // if ((i == 9) && (j == 9))
-                        // {
-                        //     obstacle_instance_02.tag = "Debugtag";
-                        // }
                         amygdalas_instances.Add(obstacle_instance_02);
                         break;
                     default:
