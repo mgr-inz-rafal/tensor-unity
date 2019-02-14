@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
-    public static int current_level = 50;
+    public static int current_level = 1;
     public const int MAX_LEVEL_NUMBER = 51;
 
     public static int total_amygdalas = 0;
 
-    public enum GameState { SplashScreen, Menu, Game };
+    public enum GameState { SplashScreen, Menu, Game, Elevator };
     public static GameState gameState = GameState.SplashScreen;
 
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];

@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 385882600}
   m_Layer: 5
   m_Name: 0
-  m_TagString: Untagged
+  m_TagString: DigitLeft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -751,6 +751,8 @@ MonoBehaviour:
   amygdala_heart: {fileID: 6522577085587819262, guid: 6bd3b3b719aa1434380638ade09c9e0d,
     type: 3}
   location_spot: {fileID: 1362540954468315154, guid: 5a8c25895baa0ab41bc1cf838904934c,
+    type: 3}
+  elevator: {fileID: 2483049347971335696, guid: 8f87ac93aa789d04c9fa6ea9269e226b,
     type: 3}
 --- !u!20 &519420031
 Camera:
@@ -1411,7 +1413,7 @@ GameObject:
   - component: {fileID: 1405010741}
   m_Layer: 5
   m_Name: 1
-  m_TagString: Untagged
+  m_TagString: DigitRight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

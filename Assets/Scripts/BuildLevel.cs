@@ -38,6 +38,9 @@ public class BuildLevel : MonoBehaviour
     public GameObject docent;
     public GameObject amygdala_heart;
     public GameObject location_spot;
+    public GameObject elevator;
+
+    public static GameObject elevator_instance;
     public static GameObject docent_instance;
     public static List<GameObject> wall_instances = new List<GameObject>();
     public static List<GameObject> amygdalas_instances = new List<GameObject>();
@@ -52,6 +55,11 @@ public class BuildLevel : MonoBehaviour
         wall_instances.Clear();
 
         WorldState.Reset();
+    }
+
+    public void SpawnElevator()
+    {
+        GameObject elevator_instance = Instantiate(elevator, new Vector3(4, 4, 0), Quaternion.identity);
     }
 
     public void PerformBuild()
