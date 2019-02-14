@@ -180,26 +180,26 @@ public class ClickHandler : MonoBehaviour
 
     public void SetDigit(string tag, int number)
     {
-        GameObject dupa = GameObject.FindWithTag(tag);
-        if (dupa == null)
+        GameObject digit = GameObject.FindWithTag(tag);
+        if (digit == null)
         {
-            Debug.Log("Dupa");
+            Debug.Log("Unable to find digit");
             return;
         }
-        RawImage ri = dupa.GetComponent<RawImage>();
+        RawImage ri = digit.GetComponent<RawImage>();
         if (ri == null)
         {
-            Debug.Log("Dupa1");
+            Debug.Log("Unable to get raw image attached to digit");
             return;
         }
 
-        Texture2D myGUITexture = (Texture2D)Resources.Load("Digits/" + number);
-        if (myGUITexture == null)
+        Texture2D texture = (Texture2D)Resources.Load("Digits/" + number);
+        if (texture == null)
         {
-            Debug.Log("Dupa2");
+            Debug.Log("Unable to load texture for digit '" + number + "'");
             return;
         }
-        ri.texture = myGUITexture;
+        ri.texture = texture;
     }
 
     public void UpdateLevelNumber()

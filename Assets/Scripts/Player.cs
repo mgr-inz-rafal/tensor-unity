@@ -169,16 +169,6 @@ public class Player : MonoBehaviour
             Debug.Log("Going back to menu");
             WorldState.gameState = WorldState.GameState.Menu;
         }
-
-        /*
-        if(Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            preform_step_left();
-        } else if(Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            perform_step_right();
-        }
-        */
     }
 
     void perform_step()
