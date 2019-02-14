@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
-    public static int current_level = 39;
+    public static int current_level = 50;
     public const int MAX_LEVEL_NUMBER = 51;
 
     public enum GameState { SplashScreen, Menu, Game };

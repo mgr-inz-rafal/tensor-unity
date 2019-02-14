@@ -184,6 +184,10 @@ public class BuildLevel : MonoBehaviour
                     case 132:
                         GameObject obstacle_instance_02 = Instantiate(obstacle01, new Vector3(j, i, 0), Quaternion.identity);
                         obstacle_instance_02.tag = "Obstacle";
+                        // if ((i == 9) && (j == 9))
+                        // {
+                        //     obstacle_instance_02.tag = "Debugtag";
+                        // }
                         amygdalas_instances.Add(obstacle_instance_02);
                         break;
                     default:

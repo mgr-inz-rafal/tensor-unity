@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClickHandler : MonoBehaviour
 {
+    const float GRAVITY_VALUE = 9.81f;
+    const float NOT_MOVING_MAGNITUTE_THRESHOLD = 0.01f;
     const int ROTATION_LOCK_COUNT = 30;
 
     int target_angle;
@@ -258,7 +261,7 @@ public class ClickHandler : MonoBehaviour
     bool DocentNotMoving()
     {
         Rigidbody2D rb = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
-        return rb.velocity.sqrMagnitude <= 0.10f;
+        return Math.Abs(rb.velocity.sqrMagnitude) <= NOT_MOVING_MAGNITUTE_THRESHOLD;
     }
 
     bool AmygdalasNotMoving()
@@ -266,7 +269,7 @@ public class ClickHandler : MonoBehaviour
         foreach (GameObject o in BuildLevel.amygdalas_instances)
         {
             Rigidbody2D rb = o.GetComponent<Rigidbody2D>();
-            if (rb.velocity.sqrMagnitude >= 0.10f)
+            if (Math.Abs(rb.velocity.sqrMagnitude) >= NOT_MOVING_MAGNITUTE_THRESHOLD)
             {
                 return false;
             }
@@ -289,6 +292,7 @@ public class ClickHandler : MonoBehaviour
         if (DocentNotMoving() && AmygdalasNotMoving())
         {
             WorldState.recalculate_amygdala_positions();
+            Debug.Log("Unlocking rotation");
             WorldState.lock_rotation = false;
         }
     }
@@ -312,16 +316,16 @@ public class ClickHandler : MonoBehaviour
         switch (WorldState.current_angle)
         {
             case 90:
-                Physics2D.gravity = new Vector3(9.8f, 0.0f, 0.0f);
+                Physics2D.gravity = new Vector3(GRAVITY_VALUE, 0.0f, 0.0f);
                 break;
             case 180:
-                Physics2D.gravity = new Vector3(0.0f, 9.8f, 0.0f);
+                Physics2D.gravity = new Vector3(0.0f, GRAVITY_VALUE, 0.0f);
                 break;
             case 270:
-                Physics2D.gravity = new Vector3(-9.8f, 0.0f, 0.0f);
+                Physics2D.gravity = new Vector3(-GRAVITY_VALUE, 0.0f, 0.0f);
                 break;
             case 0:
-                Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
+                Physics2D.gravity = new Vector3(0.0f, -GRAVITY_VALUE, 0.0f);
                 break;
         }
 
