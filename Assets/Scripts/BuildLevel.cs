@@ -59,8 +59,17 @@ public class BuildLevel : MonoBehaviour
 
     public void SpawnElevator()
     {
+
         Vector3 pos = WorldState.last_amygdala_position;
         GameObject elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
+        switch (WorldState.current_angle)
+        {
+            case 90:
+            case 270:
+                elevator_instance.transform.Rotate(new Vector3(0, 0, 1), 90);
+                break;
+        }
+
     }
 
     public void PerformBuild()
