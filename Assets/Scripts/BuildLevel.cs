@@ -70,7 +70,10 @@ public class BuildLevel : MonoBehaviour
                 pos.y = LEVEL_DIMENSION - 1 + 3;
                 break;
             case 90:
+                pos.x = LEVEL_DIMENSION - 1 + 3;
+                break;
             case 270:
+                pos.x = -3;
                 break;
         }
         GameObject elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
