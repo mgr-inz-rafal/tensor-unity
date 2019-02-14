@@ -20,6 +20,8 @@ public class WorldState : MonoBehaviour
     public static Dictionary<int, (int, int)> amygdala_map_positions = new Dictionary<int, (int, int)>();
     public static Dictionary<int, (int, int)> obstacle_map_positions = new Dictionary<int, (int, int)>();
 
+    public static Vector3 last_amygdala_position;
+
     public static void Reset()
     {
         rotation_direction = 0;

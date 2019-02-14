@@ -236,6 +236,7 @@ public class Player : MonoBehaviour
 
                 if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
                 {
+                    WorldState.last_amygdala_position = amyg.transform.position;
                     --WorldState.total_amygdalas;
                     WorldState.amygdala_map_positions.Remove(amyg.GetInstanceID());
                     BuildLevel.amygdalas_instances.Remove(amyg);

@@ -59,7 +59,8 @@ public class BuildLevel : MonoBehaviour
 
     public void SpawnElevator()
     {
-        GameObject elevator_instance = Instantiate(elevator, new Vector3(4, 4, 0), Quaternion.identity);
+        Vector3 pos = WorldState.last_amygdala_position;
+        GameObject elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
     }
 
     public void PerformBuild()
