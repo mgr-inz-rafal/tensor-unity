@@ -100,12 +100,18 @@ public class WorldState : MonoBehaviour
                             BuildLevel.elevator_instance.transform.position += position_change;
                         }
                         break;
-                        // case 90:
-                        //     pos.x = LEVEL_DIMENSION - 1 + 3;
-                        //     break;
-                        // case 270:
-                        //     pos.x = -3;
-                        //     break;
+                    case 90:
+                        {
+                            Vector3 position_change = new Vector3(-ELEVATOR_POSITION_CHANGE, 0.0f, 0.0f);
+                            BuildLevel.elevator_instance.transform.position += position_change;
+                        }
+                        break;
+                    case 270:
+                        {
+                            Vector3 position_change = new Vector3(+ELEVATOR_POSITION_CHANGE, 0.0f, 0.0f);
+                            BuildLevel.elevator_instance.transform.position += position_change;
+                        }
+                        break;
                 }
                 break;
         }
