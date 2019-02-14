@@ -56,6 +56,7 @@ public class BuildLevel : MonoBehaviour
 
     public void PerformBuild()
     {
+        WorldState.total_amygdalas = 0;
         TextAsset bindata = Resources.Load("Maps/v" + WorldState.current_level) as TextAsset;
         if (bindata == null)
         {
@@ -81,6 +82,7 @@ public class BuildLevel : MonoBehaviour
                     case 0:
                         break;
                     case 2:
+                        WorldState.total_amygdalas++;
                         GameObject amygdala_instance = Instantiate(amygdala_heart, new Vector3(j, i, 0), Quaternion.identity);
                         amygdala_instance.tag = "Amygdala";
                         //Debug.Log("Spawning Amygdala with ID=" + amygdala_instance.GetInstanceID());
@@ -197,7 +199,7 @@ public class BuildLevel : MonoBehaviour
             }
         }
 
-        ;
+        Debug.Log("Total amygdalas in this level:" + WorldState.total_amygdalas);
     }
 
     // Update is called once per frame
