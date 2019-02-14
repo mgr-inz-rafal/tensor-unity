@@ -61,6 +61,16 @@ public class BuildLevel : MonoBehaviour
     {
 
         Vector3 pos = WorldState.last_amygdala_position;
+        switch (WorldState.current_angle)
+        {
+            case 0:
+            case 180:
+                pos.y = -3;
+                break;
+            case 90:
+            case 270:
+                break;
+        }
         GameObject elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
         switch (WorldState.current_angle)
         {
@@ -69,7 +79,6 @@ public class BuildLevel : MonoBehaviour
                 elevator_instance.transform.Rotate(new Vector3(0, 0, 1), 90);
                 break;
         }
-
     }
 
     public void PerformBuild()
