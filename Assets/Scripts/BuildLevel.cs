@@ -64,8 +64,10 @@ public class BuildLevel : MonoBehaviour
         switch (WorldState.current_angle)
         {
             case 0:
-            case 180:
                 pos.y = -3;
+                break;
+            case 180:
+                pos.y = LEVEL_DIMENSION - 1 + 3;
                 break;
             case 90:
             case 270:
