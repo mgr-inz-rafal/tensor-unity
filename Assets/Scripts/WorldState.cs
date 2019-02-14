@@ -89,12 +89,17 @@ public class WorldState : MonoBehaviour
                 switch (WorldState.current_angle)
                 {
                     case 0:
-                        Vector3 position_change = new Vector3(0.0f, ELEVATOR_POSITION_CHANGE, 0.0f);
-                        BuildLevel.elevator_instance.transform.position += position_change;
+                        {
+                            Vector3 position_change = new Vector3(0.0f, ELEVATOR_POSITION_CHANGE, 0.0f);
+                            BuildLevel.elevator_instance.transform.position += position_change;
+                        }
                         break;
-                        // case 180:
-                        //     pos.y = LEVEL_DIMENSION - 1 + 3;
-                        //     break;
+                    case 180:
+                        {
+                            Vector3 position_change = new Vector3(0.0f, -ELEVATOR_POSITION_CHANGE, 0.0f);
+                            BuildLevel.elevator_instance.transform.position += position_change;
+                        }
+                        break;
                         // case 90:
                         //     pos.x = LEVEL_DIMENSION - 1 + 3;
                         //     break;
