@@ -228,10 +228,4 @@ public class BuildLevel : MonoBehaviour
 
         Debug.Log("Total amygdalas in this level:" + WorldState.total_amygdalas);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
