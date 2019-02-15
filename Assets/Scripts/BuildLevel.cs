@@ -40,6 +40,7 @@ public class BuildLevel : MonoBehaviour
     public GameObject location_spot;
     public GameObject elevator;
 
+    public static bool mapSpotsInstantiated = false;
     public static GameObject elevator_instance;
     public static GameObject docent_instance;
     public static List<GameObject> wall_instances = new List<GameObject>();
@@ -105,8 +106,11 @@ public class BuildLevel : MonoBehaviour
         {
             for (int j = 0; j < LEVEL_DIMENSION; ++j)
             {
-                GameObject spot = Instantiate(location_spot, new Vector3(j, i, 0), Quaternion.identity);
-                map_spots[spot.GetInstanceID()] = (j, i);
+                if (mapSpotsInstantiated == false)
+                {
+                    GameObject spot = Instantiate(location_spot, new Vector3(j, i, 0), Quaternion.identity);
+                    map_spots[spot.GetInstanceID()] = (j, i);
+                }
 
                 switch (WorldState.levelmap[j, i])
                 {
@@ -225,7 +229,7 @@ public class BuildLevel : MonoBehaviour
                 }
             }
         }
-
+        mapSpotsInstantiated = true;
         Debug.Log("Total amygdalas in this level:" + WorldState.total_amygdalas);
     }
 }
