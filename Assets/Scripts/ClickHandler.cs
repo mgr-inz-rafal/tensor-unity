@@ -292,7 +292,7 @@ public class ClickHandler : MonoBehaviour
         if (DocentNotMoving() && AmygdalasNotMoving())
         {
             WorldState.recalculate_amygdala_positions();
-            Debug.Log("Unlocking rotation");
+            //Debug.Log("Unlocking rotation");
             WorldState.lock_rotation = false;
         }
     }

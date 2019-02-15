@@ -8,7 +8,7 @@ TagManager:
   - Obstacle
   - DigitLeft
   - DigitRight
-  - Debugtag
+  - Elevator
   layers:
   - Default
   - TransparentFX

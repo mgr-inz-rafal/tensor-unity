@@ -129,6 +129,24 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (BuildLevel.docent_instance == null)
+        {
+            return;
+        }
+
+        if (WorldState.gameState == WorldState.GameState.Elevator)
+        {
+            Vector3 docentpos = BuildLevel.docent_instance.transform.position;
+            Vector3 elevpos = BuildLevel.elevator_instance.transform.position;
+
+            if ((Math.Abs(elevpos.x - docentpos.x) < 0.3f) && (Math.Abs(elevpos.y - docentpos.y) < 0.3f))
+            {
+                Debug.Log("Destroying docent");
+                Destroy(BuildLevel.docent_instance);
+                BuildLevel.docent_instance = null;
+            }
+        }
+
         if (player_movement_count > 0)
         {
             perform_step();
