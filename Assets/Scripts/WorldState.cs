@@ -13,7 +13,7 @@ public class WorldState : MonoBehaviour
 
     public static int total_amygdalas = 0;
 
-    public enum GameState { SplashScreen, Menu, Game, Elevator, Intermission };
+    public enum GameState { SplashScreen, Menu, Game, Elevator, Intermission_Flora_In };
     public static GameState gameState = GameState.SplashScreen;
 
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
@@ -128,7 +128,28 @@ public class WorldState : MonoBehaviour
                 Debug.Log("Destroying elevator and going into intermission");
                 Destroy(BuildLevel.elevator_instance);
                 elevator_frames = 0;
-                WorldState.gameState = WorldState.GameState.Intermission;
+                WorldState.gameState = WorldState.GameState.Intermission_Flora_In;
+
+                Camera cameraObj = Camera.main;
+                if (cameraObj == null)
+                {
+                    Debug.Log("Unable to access main Camera");
+                    return;
+                }
+                BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
+                if (buildLevel == null)
+                {
+                    Debug.Log("Unable to access BuildLevel");
+                    return;
+                }
+                Intermission intermission = cameraObj.GetComponent<Intermission>();
+                if (intermission == null)
+                {
+                    Debug.Log("Unable to access Intermission");
+                    return;
+                }
+                buildLevel.SendMessage("PerformDestroy", false);
+                intermission.SendMessage("PerformBuildIntermission");
             }
         }
         --elevator_frames;

@@ -47,9 +47,12 @@ public class BuildLevel : MonoBehaviour
     public static List<GameObject> amygdalas_instances = new List<GameObject>();
     public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
 
-    public void PerformDestroy()
+    public void PerformDestroy(bool destroyDocent = true)
     {
-        Destroy(docent_instance);
+        if (destroyDocent)
+        {
+            Destroy(docent_instance);
+        }
         foreach (GameObject g in amygdalas_instances) { Destroy(g); };
         amygdalas_instances.Clear();
         foreach (GameObject g in wall_instances) { Destroy(g); };
