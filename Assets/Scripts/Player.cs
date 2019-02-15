@@ -126,7 +126,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (BuildLevel.docent_instance == null)

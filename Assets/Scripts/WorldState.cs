@@ -6,12 +6,14 @@ public class WorldState : MonoBehaviour
 {
     public static int current_level = 1;
     public const int MAX_LEVEL_NUMBER = 51;
+    public static int elevator_frames = 0;
+    public const int TOTAL_ELEVATOR_FRAMES = (int)(50 * 1.2f);
 
     public const float ELEVATOR_POSITION_CHANGE = 0.23f;
 
     public static int total_amygdalas = 0;
 
-    public enum GameState { SplashScreen, Menu, Game, Elevator };
+    public enum GameState { SplashScreen, Menu, Game, Elevator, Intermission };
     public static GameState gameState = GameState.SplashScreen;
 
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
@@ -116,4 +118,21 @@ public class WorldState : MonoBehaviour
                 break;
         }
     }
+
+    void FixedUpdate()
+    {
+        if (elevator_frames > 0)
+        {
+            if (elevator_frames == 1)
+            {
+                Debug.Log("Destroying elevator and going into intermission");
+                Destroy(BuildLevel.elevator_instance);
+                elevator_frames = 0;
+                WorldState.gameState = WorldState.GameState.Intermission;
+            }
+        }
+        --elevator_frames;
+    }
+
 }
+
