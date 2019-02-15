@@ -8,6 +8,8 @@ public class Intermission : MonoBehaviour
     public GameObject pieczara, pieczara_instance;
     public GameObject pieczarax, pieczarax_instance;
 
+    public GameObject no01, no01_instance;
+
     public void PerformBuildIntermission()
     {
         WorldState.Reset();
@@ -21,5 +23,7 @@ public class Intermission : MonoBehaviour
 
         pieczara_instance = Instantiate(pieczara, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
         pieczarax_instance = Instantiate(pieczarax, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
+
+        no01_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
     }
 }
