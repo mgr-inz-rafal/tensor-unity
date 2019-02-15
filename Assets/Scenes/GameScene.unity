@@ -674,6 +674,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -830,6 +831,27 @@ MonoBehaviour:
     type: 3}
   menu: {fileID: 98881481287547630, guid: 96adf1041923fa44db0500308d429fee, type: 3}
   splashScreen_instance: {fileID: 0}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 0576e7ca9a9593a4da68aeb87bd38197, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flora: {fileID: 8392981208504873288, guid: cced3cee1c6ac4c45bf161be41486a91, type: 3}
+  flora_instance: {fileID: 0}
+  pieczara: {fileID: 5249457106527563741, guid: acd309e93cdcffa4abbda6ec90095e0c,
+    type: 3}
+  pieczara_instance: {fileID: 0}
+  pieczarax: {fileID: 5864289967671821828, guid: fa41da31d09453947a33a71c42b3b552,
+    type: 3}
+  pieczarax_instance: {fileID: 0}
 --- !u!1 &735965994
 GameObject:
   m_ObjectHideFlags: 0

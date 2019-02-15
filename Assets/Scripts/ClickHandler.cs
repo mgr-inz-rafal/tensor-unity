@@ -31,7 +31,7 @@ public class ClickHandler : MonoBehaviour
         Destroy(buildMenu.splashScreen_instance);
         UpdateLevelNumber();
         buildMenu.PerformMenu();
-        buildMenu.ShowNavigationButtons();
+        //buildMenu.ShowNavigationButtons();
 
         WorldState.gameState = WorldState.GameState.Menu;
     }
