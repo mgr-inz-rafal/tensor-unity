@@ -32,8 +32,8 @@ public class Intermission : MonoBehaviour
                 BuildLevel.LEVEL_DIMENSION - (BuildLevel.LEVEL_DIMENSION >> 1) - 0.5f, 1),
                 Quaternion.identity);
 
-        pieczara_instance = Instantiate(pieczara, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
-        pieczarax_instance = Instantiate(pieczarax, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
+        pieczara_instance = Instantiate(pieczara, new Vector3(2.4f, 8.8f, 1), Quaternion.identity);
+        pieczarax_instance = Instantiate(pieczarax, new Vector3(2.4f, 8.8f, 1), Quaternion.identity);
 
         cave_number_instance = Instantiate(no01, new Vector3(-18.0f, 6.7f, 1), Quaternion.identity);
         //        cave_number_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
@@ -63,7 +63,7 @@ public class Intermission : MonoBehaviour
                     Vector3 pos = flora_instance.transform.position;
                     pos.x -= 0.07f;
                     flora_instance.transform.position = pos;
-                    if (pos.x < 11.5f)
+                    if (pos.x < 12.5f)
                     {
                         WorldState.gameState = WorldState.GameState.Intermission_Pieczara_Reveal;
                         pieczara_reveal_counter = PIECZARA_REVEAL_DELAY;
@@ -119,9 +119,21 @@ public class Intermission : MonoBehaviour
                     pos.x += 0.32f;
                     title_top_instance.transform.position = pos;
 
-                    if (pos.x > 1.64f)
+                    if (pos.x > 1.54f)
                     {
                         WorldState.gameState = WorldState.GameState.Intermission_BottomTitle;
+                    }
+                }
+                break;
+            case WorldState.GameState.Intermission_BottomTitle:
+                {
+                    Vector3 pos = title_bottom_instance.transform.position;
+                    pos.x += 0.32f;
+                    title_bottom_instance.transform.position = pos;
+
+                    if (pos.x > 1.54f)
+                    {
+                        WorldState.gameState = WorldState.GameState.Intermission_Done;
                     }
                 }
                 break;

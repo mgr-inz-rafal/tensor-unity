@@ -23,7 +23,8 @@ public class WorldState : MonoBehaviour
         Intermission_Pieczara_Reveal,
         Intermission_WaitingForNumber,
         Intermission_TopTitle,
-        Intermission_BottomTitle
+        Intermission_BottomTitle,
+        Intermission_Done
     };
     public static GameState gameState = GameState.SplashScreen;
 
