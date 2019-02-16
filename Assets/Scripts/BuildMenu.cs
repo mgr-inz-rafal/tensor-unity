@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class BuildMenu : MonoBehaviour
 {
+    const int TOTAL_CREDIT_LINES = 3;
     const float CREDITS_FADE_STEP = 0.02f;
     const int CREDITS_PRESENTATION_DELAY = 98;
     public int credits_presentation_counter = 0;
+    public int current_credit_line = 1;
 
     public CanvasGroup menuNavigation;
 
@@ -43,6 +45,18 @@ public class BuildMenu : MonoBehaviour
         ShowNavigationButtons();
     }
 
+    void SwitchToNextCredit()
+    {
+        ++current_credit_line;
+        if (current_credit_line > TOTAL_CREDIT_LINES)
+        {
+            current_credit_line = 1;
+        }
+
+        SpriteRenderer credits_renderer = credits_instance.GetComponent<SpriteRenderer>();
+        credits_renderer.sprite = Resources.Load<Sprite>("Credits/credits" + current_credit_line);
+    }
+
     void FixedUpdate()
     {
         switch (WorldState.gameState)
@@ -70,7 +84,8 @@ public class BuildMenu : MonoBehaviour
                                 credits_instance.GetComponent<Renderer>().material.color = col;
                                 if (col.a < 0.0f)
                                 {
-                                    WorldState.creditState = WorldState.CreditState.Presenting;
+                                    SwitchToNextCredit();
+                                    WorldState.creditState = WorldState.CreditState.FadeIn;
                                     credits_presentation_counter = CREDITS_PRESENTATION_DELAY;
                                 }
                             }
