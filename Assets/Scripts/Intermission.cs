@@ -38,7 +38,8 @@ public class Intermission : MonoBehaviour
         pieczarax_instance = Instantiate(pieczarax, new Vector3(2.4f + HORIZONTAL_OFFSET, 8.8f, 1), Quaternion.identity);
 
         cave_number_instance = Instantiate(no01, new Vector3(-18.0f, 6.7f, 1), Quaternion.identity);
-        //        cave_number_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
+        SpriteRenderer cave_number_renderer = cave_number_instance.GetComponent<SpriteRenderer>();
+        cave_number_renderer.sprite = Resources.Load<Sprite>("MapNumbers/no" + WorldState.current_level);
 
         title_top_instance = Instantiate(title01_top, new Vector3(-29.0f, 3.44f, 1), Quaternion.identity);
         title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
