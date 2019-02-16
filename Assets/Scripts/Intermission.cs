@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Intermission : MonoBehaviour
 {
+    const int PIECZARA_REVEAL_DELAY = 6;
+    const int PIECZARA_REVEAL_STEPS = 8;
+    public int pieczara_reveal_counter = 0;
+    public int pieczara_reveal_steps = 0;
+
     public GameObject flora, flora_instance;
     public GameObject pieczara, pieczara_instance;
     public GameObject pieczarax, pieczarax_instance;
@@ -51,12 +56,38 @@ public class Intermission : MonoBehaviour
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Intermission_Flora_In:
-                Vector3 pos = flora_instance.transform.position;
-                pos.x -= 0.07f;
-                flora_instance.transform.position = pos;
-                if (pos.x < 11.5f)
                 {
-                    WorldState.gameState = WorldState.GameState.Intermission_Pieczara_Reveal;
+                    Vector3 pos = flora_instance.transform.position;
+                    pos.x -= 0.07f;
+                    flora_instance.transform.position = pos;
+                    if (pos.x < 11.5f)
+                    {
+                        WorldState.gameState = WorldState.GameState.Intermission_Pieczara_Reveal;
+                        pieczara_reveal_counter = PIECZARA_REVEAL_DELAY;
+                        pieczara_reveal_steps = PIECZARA_REVEAL_STEPS;
+                    }
+                }
+                break;
+            case WorldState.GameState.Intermission_Pieczara_Reveal:
+                {
+                    if (pieczara_reveal_steps > 0)
+                    {
+                        if (pieczara_reveal_counter == 1)
+                        {
+                            Vector3 pos = pieczarax_instance.transform.position;
+                            Vector3 scale = pieczarax_instance.transform.localScale;
+
+                            pos.x += 0.5f;
+                            scale.x -= 0.126f;
+
+                            pieczarax_instance.transform.position = pos;
+                            pieczarax_instance.transform.localScale = scale;
+
+                            --pieczara_reveal_steps;
+                            pieczara_reveal_counter = PIECZARA_REVEAL_DELAY;
+                        }
+                        --pieczara_reveal_counter;
+                    }
                 }
                 break;
         }
