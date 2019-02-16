@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public class BuildLevel : MonoBehaviour
 {
+    System.Random rng = new System.Random();
+
     public const int LEVEL_DIMENSION = 12;
+    public const int AMYGDALA_SPECIES_COUNT = 8;
 
     public GameObject brick05;
     public GameObject brick06;
@@ -106,6 +109,7 @@ public class BuildLevel : MonoBehaviour
             }
         }
 
+        int amygdala_number = rng.Next(1, AMYGDALA_SPECIES_COUNT + 1);
         for (int i = 0; i < LEVEL_DIMENSION; ++i)
         {
             for (int j = 0; j < LEVEL_DIMENSION; ++j)
@@ -124,6 +128,10 @@ public class BuildLevel : MonoBehaviour
                         WorldState.total_amygdalas++;
                         GameObject amygdala_instance = Instantiate(amygdala_heart, new Vector3(j, i, 0), Quaternion.identity);
                         amygdala_instance.tag = "Amygdala";
+
+                        SpriteRenderer amygdala_renderer = amygdala_instance.GetComponent<SpriteRenderer>();
+                        amygdala_renderer.sprite = Resources.Load<Sprite>("Amygdalas/amygdala" + amygdala_number);
+
                         //Debug.Log("Spawning Amygdala with ID=" + amygdala_instance.GetInstanceID());
                         amygdalas_instances.Add(amygdala_instance);
                         break;
