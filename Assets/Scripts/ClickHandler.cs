@@ -96,6 +96,8 @@ public class ClickHandler : MonoBehaviour
             case WorldState.GameState.Intermission_Flora_In:
             case WorldState.GameState.Intermission_Pieczara_Reveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
+            case WorldState.GameState.Intermission_TopTitle:
+            case WorldState.GameState.Intermission_BottomTitle:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -136,6 +138,8 @@ public class ClickHandler : MonoBehaviour
             case WorldState.GameState.Intermission_Flora_In:
             case WorldState.GameState.Intermission_Pieczara_Reveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
+            case WorldState.GameState.Intermission_TopTitle:
+            case WorldState.GameState.Intermission_BottomTitle:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -176,6 +180,8 @@ public class ClickHandler : MonoBehaviour
             case WorldState.GameState.Intermission_Flora_In:
             case WorldState.GameState.Intermission_Pieczara_Reveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
+            case WorldState.GameState.Intermission_TopTitle:
+            case WorldState.GameState.Intermission_BottomTitle:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -205,6 +211,8 @@ public class ClickHandler : MonoBehaviour
             case WorldState.GameState.Intermission_Flora_In:
             case WorldState.GameState.Intermission_Pieczara_Reveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
+            case WorldState.GameState.Intermission_TopTitle:
+            case WorldState.GameState.Intermission_BottomTitle:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:

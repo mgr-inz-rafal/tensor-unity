@@ -113,6 +113,18 @@ public class Intermission : MonoBehaviour
                     }
                 }
                 break;
+            case WorldState.GameState.Intermission_TopTitle:
+                {
+                    Vector3 pos = title_top_instance.transform.position;
+                    pos.x += 0.32f;
+                    title_top_instance.transform.position = pos;
+
+                    if (pos.x > 1.64f)
+                    {
+                        WorldState.gameState = WorldState.GameState.Intermission_BottomTitle;
+                    }
+                }
+                break;
         }
     }
 }
