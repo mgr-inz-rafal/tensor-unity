@@ -830,7 +830,9 @@ MonoBehaviour:
   splashScreen: {fileID: 9205947448084514190, guid: 1a0c72e343ada68489adb0f0ab5d2d95,
     type: 3}
   menu: {fileID: 98881481287547630, guid: 96adf1041923fa44db0500308d429fee, type: 3}
+  credits: {fileID: 4911568541174981005, guid: 885ddc0fc8d84ce4aae5cb113fe0790b, type: 3}
   splashScreen_instance: {fileID: 0}
+  credits_instance: {fileID: 0}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
