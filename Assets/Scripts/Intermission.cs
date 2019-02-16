@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Intermission : MonoBehaviour
 {
+    const float HORIZONTAL_OFFSET = 1.65f;
+
     const int PIECZARA_REVEAL_DELAY = 6;
     const int PIECZARA_REVEAL_STEPS = 8;
     const int NUMBER_REVEAL_DELAY = 50;
@@ -28,12 +30,12 @@ public class Intermission : MonoBehaviour
         flora_instance = Instantiate(
             flora,
             new Vector3(
-                BuildLevel.LEVEL_DIMENSION + (BuildLevel.LEVEL_DIMENSION >> 1) + 1.0f,
+                BuildLevel.LEVEL_DIMENSION + (BuildLevel.LEVEL_DIMENSION >> 1) + 1.0f + HORIZONTAL_OFFSET,
                 BuildLevel.LEVEL_DIMENSION - (BuildLevel.LEVEL_DIMENSION >> 1) - 0.5f, 1),
                 Quaternion.identity);
 
-        pieczara_instance = Instantiate(pieczara, new Vector3(2.4f, 8.8f, 1), Quaternion.identity);
-        pieczarax_instance = Instantiate(pieczarax, new Vector3(2.4f, 8.8f, 1), Quaternion.identity);
+        pieczara_instance = Instantiate(pieczara, new Vector3(2.4f + HORIZONTAL_OFFSET, 8.8f, 1), Quaternion.identity);
+        pieczarax_instance = Instantiate(pieczarax, new Vector3(2.4f + HORIZONTAL_OFFSET, 8.8f, 1), Quaternion.identity);
 
         cave_number_instance = Instantiate(no01, new Vector3(-18.0f, 6.7f, 1), Quaternion.identity);
         //        cave_number_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
@@ -63,7 +65,7 @@ public class Intermission : MonoBehaviour
                     Vector3 pos = flora_instance.transform.position;
                     pos.x -= 0.07f;
                     flora_instance.transform.position = pos;
-                    if (pos.x < 12.5f)
+                    if (pos.x < 12.5f + HORIZONTAL_OFFSET)
                     {
                         WorldState.gameState = WorldState.GameState.Intermission_Pieczara_Reveal;
                         pieczara_reveal_counter = PIECZARA_REVEAL_DELAY;
@@ -107,7 +109,7 @@ public class Intermission : MonoBehaviour
                     else
                     {
                         Vector3 pos = cave_number_instance.transform.position;
-                        pos.x = 2.0f;
+                        pos.x = 2.0f + HORIZONTAL_OFFSET;
                         cave_number_instance.transform.position = pos;
                         WorldState.gameState = WorldState.GameState.Intermission_TopTitle;
                     }
@@ -119,7 +121,7 @@ public class Intermission : MonoBehaviour
                     pos.x += 0.32f;
                     title_top_instance.transform.position = pos;
 
-                    if (pos.x > 1.54f)
+                    if (pos.x > 1.54f + HORIZONTAL_OFFSET)
                     {
                         WorldState.gameState = WorldState.GameState.Intermission_BottomTitle;
                     }
@@ -131,7 +133,7 @@ public class Intermission : MonoBehaviour
                     pos.x += 0.32f;
                     title_bottom_instance.transform.position = pos;
 
-                    if (pos.x > 1.54f)
+                    if (pos.x > 1.54f + HORIZONTAL_OFFSET)
                     {
                         WorldState.gameState = WorldState.GameState.Intermission_Done;
                     }
