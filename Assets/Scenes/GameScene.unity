@@ -826,6 +826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbdd24c18599df14e9a3110cde3aac38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  credits_presentation_counter: 0
+  current_credit_line: 1
   menuNavigation: {fileID: 282028319}
   splashScreen: {fileID: 9205947448084514190, guid: 1a0c72e343ada68489adb0f0ab5d2d95,
     type: 3}
