@@ -40,7 +40,7 @@ public class Intermission : MonoBehaviour
         cave_number_instance = Instantiate(no01, new Vector3(-18.0f, 6.7f, 1), Quaternion.identity);
         //        cave_number_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
 
-        title_top_instance = Instantiate(title01_top, new Vector3(-18.0f, 3.44f, 1), Quaternion.identity);
+        title_top_instance = Instantiate(title01_top, new Vector3(-29.0f, 3.44f, 1), Quaternion.identity);
         title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
         // title_top_instance = Instantiate(title01_top, new Vector3(1.64f, 3.44f, 1), Quaternion.identity);
         // title_bottom_instance = Instantiate(title01_bottom, new Vector3(1.64f, 2.23f, 1), Quaternion.identity);
@@ -63,7 +63,7 @@ public class Intermission : MonoBehaviour
             case WorldState.GameState.Intermission_Flora_In:
                 {
                     Vector3 pos = flora_instance.transform.position;
-                    pos.x -= 0.07f;
+                    pos.x -= 0.11f;
                     flora_instance.transform.position = pos;
                     if (pos.x < 12.5f + HORIZONTAL_OFFSET)
                     {
