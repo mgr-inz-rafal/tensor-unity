@@ -8,7 +8,11 @@ public class Intermission : MonoBehaviour
     public GameObject pieczara, pieczara_instance;
     public GameObject pieczarax, pieczarax_instance;
 
-    public GameObject no01, no01_instance;
+    public GameObject title01_top, title01_bottom;
+
+    public GameObject no01;
+    public GameObject cave_number_instance;
+    public GameObject title_top_instance, title_bottom_instance;
 
     public void PerformBuildIntermission()
     {
@@ -24,7 +28,12 @@ public class Intermission : MonoBehaviour
         pieczara_instance = Instantiate(pieczara, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
         pieczarax_instance = Instantiate(pieczarax, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
 
-        no01_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
+        cave_number_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
+
+        title_top_instance = Instantiate(title01_top, new Vector3(-18.0f, 3.44f, 1), Quaternion.identity);
+        title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
+        // title_top_instance = Instantiate(title01_top, new Vector3(1.64f, 3.44f, 1), Quaternion.identity);
+        // title_bottom_instance = Instantiate(title01_bottom, new Vector3(1.64f, 2.23f, 1), Quaternion.identity);
     }
 
     public void PerformDestroyIntermission()
@@ -32,6 +41,8 @@ public class Intermission : MonoBehaviour
         Destroy(flora_instance);
         Destroy(pieczara_instance);
         Destroy(pieczarax_instance);
-        Destroy(no01_instance);
+        Destroy(cave_number_instance);
+        Destroy(title_top_instance);
+        Destroy(title_bottom_instance);
     }
 }
