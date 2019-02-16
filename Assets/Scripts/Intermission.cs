@@ -43,8 +43,12 @@ public class Intermission : MonoBehaviour
 
         title_top_instance = Instantiate(title01_top, new Vector3(-29.0f, 3.44f, 1), Quaternion.identity);
         title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
-        // title_top_instance = Instantiate(title01_top, new Vector3(1.64f, 3.44f, 1), Quaternion.identity);
-        // title_bottom_instance = Instantiate(title01_bottom, new Vector3(1.64f, 2.23f, 1), Quaternion.identity);
+
+        SpriteRenderer title_top_renderer = title_top_instance.GetComponent<SpriteRenderer>();
+        title_top_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.current_level + "_top");
+
+        SpriteRenderer title_bottom_renderer = title_bottom_instance.GetComponent<SpriteRenderer>();
+        title_bottom_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.current_level + "_bot");
     }
 
     public void PerformDestroyIntermission()
