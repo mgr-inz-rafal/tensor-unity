@@ -13,6 +13,14 @@ public class WorldState : MonoBehaviour
 
     public static int total_amygdalas = 0;
 
+    public enum CreditState
+    {
+        FadeIn,
+        Presenting,
+        FadeOut
+    }
+    public static CreditState creditState = CreditState.FadeIn;
+
     public enum GameState
     {
         SplashScreen,
