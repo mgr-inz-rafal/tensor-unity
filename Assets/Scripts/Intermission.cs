@@ -41,7 +41,7 @@ public class Intermission : MonoBehaviour
         SpriteRenderer cave_number_renderer = cave_number_instance.GetComponent<SpriteRenderer>();
         cave_number_renderer.sprite = Resources.Load<Sprite>("MapNumbers/no" + WorldState.current_level);
 
-        title_top_instance = Instantiate(title01_top, new Vector3(-29.0f, 3.44f, 1), Quaternion.identity);
+        title_top_instance = Instantiate(title01_top, new Vector3(-18.0f - (0.32f * 40), 3.44f, 1), Quaternion.identity);
         title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
 
         SpriteRenderer title_top_renderer = title_top_instance.GetComponent<SpriteRenderer>();
