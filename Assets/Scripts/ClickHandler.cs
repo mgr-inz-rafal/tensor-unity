@@ -53,6 +53,32 @@ public class ClickHandler : MonoBehaviour
         Destroy(buildMenu.splashScreen_instance);
         buildMenu.HideNavigationButtons();
 
+        Intermission intermission = cameraObj.GetComponent<Intermission>();
+        if (intermission == null)
+        {
+            Debug.Log("Unable to access Intermission");
+            return;
+        }
+        intermission.SendMessage("PerformBuildIntermission");
+        WorldState.gameState = WorldState.GameState.Intermission_Flora_In;
+    }
+
+    void Handle_ClickOnIntermissionScreen()
+    {
+        Camera cameraObj = Camera.main;
+        if (cameraObj == null)
+        {
+            Debug.Log("Unable to access main Camera");
+            return;
+        }
+        Intermission intermission = cameraObj.GetComponent<Intermission>();
+        if (intermission == null)
+        {
+            Debug.Log("Unable to access Intermission");
+            return;
+        }
+        intermission.SendMessage("PerformDestroyIntermission");
+
         WorldState.gameState = WorldState.GameState.Game;
         BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
         if (buildLevel == null)
@@ -67,6 +93,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_Flora_In:
+                Handle_ClickOnIntermissionScreen();
+                break;
             case WorldState.GameState.Menu:
                 Handle_ClickOnMenuScreen();
                 break;
@@ -102,6 +131,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_Flora_In:
+                Handle_ClickOnIntermissionScreen();
+                break;
             case WorldState.GameState.Menu:
                 Handle_ClickOnMenuScreen();
                 break;
@@ -137,6 +169,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_Flora_In:
+                Handle_ClickOnIntermissionScreen();
+                break;
             case WorldState.GameState.Menu:
                 Handle_ClickOnMenuScreen();
                 break;
@@ -161,6 +196,9 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_Flora_In:
+                Handle_ClickOnIntermissionScreen();
+                break;
             case WorldState.GameState.Menu:
                 Handle_ClickOnMenuScreen();
                 break;

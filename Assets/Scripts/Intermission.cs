@@ -26,4 +26,12 @@ public class Intermission : MonoBehaviour
 
         no01_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
     }
+
+    public void PerformDestroyIntermission()
+    {
+        Destroy(flora_instance);
+        Destroy(pieczara_instance);
+        Destroy(pieczarax_instance);
+        Destroy(no01_instance);
+    }
 }
