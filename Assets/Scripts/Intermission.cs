@@ -6,8 +6,10 @@ public class Intermission : MonoBehaviour
 {
     const int PIECZARA_REVEAL_DELAY = 6;
     const int PIECZARA_REVEAL_STEPS = 8;
+    const int NUMBER_REVEAL_DELAY = 50;
     public int pieczara_reveal_counter = 0;
     public int pieczara_reveal_steps = 0;
+    public int number_reveal_counter = 0;
 
     public GameObject flora, flora_instance;
     public GameObject pieczara, pieczara_instance;
@@ -33,7 +35,8 @@ public class Intermission : MonoBehaviour
         pieczara_instance = Instantiate(pieczara, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
         pieczarax_instance = Instantiate(pieczarax, new Vector3(2.5f, 8.8f, 1), Quaternion.identity);
 
-        cave_number_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
+        cave_number_instance = Instantiate(no01, new Vector3(-18.0f, 6.7f, 1), Quaternion.identity);
+        //        cave_number_instance = Instantiate(no01, new Vector3(2.0f, 6.7f, 1), Quaternion.identity);
 
         title_top_instance = Instantiate(title01_top, new Vector3(-18.0f, 3.44f, 1), Quaternion.identity);
         title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
@@ -87,6 +90,26 @@ public class Intermission : MonoBehaviour
                             pieczara_reveal_counter = PIECZARA_REVEAL_DELAY;
                         }
                         --pieczara_reveal_counter;
+                    }
+                    else
+                    {
+                        number_reveal_counter = NUMBER_REVEAL_DELAY;
+                        WorldState.gameState = WorldState.GameState.Intermission_WaitingForNumber;
+                    }
+                }
+                break;
+            case WorldState.GameState.Intermission_WaitingForNumber:
+                {
+                    if (number_reveal_counter > 0)
+                    {
+                        --number_reveal_counter;
+                    }
+                    else
+                    {
+                        Vector3 pos = cave_number_instance.transform.position;
+                        pos.x = 2.0f;
+                        cave_number_instance.transform.position = pos;
+                        WorldState.gameState = WorldState.GameState.Intermission_TopTitle;
                     }
                 }
                 break;
