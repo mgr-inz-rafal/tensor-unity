@@ -13,7 +13,7 @@ public class WorldState : MonoBehaviour
 
     public static int total_amygdalas = 0;
 
-    public enum GameState { SplashScreen, Menu, Game, Elevator, Intermission_Flora_In };
+    public enum GameState { SplashScreen, Menu, Game, Elevator, Intermission_Flora_In, Intermission_Pieczara_Reveal };
     public static GameState gameState = GameState.SplashScreen;
 
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];

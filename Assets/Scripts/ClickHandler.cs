@@ -94,6 +94,7 @@ public class ClickHandler : MonoBehaviour
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Intermission_Flora_In:
+            case WorldState.GameState.Intermission_Pieczara_Reveal:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -132,6 +133,7 @@ public class ClickHandler : MonoBehaviour
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Intermission_Flora_In:
+            case WorldState.GameState.Intermission_Pieczara_Reveal:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -170,6 +172,7 @@ public class ClickHandler : MonoBehaviour
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Intermission_Flora_In:
+            case WorldState.GameState.Intermission_Pieczara_Reveal:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -197,6 +200,7 @@ public class ClickHandler : MonoBehaviour
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Intermission_Flora_In:
+            case WorldState.GameState.Intermission_Pieczara_Reveal:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:

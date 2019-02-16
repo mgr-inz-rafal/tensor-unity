@@ -45,4 +45,20 @@ public class Intermission : MonoBehaviour
         Destroy(title_top_instance);
         Destroy(title_bottom_instance);
     }
+
+    void FixedUpdate()
+    {
+        switch (WorldState.gameState)
+        {
+            case WorldState.GameState.Intermission_Flora_In:
+                Vector3 pos = flora_instance.transform.position;
+                pos.x -= 0.07f;
+                flora_instance.transform.position = pos;
+                if (pos.x < 11.5f)
+                {
+                    WorldState.gameState = WorldState.GameState.Intermission_Pieczara_Reveal;
+                }
+                break;
+        }
+    }
 }
