@@ -51,6 +51,7 @@ public class ClickHandler : MonoBehaviour
             return;
         }
         Destroy(buildMenu.splashScreen_instance);
+        Destroy(buildMenu.credits_instance);
         buildMenu.HideNavigationButtons();
 
         Intermission intermission = cameraObj.GetComponent<Intermission>();
