@@ -274,7 +274,7 @@ public class Player : MonoBehaviour
                             return;
                         }
                         buildLevel.SendMessage("SpawnElevator");
-
+                        ++WorldState.current_level;
                         WorldState.gameState = WorldState.GameState.Elevator;
                     }
                     return;
