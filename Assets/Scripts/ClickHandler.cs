@@ -17,6 +17,9 @@ public class ClickHandler : MonoBehaviour
     bool buffer_rotation_right = false;
     bool buffer_rotation_left = false;
 
+    bool going_left = false;
+    bool going_right = false;
+
     void Handle_ClickOnSplashScreen()
     {
         Camera cameraObj = Camera.main;
@@ -261,6 +264,26 @@ public class ClickHandler : MonoBehaviour
         }
     }
 
+    public void OnPointerDown_LeftArrow()
+    {
+        going_left = true;
+    }
+
+    public void OnPointerUp_LeftArrow()
+    {
+        going_left = false;
+    }
+
+    public void OnPointerDown_RightArrow()
+    {
+        going_right = true;
+    }
+
+    public void OnPointerUp_RightArrow()
+    {
+        going_right = false;
+    }
+
     public void OnClick_LeftArrow()
     {
         switch (WorldState.gameState)
@@ -436,6 +459,15 @@ public class ClickHandler : MonoBehaviour
                 AdjustRotation();
                 UnlockRotation();
                 break;
+        }
+
+        if (going_left)
+        {
+            OnClick_LeftArrow();
+        }
+        else if (going_right)
+        {
+            OnClick_RightArrow();
         }
     }
 
