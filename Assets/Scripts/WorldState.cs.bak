@@ -27,13 +27,12 @@ public class WorldState : MonoBehaviour
         Menu,
         Game,
         Elevator,
-        Intermission_FloraIn,
-        Intermission_PieczaraReveal,
+        Intermission_Flora_In,
+        Intermission_Pieczara_Reveal,
         Intermission_WaitingForNumber,
         Intermission_TopTitle,
         Intermission_BottomTitle,
-        Intermission_Done,
-        Intermission_IncomingDocent
+        Intermission_Done
     };
     public static GameState gameState = GameState.SplashScreen;
 
@@ -149,7 +148,7 @@ public class WorldState : MonoBehaviour
                 Debug.Log("Destroying elevator and going into intermission");
                 Destroy(BuildLevel.elevator_instance);
                 elevator_frames = 0;
-                WorldState.gameState = WorldState.GameState.Intermission_FloraIn;
+                WorldState.gameState = WorldState.GameState.Intermission_Flora_In;
 
                 Camera cameraObj = Camera.main;
                 if (cameraObj == null)

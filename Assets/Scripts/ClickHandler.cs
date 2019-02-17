@@ -61,7 +61,7 @@ public class ClickHandler : MonoBehaviour
             return;
         }
         intermission.SendMessage("PerformBuildIntermission");
-        WorldState.gameState = WorldState.GameState.Intermission_Flora_In;
+        WorldState.gameState = WorldState.GameState.Intermission_FloraIn;
     }
 
     void Handle_ClickOnIntermissionScreen()
@@ -94,12 +94,13 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
-            case WorldState.GameState.Intermission_Flora_In:
-            case WorldState.GameState.Intermission_Pieczara_Reveal:
+            case WorldState.GameState.Intermission_FloraIn:
+            case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
+            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -137,12 +138,13 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
-            case WorldState.GameState.Intermission_Flora_In:
-            case WorldState.GameState.Intermission_Pieczara_Reveal:
+            case WorldState.GameState.Intermission_FloraIn:
+            case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
+            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -180,12 +182,13 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
-            case WorldState.GameState.Intermission_Flora_In:
-            case WorldState.GameState.Intermission_Pieczara_Reveal:
+            case WorldState.GameState.Intermission_FloraIn:
+            case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
+            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -212,12 +215,13 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
-            case WorldState.GameState.Intermission_Flora_In:
-            case WorldState.GameState.Intermission_Pieczara_Reveal:
+            case WorldState.GameState.Intermission_FloraIn:
+            case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
+            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
