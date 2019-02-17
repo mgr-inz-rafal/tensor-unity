@@ -72,6 +72,8 @@ public class ClickHandler : MonoBehaviour
 
     void Handle_ClickOnIntermissionScreen()
     {
+        WorldState.movement_warmup_counter = WorldState.MOVEMENT_WARMUP;
+
         Camera cameraObj = Camera.main;
         if (cameraObj == null)
         {
@@ -148,6 +150,12 @@ public class ClickHandler : MonoBehaviour
                 {
                     return;
                 }
+
+                if (WorldState.movement_warmup_counter > 0)
+                {
+                    return;
+                }
+
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
                 WorldState.lock_rotation = true;
 
@@ -200,6 +208,12 @@ public class ClickHandler : MonoBehaviour
                 {
                     return;
                 }
+
+                if (WorldState.movement_warmup_counter > 0)
+                {
+                    return;
+                }
+
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
                 WorldState.lock_rotation = true;
 
@@ -243,6 +257,11 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
+                if (WorldState.movement_warmup_counter > 0)
+                {
+                    return;
+                }
+
                 Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
                 if (playerScript == null)
                 {
@@ -258,7 +277,10 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerDown_LeftArrow()
     {
-        going_left = true;
+        if (WorldState.gameState == WorldState.GameState.Game)
+        {
+            going_left = true;
+        }
     }
 
     public void OnPointerUp_LeftArrow()
@@ -268,7 +290,10 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerDown_RightArrow()
     {
-        going_right = true;
+        if (WorldState.gameState == WorldState.GameState.Game)
+        {
+            going_right = true;
+        }
     }
 
     public void OnPointerUp_RightArrow()
@@ -278,7 +303,10 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerDown_RotateLeft()
     {
-        rotate_left = true;
+        if (WorldState.gameState == WorldState.GameState.Game)
+        {
+            rotate_left = true;
+        }
     }
 
     public void OnPointerUp_RotateLeft()
@@ -288,7 +316,10 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerDown_RotateRight()
     {
-        rotate_right = true;
+        if (WorldState.gameState == WorldState.GameState.Game)
+        {
+            rotate_right = true;
+        }
     }
 
     public void OnPointerUp_RotateRight()
@@ -324,6 +355,10 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
+                if (WorldState.movement_warmup_counter > 0)
+                {
+                    return;
+                }
                 Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
                 if (playerScript == null)
                 {
@@ -463,22 +498,25 @@ public class ClickHandler : MonoBehaviour
                 break;
         }
 
-        if (going_left)
+        if (WorldState.movement_warmup_counter == 0)
         {
-            OnClick_LeftArrow();
-        }
-        else if (going_right)
-        {
-            OnClick_RightArrow();
-        }
+            if (going_left)
+            {
+                OnClick_LeftArrow();
+            }
+            else if (going_right)
+            {
+                OnClick_RightArrow();
+            }
 
-        if (rotate_left)
-        {
-            OnClick_Rotate_Left();
-        }
-        else if (rotate_right)
-        {
-            OnClick_Rotate_Right();
+            if (rotate_left)
+            {
+                OnClick_Rotate_Left();
+            }
+            else if (rotate_right)
+            {
+                OnClick_Rotate_Right();
+            }
         }
     }
 

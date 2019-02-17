@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
+    public static int movement_warmup_counter = 0;
+    public const int MOVEMENT_WARMUP = 50;
+
     public static int current_level = 1;
     public const int MAX_LEVEL_NUMBER = 51;
     public static int elevator_frames = 0;

@@ -264,4 +264,16 @@ public class BuildLevel : MonoBehaviour
         mapSpotsInstantiated = true;
         Debug.Log("Total amygdalas in this level:" + WorldState.total_amygdalas);
     }
+
+    void FixedUpdate()
+    {
+        if (WorldState.gameState == WorldState.GameState.Game)
+        {
+            --WorldState.movement_warmup_counter;
+            if (WorldState.movement_warmup_counter < 0)
+            {
+                WorldState.movement_warmup_counter = 0;
+            }
+        }
+    }
 }
