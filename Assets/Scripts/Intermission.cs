@@ -73,6 +73,7 @@ public class Intermission : MonoBehaviour
         Destroy(cave_number_instance);
         Destroy(title_top_instance);
         Destroy(title_bottom_instance);
+        Destroy(final_docent_instance);
     }
 
     void FixedUpdate()

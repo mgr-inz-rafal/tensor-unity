@@ -94,13 +94,21 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_IncomingDocent:
+                break;
             case WorldState.GameState.Intermission_FloraIn:
+                {
+                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    {
+                        Handle_ClickOnIntermissionScreen();
+                    }
+                }
+                break;
             case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
-            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -138,13 +146,21 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_IncomingDocent:
+                break;
             case WorldState.GameState.Intermission_FloraIn:
+                {
+                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    {
+                        Handle_ClickOnIntermissionScreen();
+                    }
+                }
+                break;
             case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
-            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -182,13 +198,21 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_IncomingDocent:
+                break;
             case WorldState.GameState.Intermission_FloraIn:
+                {
+                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    {
+                        Handle_ClickOnIntermissionScreen();
+                    }
+                }
+                break;
             case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
-            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
@@ -215,13 +239,21 @@ public class ClickHandler : MonoBehaviour
     {
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Intermission_IncomingDocent:
+                break;
             case WorldState.GameState.Intermission_FloraIn:
+                {
+                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    {
+                        Handle_ClickOnIntermissionScreen();
+                    }
+                }
+                break;
             case WorldState.GameState.Intermission_PieczaraReveal:
             case WorldState.GameState.Intermission_WaitingForNumber:
             case WorldState.GameState.Intermission_TopTitle:
             case WorldState.GameState.Intermission_BottomTitle:
             case WorldState.GameState.Intermission_Done:
-            case WorldState.GameState.Intermission_IncomingDocent:
                 Handle_ClickOnIntermissionScreen();
                 break;
             case WorldState.GameState.Menu:
