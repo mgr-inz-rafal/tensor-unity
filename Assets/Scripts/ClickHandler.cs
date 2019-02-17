@@ -80,14 +80,29 @@ public class ClickHandler : MonoBehaviour
         }
         intermission.SendMessage("PerformDestroyIntermission");
 
-        WorldState.gameState = WorldState.GameState.Game;
-        BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
-        if (buildLevel == null)
+        if (WorldState.current_level == WorldState.MAX_LEVEL_NUMBER + 1)
         {
-            Debug.Log("Unable to access BuildLevel");
-            return;
+            WorldState.current_level = 1;
+            BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
+            if (buildMenu == null)
+            {
+                Debug.Log("Unable to access BuildMenu");
+                return;
+            }
+            buildMenu.Start();
+            WorldState.gameState = WorldState.GameState.SplashScreen;
         }
-        buildLevel.PerformBuild();
+        else
+        {
+            WorldState.gameState = WorldState.GameState.Game;
+            BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
+            if (buildLevel == null)
+            {
+                Debug.Log("Unable to access BuildLevel");
+                return;
+            }
+            buildLevel.PerformBuild();
+        }
     }
 
     public void OnClick_Rotate_Right()
