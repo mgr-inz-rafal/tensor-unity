@@ -5,6 +5,8 @@ public class BuildLevel : MonoBehaviour
 {
     System.Random rng = new System.Random();
 
+    public CanvasGroup levelBorders;
+
     public const int LEVEL_DIMENSION = 12;
     public const int AMYGDALA_SPECIES_COUNT = 8;
 
@@ -50,6 +52,21 @@ public class BuildLevel : MonoBehaviour
     public static List<GameObject> amygdalas_instances = new List<GameObject>();
     public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
 
+    void Start()
+    {
+        HideBorders();
+    }
+
+    void HideBorders()
+    {
+        levelBorders.alpha = 0.0f;
+    }
+
+    void ShowBorders()
+    {
+        levelBorders.alpha = 1.0f;
+    }
+
     public void PerformDestroy(bool destroyDocent = true)
     {
         if (destroyDocent)
@@ -60,6 +77,7 @@ public class BuildLevel : MonoBehaviour
         amygdalas_instances.Clear();
         foreach (GameObject g in wall_instances) { Destroy(g); };
         wall_instances.Clear();
+        HideBorders();
 
         WorldState.Reset();
     }
@@ -95,6 +113,8 @@ public class BuildLevel : MonoBehaviour
 
     public void PerformBuild()
     {
+        ShowBorders();
+
         WorldState.total_amygdalas = 0;
         TextAsset bindata = Resources.Load("Maps/v" + WorldState.current_level) as TextAsset;
         if (bindata == null)
