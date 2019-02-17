@@ -275,6 +275,19 @@ public class Player : MonoBehaviour
                         }
                         buildLevel.SendMessage("SpawnElevator");
                         ++WorldState.current_level;
+
+                        GameObject world = GameObject.FindWithTag("WorldMarker");
+                        if (world == null)
+                        {
+                            Debug.Log("Unable to access world");
+                        }
+                        ClickHandler ch = world.GetComponent<ClickHandler>();
+                        if (world == null)
+                        {
+                            Debug.Log("Unable to access click handler");
+                        }
+                        ch.SendMessage("UpdateLevelNumber");
+
                         WorldState.gameState = WorldState.GameState.Elevator;
                     }
                     return;

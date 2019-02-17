@@ -852,6 +852,8 @@ MonoBehaviour:
   pieczara_reveal_steps: 0
   number_reveal_counter: 0
   flora: {fileID: 8392981208504873288, guid: cced3cee1c6ac4c45bf161be41486a91, type: 3}
+  flora_final: {fileID: 6048584713158080420, guid: c3bdad50876962d4fa51967e5c8dc548,
+    type: 3}
   flora_instance: {fileID: 0}
   pieczara: {fileID: 5249457106527563741, guid: acd309e93cdcffa4abbda6ec90095e0c,
     type: 3}
@@ -859,6 +861,9 @@ MonoBehaviour:
   pieczarax: {fileID: 5864289967671821828, guid: fa41da31d09453947a33a71c42b3b552,
     type: 3}
   pieczarax_instance: {fileID: 0}
+  final_docent: {fileID: 824064895626499784, guid: 73e205077ab0e1a49aeca2c2d72efec4,
+    type: 3}
+  final_docent_instance: {fileID: 0}
   title01_top: {fileID: 1881199626163372085, guid: 8090cbd94bda00142a01fe6664dcea5d,
     type: 3}
   title01_bottom: {fileID: 4342992789928464506, guid: 3d96e9d93842ceb4f9d8ac40a361633e,
@@ -1991,7 +1996,7 @@ GameObject:
   - component: {fileID: 1882443971}
   m_Layer: 0
   m_Name: World
-  m_TagString: Untagged
+  m_TagString: WorldMarker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
