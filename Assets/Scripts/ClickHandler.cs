@@ -14,6 +14,9 @@ public class ClickHandler : MonoBehaviour
     bool rotate_player_left = false;
     int rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
 
+    bool buffer_rotation_right = false;
+    bool buffer_rotation_left = false;
+
     void Handle_ClickOnSplashScreen()
     {
         Camera cameraObj = Camera.main;
@@ -140,6 +143,10 @@ public class ClickHandler : MonoBehaviour
 
                 if (WorldState.lock_rotation)
                 {
+                    if (!buffer_rotation_left)
+                    {
+                        buffer_rotation_right = true;
+                    }
                     return;
                 }
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
@@ -192,6 +199,10 @@ public class ClickHandler : MonoBehaviour
 
                 if (WorldState.lock_rotation)
                 {
+                    if (!buffer_rotation_right)
+                    {
+                        buffer_rotation_left = true;
+                    }
                     return;
                 }
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
@@ -404,6 +415,16 @@ public class ClickHandler : MonoBehaviour
             WorldState.recalculate_amygdala_positions();
             //Debug.Log("Unlocking rotation");
             WorldState.lock_rotation = false;
+            if (buffer_rotation_right)
+            {
+                OnClick_Rotate_Right();
+            }
+            if (buffer_rotation_left)
+            {
+                OnClick_Rotate_Left();
+            }
+            buffer_rotation_right = false;
+            buffer_rotation_left = false;
         }
     }
 
