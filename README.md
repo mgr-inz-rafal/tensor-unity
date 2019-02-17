@@ -8,3 +8,5 @@ https://github.com/mgr-inz-rafal/tensor
 # Videos
 
 https://www.youtube.com/watch?v=yIMzw1snzuE
+
+https://www.youtube.com/watch?v=v2XH3pMvqHY
