@@ -191,7 +191,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Go right
+  m_Text: '
 
 '
 --- !u!222 &113593734
@@ -701,7 +701,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Go left
+  m_Text: 
 --- !u!222 &515408419
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2350,7 +2350,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rotate left
+  m_Text: 
 --- !u!222 &1771238876
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2430,9 +2430,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Rotate right
-
-'
+  m_Text: 
 --- !u!222 &1794648549
 CanvasRenderer:
   m_ObjectHideFlags: 0
