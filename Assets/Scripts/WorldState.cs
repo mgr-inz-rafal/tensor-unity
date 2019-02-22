@@ -149,7 +149,7 @@ public class WorldState : MonoBehaviour
         {
             if (elevator_frames == 1)
             {
-                Debug.Log("Destroying elevator and going into intermission");
+                //Debug.Log("Destroying elevator and going into intermission");
                 Destroy(BuildLevel.elevator_instance);
                 elevator_frames = 0;
                 WorldState.gameState = WorldState.GameState.Intermission_FloraIn;
@@ -157,19 +157,19 @@ public class WorldState : MonoBehaviour
                 Camera cameraObj = Camera.main;
                 if (cameraObj == null)
                 {
-                    Debug.Log("Unable to access main Camera");
+                    //Debug.Log("Unable to access main Camera");
                     return;
                 }
                 BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
                 if (buildLevel == null)
                 {
-                    Debug.Log("Unable to access BuildLevel");
+                    //Debug.Log("Unable to access BuildLevel");
                     return;
                 }
                 Intermission intermission = cameraObj.GetComponent<Intermission>();
                 if (intermission == null)
                 {
-                    Debug.Log("Unable to access Intermission");
+                    //Debug.Log("Unable to access Intermission");
                     return;
                 }
                 buildLevel.SendMessage("PerformDestroy", false);

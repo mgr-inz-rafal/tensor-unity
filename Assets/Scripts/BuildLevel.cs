@@ -256,13 +256,13 @@ public class BuildLevel : MonoBehaviour
                         amygdalas_instances.Add(obstacle_instance_02);
                         break;
                     default:
-                        Debug.Log("Unsupported map element: " + WorldState.levelmap[j, i]);
+                        //Debug.Log("Unsupported map element: " + WorldState.levelmap[j, i]);
                         break;
                 }
             }
         }
         mapSpotsInstantiated = true;
-        Debug.Log("Total amygdalas in this level:" + WorldState.total_amygdalas);
+        //Debug.Log("Total amygdalas in this level:" + WorldState.total_amygdalas);
     }
 
     void FixedUpdate()
