@@ -20,6 +20,11 @@ public class ClickHandler : MonoBehaviour
     bool going_left = false;
     bool going_right = false;
 
+    void Start()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
+
     void Handle_ClickOnSplashScreen()
     {
         Camera cameraObj = Camera.main;
