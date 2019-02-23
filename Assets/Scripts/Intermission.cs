@@ -66,7 +66,14 @@ public class Intermission : MonoBehaviour
 
         GameObject world = GameObject.FindWithTag("WorldMarker");
         SoundManager sm = world.GetComponent<SoundManager>();
-        sm.PlayMusic("Intermission");
+        if (isOnFinalLevel())
+        {
+            sm.PlayMusic("Title");
+        }
+        else
+        {
+            sm.PlayMusic("Intermission");
+        }
     }
 
     public void PerformDestroyIntermission()
