@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickup1: {fileID: 8300000, guid: b18914d4ab604f0458f87906d24f104c, type: 3}
   pickup2: {fileID: 8300000, guid: a3482bc2bbe83b94aafae90c8492b92d, type: 3}
+  level_up: {fileID: 8300000, guid: d2f11a3cad2fc0b48a7855390e234dc8, type: 3}
 --- !u!61 &1552134956
 BoxCollider2D:
   m_ObjectHideFlags: 0

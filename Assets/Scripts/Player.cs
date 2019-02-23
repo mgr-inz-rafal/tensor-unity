@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     public AudioClip pickup1;
     public AudioClip pickup2;
+    public AudioClip level_up;
 
     System.Random rnd = new System.Random();
 

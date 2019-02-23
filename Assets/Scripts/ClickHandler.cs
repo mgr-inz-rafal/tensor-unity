@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ClickHandler : MonoBehaviour
 {
+    public AudioClip rotate;
+
     const float GRAVITY_VALUE = 9.81f;
     const float NOT_MOVING_MAGNITUTE_THRESHOLD = 0.01f;
     const int ROTATION_LOCK_COUNT = 30;
@@ -163,6 +165,7 @@ public class ClickHandler : MonoBehaviour
 
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
                 WorldState.lock_rotation = true;
+                GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
 
                 WorldState.rotation_direction = 1;
                 target_angle = WorldState.current_angle + 90;
@@ -221,6 +224,7 @@ public class ClickHandler : MonoBehaviour
 
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
                 WorldState.lock_rotation = true;
+                GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
 
                 WorldState.rotation_direction = -1;
                 target_angle = WorldState.current_angle - 90;
