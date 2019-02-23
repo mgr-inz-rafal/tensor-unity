@@ -113,6 +113,10 @@ public class BuildLevel : MonoBehaviour
 
     public void PerformBuild()
     {
+        GameObject world = GameObject.FindWithTag("WorldMarker");
+        SoundManager sm = world.GetComponent<SoundManager>();
+        sm.PlayMusic("Ingame");
+
         ShowBorders();
 
         WorldState.total_amygdalas = 0;

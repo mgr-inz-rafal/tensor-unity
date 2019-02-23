@@ -43,6 +43,10 @@ public class BuildMenu : MonoBehaviour
         credits_instance = Instantiate(credits, new Vector3(5.5f, 0.96f, 100), Quaternion.identity);
         credits_instance.GetComponent<SpriteRenderer>().material.color = new Color(1, 1, 1, 0);
         ShowNavigationButtons();
+
+        GameObject world = GameObject.FindWithTag("WorldMarker");
+        SoundManager sm = world.GetComponent<SoundManager>();
+        sm.PlayMusic("Menu");
     }
 
     void SwitchToNextCredit()

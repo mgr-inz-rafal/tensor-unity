@@ -63,6 +63,10 @@ public class Intermission : MonoBehaviour
             SpriteRenderer title_bottom_renderer = title_bottom_instance.GetComponent<SpriteRenderer>();
             title_bottom_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.current_level + "_bot");
         }
+
+        GameObject world = GameObject.FindWithTag("WorldMarker");
+        SoundManager sm = world.GetComponent<SoundManager>();
+        sm.PlayMusic("Intermission");
     }
 
     public void PerformDestroyIntermission()

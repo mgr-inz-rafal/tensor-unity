@@ -9,6 +9,7 @@ TagManager:
   - DigitLeft
   - DigitRight
   - WorldMarker
+  - AudioMarker
   layers:
   - Default
   - TransparentFX
