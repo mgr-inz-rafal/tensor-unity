@@ -147,7 +147,8 @@ public class Player : MonoBehaviour
             if ((Math.Abs(elevpos.x - docentpos.x) < 0.3f) && (Math.Abs(elevpos.y - docentpos.y) < 0.3f))
             {
                 //Debug.Log("Destroying docent");
-                Destroy(BuildLevel.docent_instance);
+                BuildLevel.docent_instance.transform.position = new Vector3(-1000, -1000, -1000);
+                Destroy(BuildLevel.docent_instance, 2);
                 BuildLevel.docent_instance = null;
             }
         }
@@ -261,13 +262,20 @@ public class Player : MonoBehaviour
                 {
                     WorldState.last_amygdala_position = amyg.transform.position;
                     --WorldState.total_amygdalas;
-                    if (rnd.Next(1, 3) == 1)
+                    if (WorldState.total_amygdalas == 0)
                     {
-                        GetComponent<AudioSource>().PlayOneShot(pickup1, 1.0f);
+                        GetComponent<AudioSource>().PlayOneShot(level_up, 1.0f);
                     }
                     else
                     {
-                        GetComponent<AudioSource>().PlayOneShot(pickup2, 1.0f);
+                        if (rnd.Next(1, 3) == 1)
+                        {
+                            GetComponent<AudioSource>().PlayOneShot(pickup1, 1.0f);
+                        }
+                        else
+                        {
+                            GetComponent<AudioSource>().PlayOneShot(pickup2, 1.0f);
+                        }
                     }
                     WorldState.amygdala_map_positions.Remove(amyg.GetInstanceID());
                     BuildLevel.amygdalas_instances.Remove(amyg);

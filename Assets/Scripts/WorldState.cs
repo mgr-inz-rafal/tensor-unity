@@ -10,9 +10,9 @@ public class WorldState : MonoBehaviour
     public static int current_level = 1;
     public const int MAX_LEVEL_NUMBER = 51;
     public static int elevator_frames = 0;
-    public const int TOTAL_ELEVATOR_FRAMES = (int)(50 * 1.2f);
+    public const int TOTAL_ELEVATOR_FRAMES = (int)(50 * 1.5f);
 
-    public const float ELEVATOR_POSITION_CHANGE = 0.23f;
+    public const float ELEVATOR_POSITION_CHANGE = 0.20f;
 
     public static int total_amygdalas = 0;
 
