@@ -260,8 +260,6 @@ public class Player : MonoBehaviour
                 {
                     WorldState.last_amygdala_position = amyg.transform.position;
                     --WorldState.total_amygdalas;
-                    int rand = rnd.Next(1, 3);
-                    Debug.Log(rand);
                     if (rnd.Next(1, 3) == 1)
                     {
                         GetComponent<AudioSource>().PlayOneShot(pickup1, 1.0f);
