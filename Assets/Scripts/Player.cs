@@ -6,6 +6,11 @@ using System;
 
 public class Player : MonoBehaviour
 {
+    public AudioClip pickup1;
+    public AudioClip pickup2;
+
+    System.Random rnd = new System.Random();
+
     public enum Move_Direction { Left, Right };
     Dictionary<int, Tuple<int, int>> moves_right = new Dictionary<int, Tuple<int, int>>()
     {
@@ -140,7 +145,7 @@ public class Player : MonoBehaviour
 
             if ((Math.Abs(elevpos.x - docentpos.x) < 0.3f) && (Math.Abs(elevpos.y - docentpos.y) < 0.3f))
             {
-                Debug.Log("Destroying docent");
+                //Debug.Log("Destroying docent");
                 Destroy(BuildLevel.docent_instance);
                 BuildLevel.docent_instance = null;
             }
@@ -163,13 +168,13 @@ public class Player : MonoBehaviour
             Camera cameraObj = Camera.main;
             if (cameraObj == null)
             {
-                Debug.Log("Unable to access main Camera");
+                //Debug.Log("Unable to access main Camera");
                 return;
             }
             BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
             if (buildLevel == null)
             {
-                Debug.Log("Unable to access BuildLevel");
+                //Debug.Log("Unable to access BuildLevel");
                 return;
             }
             buildLevel.PerformDestroy();
@@ -178,12 +183,12 @@ public class Player : MonoBehaviour
             BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
             if (buildMenu == null)
             {
-                Debug.Log("Unable to access BuildMenu");
+                //Debug.Log("Unable to access BuildMenu");
                 return;
             }
             buildMenu.PerformMenu();
 
-            Debug.Log("Going back to menu");
+            //Debug.Log("Going back to menu");
             WorldState.gameState = WorldState.GameState.Menu;
         }
     }
@@ -255,22 +260,32 @@ public class Player : MonoBehaviour
                 {
                     WorldState.last_amygdala_position = amyg.transform.position;
                     --WorldState.total_amygdalas;
+                    int rand = rnd.Next(1, 3);
+                    Debug.Log(rand);
+                    if (rnd.Next(1, 3) == 1)
+                    {
+                        GetComponent<AudioSource>().PlayOneShot(pickup1, 1.0f);
+                    }
+                    else
+                    {
+                        GetComponent<AudioSource>().PlayOneShot(pickup2, 1.0f);
+                    }
                     WorldState.amygdala_map_positions.Remove(amyg.GetInstanceID());
                     BuildLevel.amygdalas_instances.Remove(amyg);
                     Destroy(amyg, 0.0f);
-                    Debug.Log("Amygdalas left in this level:" + WorldState.total_amygdalas);
+                    //Debug.Log("Amygdalas left in this level:" + WorldState.total_amygdalas);
                     if (WorldState.total_amygdalas == 0)
                     {
                         Camera cameraObj = Camera.main;
                         if (cameraObj == null)
                         {
-                            Debug.Log("Unable to access main Camera");
+                            //Debug.Log("Unable to access main Camera");
                             return;
                         }
                         BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
                         if (buildLevel == null)
                         {
-                            Debug.Log("Unable to access BuildLevel");
+                            //Debug.Log("Unable to access BuildLevel");
                             return;
                         }
                         buildLevel.SendMessage("SpawnElevator");
@@ -279,12 +294,12 @@ public class Player : MonoBehaviour
                         GameObject world = GameObject.FindWithTag("WorldMarker");
                         if (world == null)
                         {
-                            Debug.Log("Unable to access world");
+                            //Debug.Log("Unable to access world");
                         }
                         ClickHandler ch = world.GetComponent<ClickHandler>();
                         if (world == null)
                         {
-                            Debug.Log("Unable to access click handler");
+                            //Debug.Log("Unable to access click handler");
                         }
                         ch.SendMessage("UpdateLevelNumber");
 

@@ -2450,6 +2450,7 @@ GameObject:
   - component: {fileID: 1882443970}
   - component: {fileID: 1882443969}
   - component: {fileID: 1882443971}
+  - component: {fileID: 1882443972}
   m_Layer: 0
   m_Name: World
   m_TagString: WorldMarker
@@ -2495,6 +2496,19 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 56af3e3afae135c4db6e0d445b5a03a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1882443972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882443968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: d5423ab24b81c544f911ea539046b713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1991668333
@@ -2577,7 +2591,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7137882585e99504d9e71a8d73aabfe2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
