@@ -115,7 +115,8 @@ public class BuildLevel : MonoBehaviour
     {
         GameObject world = GameObject.FindWithTag("WorldMarker");
         SoundManager sm = world.GetComponent<SoundManager>();
-        sm.PlayMusic("Ingame");
+        //sm.PlayMusic("Ingame");
+        sm.PlayRandomGameplayMusic();
 
         ShowBorders();
 
