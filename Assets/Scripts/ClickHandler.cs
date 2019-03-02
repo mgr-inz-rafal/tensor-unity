@@ -44,7 +44,6 @@ public class ClickHandler : MonoBehaviour
         Destroy(buildMenu.splashScreen_instance);
         UpdateLevelNumber();
         buildMenu.PerformMenu();
-        //buildMenu.ShowNavigationButtons();
 
         WorldState.gameState = WorldState.GameState.Menu;
     }
@@ -286,6 +285,12 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerDown_LeftArrow()
     {
+        if (WorldState.LeftBorderState != WorldState.BorderState.Movement)
+        {
+            WorldState.LeftBorderState = WorldState.BorderState.Movement;
+            BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+            buildLevel.ShowBorders();
+        }
         if (WorldState.gameState == WorldState.GameState.Game)
         {
             going_left = true;
@@ -294,11 +299,20 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerUp_LeftArrow()
     {
+        WorldState.LeftBorderState = WorldState.BorderState.Neutral;
+        BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+        buildLevel.ShowBorders();
         going_left = false;
     }
 
     public void OnPointerDown_RightArrow()
     {
+        if (WorldState.RightBorderState != WorldState.BorderState.Movement)
+        {
+            WorldState.RightBorderState = WorldState.BorderState.Movement;
+            BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+            buildLevel.ShowBorders();
+        }
         if (WorldState.gameState == WorldState.GameState.Game)
         {
             going_right = true;
@@ -307,6 +321,9 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerUp_RightArrow()
     {
+        WorldState.RightBorderState = WorldState.BorderState.Neutral;
+        BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+        buildLevel.ShowBorders();
         going_right = false;
     }
 

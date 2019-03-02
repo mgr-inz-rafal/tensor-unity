@@ -16,6 +16,15 @@ public class WorldState : MonoBehaviour
 
     public static int total_amygdalas = 0;
 
+    public enum BorderState
+    {
+        Neutral,
+        Rotation,
+        Movement
+    }
+    public static BorderState LeftBorderState = BorderState.Neutral;
+    public static BorderState RightBorderState = BorderState.Neutral;
+
     public enum CreditState
     {
         FadeIn,

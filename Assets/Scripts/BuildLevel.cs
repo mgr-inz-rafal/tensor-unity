@@ -52,6 +52,12 @@ public class BuildLevel : MonoBehaviour
     public static List<GameObject> wall_instances = new List<GameObject>();
     public static List<GameObject> amygdalas_instances = new List<GameObject>();
     public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
+    public static Dictionary<WorldState.BorderState, string> border_textures = new Dictionary<WorldState.BorderState, string>()
+    {
+        {WorldState.BorderState.Neutral, "_neutral"},
+        {WorldState.BorderState.Movement, "_movement"},
+        {WorldState.BorderState.Rotation, "_rotation"}
+    };
 
     void Start()
     {
@@ -63,23 +69,29 @@ public class BuildLevel : MonoBehaviour
         levelBorders.alpha = 0.0f;
     }
 
-    void ShowBorders()
+    public void ShowBorders()
     {
+        if (WorldState.gameState == WorldState.GameState.Game)
         {
-            GameObject border = GameObject.FindWithTag("LeftBorder");
-            RawImage ri = border.GetComponent<RawImage>();
-            Texture2D texture = (Texture2D)Resources.Load("Borders/left_neutral");
-            ri.texture = texture;
-        }
+            {
+                string prefix = "left";
+                string suffix = border_textures[WorldState.LeftBorderState];
+                GameObject border = GameObject.FindWithTag("LeftBorder");
+                RawImage ri = border.GetComponent<RawImage>();
+                Texture2D texture = (Texture2D)Resources.Load("Borders/" + prefix + suffix);
+                ri.texture = texture;
+            }
 
-        {
-            GameObject border = GameObject.FindWithTag("RightBorder");
-            RawImage ri = border.GetComponent<RawImage>();
-            Texture2D texture = (Texture2D)Resources.Load("Borders/right_neutral");
-            ri.texture = texture;
+            {
+                string prefix = "right";
+                string suffix = border_textures[WorldState.RightBorderState];
+                GameObject border = GameObject.FindWithTag("RightBorder");
+                RawImage ri = border.GetComponent<RawImage>();
+                Texture2D texture = (Texture2D)Resources.Load("Borders/" + prefix + suffix);
+                ri.texture = texture;
+            }
+            levelBorders.alpha = 1.0f;
         }
-
-        levelBorders.alpha = 1.0f;
     }
 
     public void PerformDestroy(bool destroyDocent = true)
