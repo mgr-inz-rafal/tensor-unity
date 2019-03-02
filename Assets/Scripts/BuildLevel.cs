@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class BuildLevel : MonoBehaviour
 {
     System.Random rng = new System.Random();
@@ -64,6 +65,20 @@ public class BuildLevel : MonoBehaviour
 
     void ShowBorders()
     {
+        {
+            GameObject border = GameObject.FindWithTag("LeftBorder");
+            RawImage ri = border.GetComponent<RawImage>();
+            Texture2D texture = (Texture2D)Resources.Load("Borders/left_neutral");
+            ri.texture = texture;
+        }
+
+        {
+            GameObject border = GameObject.FindWithTag("RightBorder");
+            RawImage ri = border.GetComponent<RawImage>();
+            Texture2D texture = (Texture2D)Resources.Load("Borders/right_neutral");
+            ri.texture = texture;
+        }
+
         levelBorders.alpha = 1.0f;
     }
 
