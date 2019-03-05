@@ -329,6 +329,12 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerDown_RotateLeft()
     {
+        if (WorldState.LeftBorderState != WorldState.BorderState.Rotation)
+        {
+            WorldState.LeftBorderState = WorldState.BorderState.Rotation;
+            BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+            buildLevel.ShowBorders();
+        }
         if (WorldState.gameState == WorldState.GameState.Game)
         {
             rotate_left = true;
@@ -337,11 +343,20 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerUp_RotateLeft()
     {
+        WorldState.LeftBorderState = WorldState.BorderState.Neutral;
+        BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+        buildLevel.ShowBorders();
         rotate_left = false;
     }
 
     public void OnPointerDown_RotateRight()
     {
+        if (WorldState.RightBorderState != WorldState.BorderState.Rotation)
+        {
+            WorldState.RightBorderState = WorldState.BorderState.Rotation;
+            BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+            buildLevel.ShowBorders();
+        }
         if (WorldState.gameState == WorldState.GameState.Game)
         {
             rotate_right = true;
@@ -350,6 +365,9 @@ public class ClickHandler : MonoBehaviour
 
     public void OnPointerUp_RotateRight()
     {
+        WorldState.RightBorderState = WorldState.BorderState.Neutral;
+        BuildLevel buildLevel = Camera.main.GetComponent<BuildLevel>();
+        buildLevel.ShowBorders();
         rotate_right = false;
     }
 
