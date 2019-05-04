@@ -442,6 +442,7 @@ public class ClickHandler : MonoBehaviour
 
     public void UpdateLevelNumber()
     {
+        PlayerPrefs.SetInt("SelectedLevel", WorldState.current_level);
         SetDigit("DigitRight", WorldState.current_level % 10);
         SetDigit("DigitLeft", WorldState.current_level / 10);
     }
