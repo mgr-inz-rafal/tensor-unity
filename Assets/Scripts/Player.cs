@@ -54,8 +54,31 @@ public class Player : MonoBehaviour
         }
     }
 
+    bool is_wall(byte b) {
+        return b == 1;
+    }
+
+    bool is_obstacle(byte b) {
+        return b == 131;
+    }
+
     bool obstacles_on_the_way(Move_Direction m)
     {
+        Tuple<int, int> modifier = get_player_position_modifiers(m);
+        //Debug.Log(modifier);
+        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+        px += modifier.Item1;
+        py += modifier.Item2;
+
+        //WorldState.virt[px, py] = 166;
+        //WorldState.debug_print_virtual_level();
+        byte at_location = WorldState.virt[px, py];
+        // Debug.Log("at_location = " + at_location);
+        return is_wall(at_location) || is_obstacle(at_location);
+
+        //return true;
+        /*
         Tuple<int, int> modifier = get_player_position_modifiers(m);
         int targetx = WorldState.current_player_pos.Item1 + modifier.Item1;
         int targety = WorldState.current_player_pos.Item2 + modifier.Item2;
@@ -69,6 +92,7 @@ public class Player : MonoBehaviour
             return false;
         }
         return true;
+        */
     }
 
     public void StepLeft()
@@ -81,6 +105,7 @@ public class Player : MonoBehaviour
 
         if (false == obstacles_on_the_way(Move_Direction.Left))
         {
+//            Debug.Log("No obstacles!");
             if (false == block_next_step)
             {
                 block_next_step = true;
@@ -88,7 +113,11 @@ public class Player : MonoBehaviour
                 DoStep();
             }
         }
+        // else {
+        //     Debug.Log("Obstacles!");
+        // }
     }
+
     Tuple<int, int> get_player_position_modifiers(Move_Direction m)
     {
         return moves_definition[m][WorldState.current_angle];
@@ -234,8 +263,8 @@ public class Player : MonoBehaviour
         // TODO: RC: Must be reworked when "map_spot" approach to physics is removed.
         //       Code responsible for removing amygdalas, spawning elevator, etc. must be retained.
         return;
-        
-        Debug.Log("OnCollisionEnter2D");
+
+        // Debug.Log("OnCollisionEnter2D");
         foreach (GameObject amyg in BuildLevel.amygdalas_instances)
         {
             if (amyg.CompareTag("Obstacle"))
@@ -261,7 +290,7 @@ public class Player : MonoBehaviour
                         break;
                 }
 
-                Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
+                // Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
 
                 if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
                 {

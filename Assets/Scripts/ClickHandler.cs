@@ -78,6 +78,7 @@ public class ClickHandler : MonoBehaviour
 
     void Handle_ClickOnIntermissionScreen()
     {
+        WorldState.DisableGravity();
         WorldState.movement_warmup_counter = WorldState.MOVEMENT_WARMUP;
 
         Camera cameraObj = Camera.main;
@@ -116,6 +117,8 @@ public class ClickHandler : MonoBehaviour
                 return;
             }
             buildLevel.PerformBuild();
+            WorldState.build_virtual_level_representation();
+            WorldState.debug_print_virtual_level();
         }
     }
 
@@ -410,6 +413,7 @@ public class ClickHandler : MonoBehaviour
                 }
                 else
                 {
+                    Debug.Log("Sending StepLeft!");
                     playerScript.SendMessage("StepLeft");
                 }
                 break;
@@ -531,6 +535,7 @@ public class ClickHandler : MonoBehaviour
             WorldState.debug_print_virtual_level();
             WorldState.recalculate_amygdala_positions();
             //Debug.Log("Unlocking rotation");
+            WorldState.DisableGravity();
             WorldState.lock_rotation = false;
         }
     }
@@ -576,18 +581,23 @@ public class ClickHandler : MonoBehaviour
         {
             case 90:
                 Physics2D.gravity = new Vector3(GRAVITY_VALUE, 0.0f, 0.0f);
+                Debug.Log("Gravity On");
                 break;
             case 180:
                 Physics2D.gravity = new Vector3(0.0f, GRAVITY_VALUE, 0.0f);
+                Debug.Log("Gravity On");
                 break;
             case 270:
                 Physics2D.gravity = new Vector3(-GRAVITY_VALUE, 0.0f, 0.0f);
+                Debug.Log("Gravity On");
                 break;
             case 0:
                 Physics2D.gravity = new Vector3(0.0f, -GRAVITY_VALUE, 0.0f);
+                Debug.Log("Gravity On");
                 break;
         }
 
+        WorldState.EnableGravity();
         DealWithActorRotations();
         WorldState.rotation_direction = 0;
     }

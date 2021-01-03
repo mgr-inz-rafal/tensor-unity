@@ -62,6 +62,63 @@ public class WorldState : MonoBehaviour
 
     public static Vector3 last_amygdala_position;
 
+    public static void EnableGravity() {
+        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        {
+            Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
+            if (rigid == null)
+            {
+                return;
+            }
+            else
+            {
+                rigid.simulated = true;
+            }
+        }
+
+        Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
+        if (rigid_docent == null)
+        {
+            return;
+        }
+        else
+        {
+            rigid_docent.simulated = true;
+        }
+
+        Debug.Log("Gravity ON");
+    }
+
+    public static void DisableGravity() {
+        Debug.Log("Gravity OFF");
+        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        {
+            Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
+            if (rigid == null)
+            {
+                return;
+            }
+            else
+            {
+                rigid.simulated = false;
+            }
+        }
+
+        if (BuildLevel.docent_instance != null) {
+            Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
+            if (rigid_docent == null)
+            {
+                return;
+            }
+            else
+            {
+                rigid_docent.simulated = false;
+            }
+        }
+
+        //Physics2D.gravity = Vector2.zero;
+    }
+
     public static void Reset()
     {
         rotation_direction = 0;
@@ -70,6 +127,7 @@ public class WorldState : MonoBehaviour
         amygdala_map_positions.Clear();
         obstacle_map_positions.Clear();
         Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
+        Debug.Log("Gravity On");
     }
 
     public static int DoLevelDown()
@@ -93,6 +151,7 @@ public class WorldState : MonoBehaviour
     }
 
     public static void build_virtual_level_representation() {
+        WorldState.DisableGravity();
         for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)
         {
             for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
@@ -112,6 +171,16 @@ public class WorldState : MonoBehaviour
                 virt[x, y] = 131; // TODO: RC: or 132
             }
             amyg.transform.position = new Vector3(x, y, 0);
+            Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
+            if (rigid == null)
+            {
+                return;
+            }
+            else
+            {
+                Debug.Log("Set to zero");
+                //rigid.velocity = Vector2.zero;
+            }
         }
 
         foreach (GameObject wall in BuildLevel.wall_instances)
@@ -126,9 +195,19 @@ public class WorldState : MonoBehaviour
         var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
         virt[px, py] = 200;
         BuildLevel.docent_instance.transform.position = new Vector3(px, py, 0);
+            Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
+            if (rigid_docent == null)
+            {
+                return;
+            }
+            else
+            {
+                rigid_docent.simulated = false;
+            }
     }
 
     public static void debug_print_virtual_level() {
+        WorldState.DisableGravity();
         string lev = System.Environment.NewLine;
         Debug.Log("");
         Debug.Log("---");
@@ -142,6 +221,9 @@ public class WorldState : MonoBehaviour
                         break;
                     case 131:
                         lev += "O";
+                        break;
+                    case 166:
+                        lev += "?";
                         break;
                     case 0:
                         lev += "  ";
@@ -173,7 +255,7 @@ public class WorldState : MonoBehaviour
                 {
                     if (levelmap[j, i] == 2)
                     {
-                        Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
+                        // Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
                     }
                     levelmap[j, i] = 0;
                 }
