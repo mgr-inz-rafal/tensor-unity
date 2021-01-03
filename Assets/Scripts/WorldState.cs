@@ -111,6 +111,7 @@ public class WorldState : MonoBehaviour
             else {
                 virt[x, y] = 131; // TODO: RC: or 132
             }
+            amyg.transform.position = new Vector3(x, y, 0);
         }
 
         foreach (GameObject wall in BuildLevel.wall_instances)
@@ -118,11 +119,13 @@ public class WorldState : MonoBehaviour
             var x = (int)System.Math.Round(wall.transform.position.x);
             var y = (int)System.Math.Round(wall.transform.position.y);
             virt[x, y] = 1;
+            wall.transform.position = new Vector3(x, y, 0);
         }
 
         var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
         var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
         virt[px, py] = 200;
+        BuildLevel.docent_instance.transform.position = new Vector3(px, py, 0);
     }
 
     public static void debug_print_virtual_level() {
@@ -141,7 +144,7 @@ public class WorldState : MonoBehaviour
                         lev += "O";
                         break;
                     case 0:
-                        lev += "   ";
+                        lev += "  ";
                         break;
                     case 200:
                         lev += "P";
