@@ -173,8 +173,9 @@ public class BuildLevel : MonoBehaviour
             {
                 if (mapSpotsInstantiated == false)
                 {
-                    GameObject spot = Instantiate(location_spot, new Vector3(j, i, 0), Quaternion.identity);
-                    map_spots[spot.GetInstanceID()] = (j, i);
+                    // TODO: RC: Abandon the "map_spot" approach to physics
+                    //GameObject spot = Instantiate(location_spot, new Vector3(j, i, 0), Quaternion.identity);
+                    //map_spots[spot.GetInstanceID()] = (j, i);
                 }
 
                 switch (WorldState.levelmap[j, i])
@@ -189,7 +190,7 @@ public class BuildLevel : MonoBehaviour
                         SpriteRenderer amygdala_renderer = amygdala_instance.GetComponent<SpriteRenderer>();
                         amygdala_renderer.sprite = Resources.Load<Sprite>("Amygdalas/amygdala" + amygdala_number);
 
-                        //Debug.Log("Spawning Amygdala with ID=" + amygdala_instance.GetInstanceID());
+                        //Debug.Log("Spawning Amygdala at " + j + "," + i);
                         amygdalas_instances.Add(amygdala_instance);
                         break;
                     case 1:

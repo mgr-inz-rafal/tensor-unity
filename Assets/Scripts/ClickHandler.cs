@@ -527,6 +527,8 @@ public class ClickHandler : MonoBehaviour
 
         if (DocentNotMoving() && AmygdalasNotMoving())
         {
+            WorldState.build_virtual_level_representation();
+            WorldState.debug_print_virtual_level();
             WorldState.recalculate_amygdala_positions();
             //Debug.Log("Unlocking rotation");
             WorldState.lock_rotation = false;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
+    public static int global_debug_frames = 0;
+
     public static int movement_warmup_counter = 0;
     public const int MOVEMENT_WARMUP = 50;
 
@@ -50,6 +52,7 @@ public class WorldState : MonoBehaviour
     public static GameState gameState = GameState.SplashScreen;
 
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
+    public static byte[,] virt = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
     public static int rotation_direction = 0;
     public static int current_angle = 0;
     public static bool lock_rotation = false;
@@ -89,15 +92,86 @@ public class WorldState : MonoBehaviour
         return current_level;
     }
 
+    public static void build_virtual_level_representation() {
+        for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)
+        {
+            for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
+            {
+                virt[j, i] = 0;
+            }
+        }
+
+        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        {
+            var x = (int)System.Math.Round(amyg.transform.position.x);
+            var y = (int)System.Math.Round(amyg.transform.position.y);
+            if (amyg.CompareTag("Amygdala")) {
+                virt[x, y] = 2;
+            }
+            else {
+                virt[x, y] = 131; // TODO: RC: or 132
+            }
+        }
+
+        foreach (GameObject wall in BuildLevel.wall_instances)
+        {
+            var x = (int)System.Math.Round(wall.transform.position.x);
+            var y = (int)System.Math.Round(wall.transform.position.y);
+            virt[x, y] = 1;
+        }
+
+        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+        virt[px, py] = 200;
+    }
+
+    public static void debug_print_virtual_level() {
+        string lev = System.Environment.NewLine;
+        Debug.Log("");
+        Debug.Log("---");
+        for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)
+        {
+            for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
+            {
+                switch (virt[j,i]) {
+                    case 2: // Amygdala
+                        lev += "$";
+                        break;
+                    case 131:
+                        lev += "O";
+                        break;
+                    case 0:
+                        lev += "   ";
+                        break;
+                    case 200:
+                        lev += "P";
+                        break;
+                    default:
+                        lev += "#";
+                        break;
+                }
+            }
+            lev += System.Environment.NewLine;
+        }
+        Debug.Log(lev);
+        Debug.Log("---");
+    }
+
     public static void recalculate_amygdala_positions()
     {
+        // TODO: RC: Not needed with the new psychics approach?
+        return;
+
         for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)
         {
             for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
             {
                 if ((levelmap[j, i] == 2) || (levelmap[j, i] == 131) || (levelmap[j, i] == 132)) // Amygdala or Obstacle
                 {
-                    //Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
+                    if (levelmap[j, i] == 2)
+                    {
+                        Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
+                    }
                     levelmap[j, i] = 0;
                 }
             }
@@ -118,6 +192,25 @@ public class WorldState : MonoBehaviour
 
     void Update()
     {
+        /*
+        WorldState.global_debug_frames++;
+        if (WorldState.global_debug_frames == 15) {
+            for (var i=0; i < BuildLevel.amygdalas_instances.Count; ++i)
+            {
+                GameObject amyg = BuildLevel.amygdalas_instances[i];
+                if (amyg.CompareTag("Obstacle"))
+                {
+                    // This is not really an amygdala
+                    continue;
+                }
+                var x = amyg.transform.position.x;
+                var y = amyg.transform.position.y;
+                Debug.Log(i + ": (" + x + " / " + y + ")");
+            }
+            WorldState.global_debug_frames = 0;
+        }
+        */
+
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Elevator:

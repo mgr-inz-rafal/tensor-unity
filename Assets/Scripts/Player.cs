@@ -231,6 +231,11 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        // TODO: RC: Must be reworked when "map_spot" approach to physics is removed.
+        //       Code responsible for removing amygdalas, spawning elevator, etc. must be retained.
+        return;
+        
+        Debug.Log("OnCollisionEnter2D");
         foreach (GameObject amyg in BuildLevel.amygdalas_instances)
         {
             if (amyg.CompareTag("Obstacle"))
@@ -256,7 +261,7 @@ public class Player : MonoBehaviour
                         break;
                 }
 
-                //Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
+                Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
 
                 if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
                 {
