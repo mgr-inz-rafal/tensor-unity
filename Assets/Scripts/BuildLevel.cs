@@ -64,6 +64,11 @@ public class BuildLevel : MonoBehaviour
         HideBorders();
     }
 
+    void Awake() {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+    }
+
     void HideBorders()
     {
         levelBorders.alpha = 0.0f;
