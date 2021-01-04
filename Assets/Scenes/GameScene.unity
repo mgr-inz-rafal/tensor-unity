@@ -379,7 +379,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 0
+          m_CallState: 2
   - eventID: 3
     callback:
       m_PersistentCalls:

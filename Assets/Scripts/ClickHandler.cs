@@ -78,7 +78,6 @@ public class ClickHandler : MonoBehaviour
 
     void Handle_ClickOnIntermissionScreen()
     {
-        WorldState.DisableGravity();
         WorldState.movement_warmup_counter = WorldState.MOVEMENT_WARMUP;
 
         Camera cameraObj = Camera.main;
@@ -117,6 +116,7 @@ public class ClickHandler : MonoBehaviour
                 return;
             }
             buildLevel.PerformBuild();
+            WorldState.DisableGravity();
             WorldState.build_virtual_level_representation();
             WorldState.debug_print_virtual_level();
         }
@@ -413,7 +413,6 @@ public class ClickHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Sending StepLeft!");
                     playerScript.SendMessage("StepLeft");
                 }
                 break;
@@ -519,6 +518,11 @@ public class ClickHandler : MonoBehaviour
 
     void UnlockRotation()
     {
+        if (WorldState.skip_check_docent_moving > 0) {
+            --WorldState.skip_check_docent_moving;
+            return;
+        }
+
         if (!WorldState.lock_rotation)
         {
             return;
@@ -534,8 +538,6 @@ public class ClickHandler : MonoBehaviour
             WorldState.build_virtual_level_representation();
             WorldState.debug_print_virtual_level();
             WorldState.recalculate_amygdala_positions();
-            //Debug.Log("Unlocking rotation");
-            WorldState.DisableGravity();
             WorldState.lock_rotation = false;
         }
     }
@@ -581,19 +583,15 @@ public class ClickHandler : MonoBehaviour
         {
             case 90:
                 Physics2D.gravity = new Vector3(GRAVITY_VALUE, 0.0f, 0.0f);
-                Debug.Log("Gravity On");
                 break;
             case 180:
                 Physics2D.gravity = new Vector3(0.0f, GRAVITY_VALUE, 0.0f);
-                Debug.Log("Gravity On");
                 break;
             case 270:
                 Physics2D.gravity = new Vector3(-GRAVITY_VALUE, 0.0f, 0.0f);
-                Debug.Log("Gravity On");
                 break;
             case 0:
                 Physics2D.gravity = new Vector3(0.0f, -GRAVITY_VALUE, 0.0f);
-                Debug.Log("Gravity On");
                 break;
         }
 

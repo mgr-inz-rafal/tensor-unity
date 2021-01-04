@@ -17,6 +17,7 @@ public class WorldState : MonoBehaviour
     public const float ELEVATOR_POSITION_CHANGE = 0.20f;
 
     public static int total_amygdalas = 0;
+    public static int skip_check_docent_moving = 0;
 
     public enum BorderState
     {
@@ -171,16 +172,6 @@ public class WorldState : MonoBehaviour
                 virt[x, y] = 131; // TODO: RC: or 132
             }
             amyg.transform.position = new Vector3(x, y, 0);
-            Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
-            if (rigid == null)
-            {
-                return;
-            }
-            else
-            {
-                Debug.Log("Set to zero");
-                //rigid.velocity = Vector2.zero;
-            }
         }
 
         foreach (GameObject wall in BuildLevel.wall_instances)
@@ -195,19 +186,11 @@ public class WorldState : MonoBehaviour
         var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
         virt[px, py] = 200;
         BuildLevel.docent_instance.transform.position = new Vector3(px, py, 0);
-            Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
-            if (rigid_docent == null)
-            {
-                return;
-            }
-            else
-            {
-                rigid_docent.simulated = false;
-            }
     }
 
     public static void debug_print_virtual_level() {
-        WorldState.DisableGravity();
+        return;
+
         string lev = System.Environment.NewLine;
         Debug.Log("");
         Debug.Log("---");

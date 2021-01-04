@@ -45,6 +45,10 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
+*.exe
+*_Data
+MonoBleedingEdge
+UnityPlayer.dll
 
 # Crashlytics generated file
 Assets/StreamingAssets/crashlytics-build.properties
