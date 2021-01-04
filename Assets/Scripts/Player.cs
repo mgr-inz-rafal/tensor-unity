@@ -35,31 +35,35 @@ public class Player : MonoBehaviour
     int player_movement_count = 0;
     Tuple<float, float> player_movement_modifier = new Tuple<float, float>(0.0f, 0.0f);
 
-    public void StepRight()
-    {
-        if (WorldState.lock_rotation)
-        {
-            // Waiting until all rigid bodies settle on the ground
-            return;
-        }
-
-        if (false == obstacles_on_the_way(Move_Direction.Right))
-        {
-            if (false == block_next_step)
-            {
-                block_next_step = true;
-                face_right();
-                DoStep();
-            }
-        }
-    }
-
     bool is_wall(byte b) {
         return b == 1;
     }
 
     bool is_obstacle(byte b) {
         return b == 131;
+    }
+
+    bool is_amygdala(byte b) {
+        return b == 2;
+    }
+
+    Tuple<bool, int, int> amygdala_on_the_way(Move_Direction m)
+    {
+        Tuple<int, int> modifier = get_player_position_modifiers(m);
+        //Debug.Log(modifier);
+        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+        px += modifier.Item1;
+        py += modifier.Item2;
+
+        //WorldState.virt[px, py] = 166;
+        //WorldState.debug_print_virtual_level();
+        byte at_location = WorldState.virt[px, py];
+        // Debug.Log("at_location = " + at_location);
+        if (is_amygdala(at_location)) {
+            return new Tuple<bool, int, int>(true, px, py);
+        }
+        return new Tuple<bool, int, int>(false, -1, -1);
     }
 
     bool obstacles_on_the_way(Move_Direction m)
@@ -76,23 +80,30 @@ public class Player : MonoBehaviour
         byte at_location = WorldState.virt[px, py];
         // Debug.Log("at_location = " + at_location);
         return is_wall(at_location) || is_obstacle(at_location);
+    }
 
-        //return true;
-        /*
-        Tuple<int, int> modifier = get_player_position_modifiers(m);
-        int targetx = WorldState.current_player_pos.Item1 + modifier.Item1;
-        int targety = WorldState.current_player_pos.Item2 + modifier.Item2;
-        //Debug.Log("My pos: (" + WorldState.current_player_pos.Item1 + "," + WorldState.current_player_pos.Item2 + ")  --- Wanna go to: (" + targetx + "," + targety + ")");
-
-        byte item = WorldState.levelmap[targetx, targety];
-        //Debug.Log("Item at target: " + item + " --- " + ((item != 1) && (item != 2)));
-
-        if ((item == 0) || (item == 1) || (item == 2))
+    public void StepRight()
+    {
+        if (WorldState.lock_rotation)
         {
-            return false;
+            // Waiting until all rigid bodies settle on the ground
+            return;
         }
-        return true;
-        */
+
+        if (false == obstacles_on_the_way(Move_Direction.Right))
+        {
+            var amyg_in_way = amygdala_on_the_way(Move_Direction.Right);
+            if (true == amyg_in_way.Item1) {
+                Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
+                WorldState.destroy_amygdala_at(amyg_in_way.Item2, amyg_in_way.Item3);
+            }
+            if (false == block_next_step)
+            {
+                block_next_step = true;
+                face_right();
+                DoStep();
+            }
+        }
     }
 
     public void StepLeft()
@@ -105,7 +116,11 @@ public class Player : MonoBehaviour
 
         if (false == obstacles_on_the_way(Move_Direction.Left))
         {
-//            Debug.Log("No obstacles!");
+            var amyg_in_way = amygdala_on_the_way(Move_Direction.Left);
+            if (true == amyg_in_way.Item1) {
+                Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
+                WorldState.destroy_amygdala_at(amyg_in_way.Item2, amyg_in_way.Item3);
+            }
             if (false == block_next_step)
             {
                 block_next_step = true;
@@ -113,9 +128,6 @@ public class Player : MonoBehaviour
                 DoStep();
             }
         }
-        // else {
-        //     Debug.Log("Obstacles!");
-        // }
     }
 
     Tuple<int, int> get_player_position_modifiers(Move_Direction m)
@@ -192,7 +204,7 @@ public class Player : MonoBehaviour
                 block_next_step = false;
                 WorldState.lock_rotation = true;
                 WorldState.EnableGravity();
-                WorldState.skip_check_docent_moving = 10;
+                WorldState.skip_check_docent_moving = 2;
             }
         }
 

@@ -87,11 +87,11 @@ public class WorldState : MonoBehaviour
             rigid_docent.simulated = true;
         }
 
-        Debug.Log("Gravity ON");
+        //Debug.Log("Gravity ON");
     }
 
     public static void DisableGravity() {
-        Debug.Log("Gravity OFF");
+        //Debug.Log("Gravity OFF");
         foreach (GameObject amyg in BuildLevel.amygdalas_instances)
         {
             Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
@@ -128,7 +128,7 @@ public class WorldState : MonoBehaviour
         amygdala_map_positions.Clear();
         obstacle_map_positions.Clear();
         Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
-        Debug.Log("Gravity On");
+        //Debug.Log("Gravity On");
     }
 
     public static int DoLevelDown()
@@ -149,6 +149,21 @@ public class WorldState : MonoBehaviour
             current_level = MAX_LEVEL_NUMBER;
         }
         return current_level;
+    }
+
+    public static void destroy_amygdala_at(int x, int y) {
+        foreach (GameObject amyg in BuildLevel.amygdalas_instances) {
+            float ax = amyg.transform.position.x;
+            float ay = amyg.transform.position.y;
+            float mx = x;
+            float my = y;
+
+            if ((System.Math.Abs(ax - mx) < 0.1f) && (System.Math.Abs(ay - my) < 0.1f)) {
+                    BuildLevel.amygdalas_instances.Remove(amyg);
+                    Destroy(amyg, 0.0f);
+                    break;                
+            }
+        }
     }
 
     public static void build_virtual_level_representation() {
