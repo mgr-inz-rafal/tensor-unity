@@ -49,6 +49,10 @@ public class Player : MonoBehaviour
 
     Tuple<bool, int, int> amygdala_on_the_way(Move_Direction m)
     {
+        if (player_movement_count != 0) {
+            return new Tuple<bool, int, int>(false, -1, -1);
+        }
+
         Tuple<int, int> modifier = get_player_position_modifiers(m);
         //Debug.Log(modifier);
         var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
