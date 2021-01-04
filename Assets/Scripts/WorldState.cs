@@ -161,8 +161,44 @@ public class WorldState : MonoBehaviour
             if ((System.Math.Abs(ax - mx) < 0.1f) && (System.Math.Abs(ay - my) < 0.1f)) {
                     BuildLevel.amygdalas_instances.Remove(amyg);
                     Destroy(amyg, 0.0f);
+                    --WorldState.total_amygdalas;
                     break;                
             }
+        }
+        check_level_finished();
+    }
+
+    public static void check_level_finished() {
+        if (WorldState.total_amygdalas == 0)
+        {
+            Camera cameraObj = Camera.main;
+            if (cameraObj == null)
+            {
+                //Debug.Log("Unable to access main Camera");
+                return;
+            }
+            BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
+            if (buildLevel == null)
+            {
+                //Debug.Log("Unable to access BuildLevel");
+                return;
+            }
+            buildLevel.SendMessage("SpawnElevator");
+            ++WorldState.current_level;
+
+            GameObject world = GameObject.FindWithTag("WorldMarker");
+            if (world == null)
+            {
+                //Debug.Log("Unable to access world");
+            }
+            ClickHandler ch = world.GetComponent<ClickHandler>();
+            if (world == null)
+            {
+                //Debug.Log("Unable to access click handler");
+            }
+            ch.SendMessage("UpdateLevelNumber");
+
+            WorldState.gameState = WorldState.GameState.Elevator;
         }
     }
 
