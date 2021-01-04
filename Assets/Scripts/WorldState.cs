@@ -18,6 +18,8 @@ public class WorldState : MonoBehaviour
 
     public static int total_amygdalas = 0;
     public static int skip_check_docent_moving = 0;
+    public static int skip_check_level_finished = 0;
+    public static bool should_check_level_finished = false;
 
     public enum BorderState
     {
@@ -159,16 +161,24 @@ public class WorldState : MonoBehaviour
             float my = y;
 
             if ((System.Math.Abs(ax - mx) < 0.1f) && (System.Math.Abs(ay - my) < 0.1f)) {
+                    WorldState.last_amygdala_position = amyg.transform.position;
                     BuildLevel.amygdalas_instances.Remove(amyg);
                     Destroy(amyg, 0.0f);
                     --WorldState.total_amygdalas;
+                    var player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                    player.play_pickup_sound();
+                    skip_check_level_finished = 8;
+                    should_check_level_finished = true;
                     break;                
             }
         }
-        check_level_finished();
-    }
+   }
 
     public static void check_level_finished() {
+        if (skip_check_level_finished > 0) {
+            --skip_check_level_finished;
+            return;
+        }
         if (WorldState.total_amygdalas == 0)
         {
             Camera cameraObj = Camera.main;
@@ -332,6 +342,11 @@ public class WorldState : MonoBehaviour
 
         switch (WorldState.gameState)
         {
+            case WorldState.GameState.Game:
+                if (should_check_level_finished) {
+                    check_level_finished();
+                }
+                break;
             case WorldState.GameState.Elevator:
                 switch (WorldState.current_angle)
                 {

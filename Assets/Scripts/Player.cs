@@ -272,6 +272,24 @@ public class Player : MonoBehaviour
         moves_definition.Add(Move_Direction.Right, moves_right);
     }
 
+    public void play_pickup_sound() {
+        if (WorldState.total_amygdalas == 0)
+        {
+            GetComponent<AudioSource>().PlayOneShot(level_up, 1.0f);
+        }
+        else
+        {
+            if (rnd.Next(1, 3) == 1)
+            {
+                GetComponent<AudioSource>().PlayOneShot(pickup1, 1.0f);
+            }
+            else
+            {
+                GetComponent<AudioSource>().PlayOneShot(pickup2, 1.0f);
+            }
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         // TODO: RC: Must be reworked when "map_spot" approach to physics is removed.
