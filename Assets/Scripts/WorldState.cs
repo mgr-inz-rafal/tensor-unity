@@ -92,6 +92,95 @@ public class WorldState : MonoBehaviour
         //Debug.Log("Gravity ON");
     }
 
+    // Enables gravity only for objects that have collision
+    // probability after Docent made a step, i.e.:
+    // - objects below current docent position (he could have stepped on an object and shouldn't fall through)
+    // - objects above previous docent position (he could have stepped away and objects on his head should fall) <-- TODO
+    public static void EnableGravitySelective() {
+        Debug.Log("EnableGravitySelective");
+        Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
+        if (rigid_docent == null) {
+            return;
+        }
+        else
+        {
+            rigid_docent.simulated = true;
+        }
+
+        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+
+        // TODO: Each call to `EnableAmygdalaAt` traverses through all amygdalas.
+        // Refactor this: precalc amygdalas to enable and
+        // then go once through the list.
+        switch (WorldState.current_angle)
+        {
+            case 90:
+                {
+                    var x = px+1;
+                    var y = py;
+                    do 
+                    {
+                        WorldState.virt[x, y] = 254;
+                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+                break;
+            case 270:
+                {
+                    var x = px-1;
+                    var y = py;
+                    do 
+                    {
+                        EnableAmygdalaAt(x, y);
+                    } while(--x > 0);
+                }
+                break;
+            case 0:
+                {
+                    var x = px;
+                    var y = py-1;
+                    do 
+                    {
+                        EnableAmygdalaAt(x, y);
+                    } while(--y > 0);
+                }
+                break;
+            case 180:
+                {
+                    var x = px;
+                    var y = py+1;
+                    do 
+                    {
+                        Debug.Log(x + "/" + y);
+                        WorldState.virt[x, y] = 254;
+                        EnableAmygdalaAt(x, y);
+                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                    debug_print_virtual_level();
+                }
+                break;
+        }
+    }
+
+    public static void EnableAmygdalaAt(int x, int y) {
+        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        {
+            float ax = amyg.transform.position.x;
+            float ay = amyg.transform.position.y;
+
+            if ((System.Math.Abs(ax - x) < 0.1f) && (System.Math.Abs(ay - y) < 0.1f)) {
+                Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
+                if (rigid == null)
+                {
+                    return;
+                }
+                else
+                {
+                    rigid.simulated = true;
+                }
+            }
+        }
+    }
+
     public static void DisableGravity() {
         //Debug.Log("Gravity OFF");
         foreach (GameObject amyg in BuildLevel.amygdalas_instances)
@@ -250,8 +339,6 @@ public class WorldState : MonoBehaviour
     }
 
     public static void debug_print_virtual_level() {
-        return;
-
         string lev = System.Environment.NewLine;
         Debug.Log("");
         Debug.Log("---");
@@ -270,10 +357,13 @@ public class WorldState : MonoBehaviour
                         lev += "?";
                         break;
                     case 0:
-                        lev += "  ";
+                        lev += " ";
                         break;
                     case 200:
                         lev += "P";
+                        break;
+                    case 254:
+                        lev += "@";
                         break;
                     default:
                         lev += "#";
