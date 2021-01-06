@@ -8,7 +8,6 @@ public class BuildLevel : MonoBehaviour
 
     public CanvasGroup levelBorders;
 
-    public const int LEVEL_DIMENSION = 12;
     public const int AMYGDALA_SPECIES_COUNT = 8;
 
     public GameObject brick05;
@@ -123,17 +122,17 @@ public class BuildLevel : MonoBehaviour
                 pos.y = -3;
                 break;
             case 180:
-                pos.y = LEVEL_DIMENSION - 1 + 3;
+                pos.y = Consts.LEVEL_DIMENSION - 1 + 3;
                 break;
             case 90:
-                pos.x = LEVEL_DIMENSION - 1 + 3;
+                pos.x = Consts.LEVEL_DIMENSION - 1 + 3;
                 break;
             case 270:
                 pos.x = -3;
                 break;
         }
         elevatorInstance = Instantiate(elevator, pos, Quaternion.identity);
-        Counters.elevatorFrames = Consts.TOTAL_elevatorFrames;
+        Counters.elevatorFrames = Consts.TOTAL_ELEVATOR_FRAMES;
         switch (WorldState.currentAngle)
         {
             case 90:
@@ -157,18 +156,18 @@ public class BuildLevel : MonoBehaviour
         {
             return;
         }
-        for (int i = 0; i < LEVEL_DIMENSION; ++i)
+        for (int i = 0; i < Consts.LEVEL_DIMENSION; ++i)
         {
-            for (int j = 0; j < LEVEL_DIMENSION; ++j)
+            for (int j = 0; j < Consts.LEVEL_DIMENSION; ++j)
             {
-                WorldState.levelmap[j, (LEVEL_DIMENSION - 1) - i] = bindata.bytes[LEVEL_DIMENSION * i + j];
+                WorldState.levelmap[j, (Consts.LEVEL_DIMENSION - 1) - i] = bindata.bytes[Consts.LEVEL_DIMENSION * i + j];
             }
         }
 
         int amygdala_number = rng.Next(1, AMYGDALA_SPECIES_COUNT + 1);
-        for (int i = 0; i < LEVEL_DIMENSION; ++i)
+        for (int i = 0; i < Consts.LEVEL_DIMENSION; ++i)
         {
-            for (int j = 0; j < LEVEL_DIMENSION; ++j)
+            for (int j = 0; j < Consts.LEVEL_DIMENSION; ++j)
             {
                 if (mapSpotsInstantiated == false)
                 {

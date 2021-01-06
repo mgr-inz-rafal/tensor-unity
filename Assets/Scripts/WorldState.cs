@@ -47,13 +47,17 @@ public class WorldState : MonoBehaviour
     };
     public static GameState gameState = GameState.SplashScreen;
 
-    public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
-    public static byte[,] virt = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
+    public static byte[,] levelmap = new byte[Consts.LEVEL_DIMENSION, Consts.LEVEL_DIMENSION];
+    public static byte[,] virt = new byte[Consts.LEVEL_DIMENSION, Consts.LEVEL_DIMENSION];
     public static int rotationDirection = 0;
     public static int currentAngle = 0;
     public static bool lockRotation = false;
     public static Dictionary<int, (int, int)> amygdalaMapPositions = new Dictionary<int, (int, int)>();
     public static Dictionary<int, (int, int)> obstacleMapPositions = new Dictionary<int, (int, int)>();
+
+    // TODO: Extract to separate component
+    static byte[] amygdalasToEnable = new byte[Consts.MAXIMUM_AMYGDALAS_PER_LEVEL];
+    static int amygdalasToEnableIndex;
 
     public static Vector3 lastAmygdalaPosition;
 
@@ -103,9 +107,7 @@ public class WorldState : MonoBehaviour
         var px = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.x);
         var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
 
-        // TODO: Each call to `EnableAmygdalaAt` traverses through all amygdalas.
-        // Refactor this: precalc amygdalas to enable and
-        // then go once through the list.
+        amygdalasToEnableIndex = 0;
         switch (WorldState.currentAngle)
         {
             case 90:
@@ -118,8 +120,8 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
-                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                        QueueAmygdalaToEnable(x, y);
+                    } while(++x < (Consts.LEVEL_DIMENSION - 1));
                 }
 
                 // Below old docent position
@@ -138,8 +140,8 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
-                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                        QueueAmygdalaToEnable(x, y);
+                    } while(++x < (Consts.LEVEL_DIMENSION - 1));
                 }
 
                 // Below old docent position
@@ -158,7 +160,7 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
+                        QueueAmygdalaToEnable(x, y);
                     } while(--x > 0);
                 }
                 break;
@@ -172,7 +174,7 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
+                        QueueAmygdalaToEnable(x, y);
                     } while(--x > 0);
                 }
 
@@ -192,7 +194,7 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
+                        QueueAmygdalaToEnable(x, y);
                     } while(--x > 0);
                 }
 
@@ -212,8 +214,8 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
-                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                        QueueAmygdalaToEnable(x, y);
+                    } while(++x < (Consts.LEVEL_DIMENSION - 1));
                 }
                 break;
             case 0:
@@ -226,7 +228,7 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
+                        QueueAmygdalaToEnable(x, y);
                     } while(--y > 0);
                 }
 
@@ -246,9 +248,8 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
+                        QueueAmygdalaToEnable(x, y);
                     } while(--y > 0);
-                    debug_print_virtual_level();
                 }
 
                 // Above old docent position
@@ -267,8 +268,8 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
-                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                        QueueAmygdalaToEnable(x, y);
+                    } while(++y < (Consts.LEVEL_DIMENSION - 1));
                 }
                 break;
             case 180:
@@ -281,8 +282,8 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
-                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                        QueueAmygdalaToEnable(x, y);
+                    } while(++y < (Consts.LEVEL_DIMENSION - 1));
                 }
 
                 // Below old docent position
@@ -301,8 +302,8 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
-                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                        QueueAmygdalaToEnable(x, y);
+                    } while(++y < (Consts.LEVEL_DIMENSION - 1));
                 }
 
                 // Above old docent position
@@ -321,18 +322,20 @@ public class WorldState : MonoBehaviour
                         if (IsWallAt(x, y)) {
                             break;
                         }
-                        EnableAmygdalaAt(x, y);
+                        QueueAmygdalaToEnable(x, y);
                     } while(--y > 0);
                 }
                 break;
         }
+
+        EnableQueuedAmygdalas();
     }
 
-    public static bool IsWallAt(int x, int y) {
+    static bool IsWallAt(int x, int y) {
         return WorldState.virt[x, y] == 1;
     }
 
-    public static void EnableAmygdalaAt(int x, int y) {
+    static void EnableAmygdalaAt(int x, int y) {
         foreach (GameObject amyg in BuildLevel.amygdalaInstances)
         {
             float ax = amyg.transform.position.x;
@@ -349,6 +352,17 @@ public class WorldState : MonoBehaviour
                     rigid.simulated = true;
                 }
             }
+        }
+    }
+
+    public static void QueueAmygdalaToEnable(int x, int y) {
+        amygdalasToEnable[amygdalasToEnableIndex++] = BitCoordinates.ToBits(x, y);
+    }
+
+    static void EnableQueuedAmygdalas() {
+        while(--amygdalasToEnableIndex > -1) {
+            (int x, int y) = BitCoordinates.FromBits(amygdalasToEnable[amygdalasToEnableIndex]);
+            EnableAmygdalaAt(x, y);
         }
     }
 
@@ -472,9 +486,9 @@ public class WorldState : MonoBehaviour
 
     public static void build_virtual_level_representation() {
         WorldState.DisableGravity();
-        for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)
+        for (int i = 0; i < Consts.LEVEL_DIMENSION; ++i)
         {
-            for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
+            for (int j = 0; j < Consts.LEVEL_DIMENSION; ++j)
             {
                 virt[j, i] = 0;
             }
@@ -513,9 +527,9 @@ public class WorldState : MonoBehaviour
         string lev = System.Environment.NewLine;
         Debug.Log("");
         Debug.Log("---");
-        for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)
+        for (int i = 0; i < Consts.LEVEL_DIMENSION; ++i)
         {
-            for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
+            for (int j = 0; j < Consts.LEVEL_DIMENSION; ++j)
             {
                 switch (virt[j,i]) {
                     case 2: // Amygdala
