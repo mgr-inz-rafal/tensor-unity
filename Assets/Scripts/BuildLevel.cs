@@ -152,7 +152,7 @@ public class BuildLevel : MonoBehaviour
         ShowBorders();
 
         WorldState.totalAmygdalas = 0;
-        TextAsset bindata = Resources.Load("Maps/v" + WorldState.currentLevel) as TextAsset;
+        TextAsset bindata = Resources.Load("Maps/v" + WorldState.currentLevel.Get()) as TextAsset;
         if (bindata == null)
         {
             return;

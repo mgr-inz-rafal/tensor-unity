@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
-    public static int currentLevel = 1;
+    public static LevelCounter currentLevel = new LevelCounter();
 
     public const float ELEVATOR_positionChange = 0.20f;
 
@@ -56,7 +56,7 @@ public class WorldState : MonoBehaviour
     public static Dictionary<int, (int, int)> obstacleMapPositions = new Dictionary<int, (int, int)>();
 
     // TODO: Extract to separate component
-    static byte[] amygdalasToEnable = new byte[Consts.MAXIMUM_AMYGDALAS_PER_LEVEL];
+    static byte[] amygdalasToEnable = new byte[Consts.MAXIMUM_AMYGDALAS_TO_ACTIVATE];
     static int amygdalasToEnableIndex;
 
     public static Vector3 lastAmygdalaPosition;
@@ -407,22 +407,14 @@ public class WorldState : MonoBehaviour
 
     public static int DoLevelDown()
     {
-        currentLevel--;
-        if (0 == currentLevel)
-        {
-            currentLevel = Consts.MAX_LEVEL_NUMBER;
-        }
-        return currentLevel;
+        currentLevel.Decrease();
+        return currentLevel.Get();
     }
 
     public static int DoLevelUp()
     {
-        currentLevel++;
-        if (currentLevel == Consts.MAX_LEVEL_NUMBER + 1)
-        {
-            currentLevel = 1;
-        }
-        return currentLevel;
+        currentLevel.Increase();
+        return currentLevel.Get();
     }
 
     public static void destroy_amygdala_at(int x, int y) {
@@ -466,7 +458,7 @@ public class WorldState : MonoBehaviour
                 return;
             }
             buildLevel.SendMessage("SpawnElevator");
-            ++WorldState.currentLevel;
+            currentLevel.Increase();
 
             GameObject world = GameObject.FindWithTag("WorldMarker");
             if (world == null)

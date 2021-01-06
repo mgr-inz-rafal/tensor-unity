@@ -896,7 +896,7 @@ MonoBehaviour:
   pieczarax_instance: {fileID: 0}
   final_docent: {fileID: 824064895626499784, guid: 73e205077ab0e1a49aeca2c2d72efec4,
     type: 3}
-  final_docent_instance: {fileID: 0}
+  final_docentInstance: {fileID: 0}
   title01_top: {fileID: 1881199626163372085, guid: 8090cbd94bda00142a01fe6664dcea5d,
     type: 3}
   title01_bottom: {fileID: 4342992789928464506, guid: 3d96e9d93842ceb4f9d8ac40a361633e,

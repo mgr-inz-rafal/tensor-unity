@@ -345,7 +345,7 @@ public class Player : MonoBehaviour
                             return;
                         }
                         buildLevel.SendMessage("SpawnElevator");
-                        ++WorldState.currentLevel;
+                        WorldState.currentLevel.Increase();
 
                         GameObject world = GameObject.FindWithTag("WorldMarker");
                         if (world == null)

@@ -94,9 +94,9 @@ public class ClickHandler : MonoBehaviour
         }
         intermission.SendMessage("PerformDestroyIntermission");
 
-        if (WorldState.currentLevel == Consts.MAX_LEVEL_NUMBER + 1)
+        if (WorldState.currentLevel.ReachedFinal())
         {
-            WorldState.currentLevel = 1;
+            WorldState.currentLevel.Set(1);
             BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
             if (buildMenu == null)
             {
@@ -130,7 +130,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
+                    if (!WorldState.currentLevel.IsLast())
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -221,7 +221,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
+                    if (!WorldState.currentLevel.IsLast())
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -254,7 +254,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
+                    if (!WorldState.currentLevel.IsLast())
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -388,7 +388,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
+                    if (!WorldState.currentLevel.IsLast())
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -451,23 +451,21 @@ public class ClickHandler : MonoBehaviour
 
     public void UpdateLevelNumber()
     {
-        PlayerPrefs.SetInt("SelectedLevel", WorldState.currentLevel);
-        SetDigit("DigitRight", WorldState.currentLevel % 10);
-        SetDigit("DigitLeft", WorldState.currentLevel / 10);
+        PlayerPrefs.SetInt("SelectedLevel", WorldState.currentLevel.Get());
+        SetDigit("DigitRight", WorldState.currentLevel.Get() % 10);
+        SetDigit("DigitLeft", WorldState.currentLevel.Get() / 10);
     }
 
     public void OnClick_LevelDown()
     {
         int currentLevel = WorldState.DoLevelDown();
         UpdateLevelNumber();
-        Debug.Log("Level down. Current level=" + currentLevel);
     }
 
     public void OnClick_LevelUp()
     {
         int currentLevel = WorldState.DoLevelUp();
         UpdateLevelNumber();
-        Debug.Log("Level up. Current level=" + currentLevel);
     }
 
     void AdjustRotation()
@@ -597,7 +595,6 @@ public class ClickHandler : MonoBehaviour
 
     void DoCameraRotation()
     {
-        Debug.Log("Setting at index " + WorldState.cameraDistanceIndex);
         var pos = Camera.main.transform.position;
         pos.z = Consts.CAMERA_DISTANCE_TABLE[WorldState.cameraDistanceIndex++];
         Camera.main.transform.position = pos;

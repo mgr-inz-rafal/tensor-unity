@@ -25,23 +25,18 @@ public class Intermission : MonoBehaviour
     public GameObject cave_number_instance;
     public GameObject title_top_instance, title_bottom_instance;
 
-    bool isOnFinalLevel()
-    {
-        return (WorldState.currentLevel == Consts.MAX_LEVEL_NUMBER + 1);
-    }
-
     public void PerformBuildIntermission()
     {
         WorldState.Reset();
         Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.currentAngle));
         flora_instance = Instantiate(
-            isOnFinalLevel() ? flora_final : flora,
+            WorldState.currentLevel.ReachedFinal() ? flora_final : flora,
             new Vector3(
                 Consts.LEVEL_DIMENSION + (Consts.LEVEL_DIMENSION >> 1) + 1.0f + HORIZONTAL_OFFSET,
                 Consts.LEVEL_DIMENSION - (Consts.LEVEL_DIMENSION >> 1) - 0.5f, 1),
                 Quaternion.identity);
 
-        if (isOnFinalLevel())
+        if (WorldState.currentLevel.ReachedFinal())
         {
             final_docentInstance = Instantiate(final_docent, new Vector3(5.68f, -10.0f, 1), Quaternion.identity);
         }
@@ -52,21 +47,21 @@ public class Intermission : MonoBehaviour
 
             cave_number_instance = Instantiate(no01, new Vector3(-18.0f, 6.7f, 1), Quaternion.identity);
             SpriteRenderer cave_number_renderer = cave_number_instance.GetComponent<SpriteRenderer>();
-            cave_number_renderer.sprite = Resources.Load<Sprite>("MapNumbers/no" + WorldState.currentLevel);
+            cave_number_renderer.sprite = Resources.Load<Sprite>("MapNumbers/no" + WorldState.currentLevel.Get());
 
             title_top_instance = Instantiate(title01_top, new Vector3(-18.0f - (0.32f * 40), 3.44f, 1), Quaternion.identity);
             title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
 
             SpriteRenderer title_top_renderer = title_top_instance.GetComponent<SpriteRenderer>();
-            title_top_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.currentLevel + "_top");
+            title_top_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.currentLevel.Get() + "_top");
 
             SpriteRenderer title_bottom_renderer = title_bottom_instance.GetComponent<SpriteRenderer>();
-            title_bottom_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.currentLevel + "_bot");
+            title_bottom_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.currentLevel.Get() + "_bot");
         }
 
         GameObject world = GameObject.FindWithTag("WorldMarker");
         SoundManager sm = world.GetComponent<SoundManager>();
-        if (isOnFinalLevel())
+        if (WorldState.currentLevel.ReachedFinal())
         {
             sm.PlayMusic("Title");
         }
@@ -104,7 +99,7 @@ public class Intermission : MonoBehaviour
                     flora_instance.transform.position = pos;
                     if (pos.x < 12.5f + HORIZONTAL_OFFSET)
                     {
-                        WorldState.gameState = isOnFinalLevel() ? WorldState.GameState.Intermission_IncomingDocent : WorldState.GameState.Intermission_PieczaraReveal;
+                        WorldState.gameState = WorldState.currentLevel.ReachedFinal() ? WorldState.GameState.Intermission_IncomingDocent : WorldState.GameState.Intermission_PieczaraReveal;
                         pieczara_reveal_counter = PIECZARA_REVEAL_DELAY;
                         pieczara_reveal_steps = PIECZARA_REVEAL_STEPS;
                     }

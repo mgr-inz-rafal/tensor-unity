@@ -35,7 +35,7 @@ public class BuildMenu : MonoBehaviour
     {
         splashScreen_instance = Instantiate(splashScreen, new Vector3(5.5f, 5.5f, 100), Quaternion.identity);
         HideNavigationButtons();
-        WorldState.currentLevel = PlayerPrefs.GetInt("SelectedLevel", 1);
+        WorldState.currentLevel.Set(PlayerPrefs.GetInt("SelectedLevel", 1));
     }
 
     public void PerformMenu()
