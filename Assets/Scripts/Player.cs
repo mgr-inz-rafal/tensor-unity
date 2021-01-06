@@ -230,6 +230,7 @@ public class Player : MonoBehaviour
                 return;
             }
             buildLevel.PerformDestroy();
+            Camera.main.orthographic = true;
             Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.currentAngle));
 
             BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();

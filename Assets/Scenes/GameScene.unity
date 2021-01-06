@@ -777,6 +777,8 @@ MonoBehaviour:
     type: 3}
   brick18p: {fileID: 6151721259538216072, guid: a57f9696d776dd34aaf0ce66b3ceb306,
     type: 3}
+  brick05b: {fileID: 9028973015986951146, guid: 5bb24ba2b7dddd74899124a186bc6db3,
+    type: 3}
   obstacle00: {fileID: 8478876787982615243, guid: ab098009c5ded1d4fb3f592bf4c09818,
     type: 3}
   obstacle01: {fileID: 5164662085285396544, guid: f79601ccbca096b4ab4f9a5e13ea364a,

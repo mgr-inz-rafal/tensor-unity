@@ -13,6 +13,7 @@ public class WorldState : MonoBehaviour
     public static int skip_check_docent_moving = 0;
     public static int skipCheckLevelFinished = 0;
     public static bool shouldCheckLevelFinished = false;
+    public static int cameraDistanceIndex = 0;
 
     public enum BorderState
     {

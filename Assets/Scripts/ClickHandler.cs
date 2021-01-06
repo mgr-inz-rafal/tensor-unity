@@ -150,36 +150,68 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
-                if (WorldState.rotationDirection != 0)
-                {
-                    return;
-                }
-
-                if (WorldState.lockRotation)
-                {
-                    return;
-                }
-
-                if (Counters.movementWarmupCounter > 0)
-                {
-                    return;
-                }
-
-                rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
-                WorldState.lockRotation = true;
-                GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
-
-                WorldState.rotationDirection = 1;
-                target_angle = WorldState.currentAngle + 90;
-                if (target_angle == 360)
-                {
-                    target_angle = 0;
-                }
-
-                rotate_player_left = true;
+                BeginRotation(Player.Move_Direction.Left);
                 break;
         }
     }
+
+    // TODO: Do not mix with Player
+    void BeginRotation(Player.Move_Direction direction) {
+        if ((WorldState.rotationDirection != 0) || (WorldState.lockRotation) || (Counters.movementWarmupCounter > 0)) {
+            return;
+        }
+
+        Camera.main.orthographic = false;
+        rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
+        WorldState.lockRotation = true;
+        WorldState.cameraDistanceIndex = 0;
+        GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
+
+        switch (direction) {
+            case Player.Move_Direction.Left:
+                WorldState.rotationDirection = 1;
+                target_angle = WorldState.currentAngle + 90;
+                if (target_angle == 360) {
+                    target_angle = 0;
+                }
+                rotate_player_left = true;
+                break;
+            case Player.Move_Direction.Right:
+                WorldState.rotationDirection = -1;
+                target_angle = WorldState.currentAngle - 90;
+                if (target_angle < 0) {
+                    target_angle += 360;
+                }
+                rotate_player_left = false;
+                break;
+        }
+    }
+
+    void FinishRotation()
+    {
+        WorldState.rotationDirection = 0;
+        Camera.main.orthographic = true;
+
+        switch (WorldState.currentAngle)
+        {
+            case 90:
+                Physics2D.gravity = new Vector3(GRAVITY_VALUE, 0.0f, 0.0f);
+                break;
+            case 180:
+                Physics2D.gravity = new Vector3(0.0f, GRAVITY_VALUE, 0.0f);
+                break;
+            case 270:
+                Physics2D.gravity = new Vector3(-GRAVITY_VALUE, 0.0f, 0.0f);
+                break;
+            case 0:
+                Physics2D.gravity = new Vector3(0.0f, -GRAVITY_VALUE, 0.0f);
+                break;
+        }
+
+        WorldState.EnableGravity();
+        WorldState.rotationDirection = 0;
+    }
+
 
     public void OnClick_Rotate_Left()
     {
@@ -209,33 +241,7 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
-                if (WorldState.rotationDirection != 0)
-                {
-                    return;
-                }
-
-                if (WorldState.lockRotation)
-                {
-                    return;
-                }
-
-                if (Counters.movementWarmupCounter > 0)
-                {
-                    return;
-                }
-
-                rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
-                WorldState.lockRotation = true;
-                GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
-
-                WorldState.rotationDirection = -1;
-                target_angle = WorldState.currentAngle - 90;
-                if (target_angle < 0)
-                {
-                    target_angle += 360;
-                }
-
-                rotate_player_left = false;
+                BeginRotation(Player.Move_Direction.Right);
                 break;
         }
     }
@@ -573,30 +579,6 @@ public class ClickHandler : MonoBehaviour
         }
     }
 
-    void FinishRotation()
-    {
-        WorldState.rotationDirection = 0;
-
-        switch (WorldState.currentAngle)
-        {
-            case 90:
-                Physics2D.gravity = new Vector3(GRAVITY_VALUE, 0.0f, 0.0f);
-                break;
-            case 180:
-                Physics2D.gravity = new Vector3(0.0f, GRAVITY_VALUE, 0.0f);
-                break;
-            case 270:
-                Physics2D.gravity = new Vector3(-GRAVITY_VALUE, 0.0f, 0.0f);
-                break;
-            case 0:
-                Physics2D.gravity = new Vector3(0.0f, -GRAVITY_VALUE, 0.0f);
-                break;
-        }
-
-        WorldState.EnableGravity();
-        WorldState.rotationDirection = 0;
-    }
-
     void DoSceneRotation() {
         DoCameraRotation();
         DoObjectsRotation();
@@ -615,6 +597,10 @@ public class ClickHandler : MonoBehaviour
 
     void DoCameraRotation()
     {
+        Debug.Log("Setting at index " + WorldState.cameraDistanceIndex);
+        var pos = Camera.main.transform.position;
+        pos.z = Consts.CAMERA_DISTANCE_TABLE[WorldState.cameraDistanceIndex++];
+        Camera.main.transform.position = pos;
         Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.currentAngle));
     }
 }

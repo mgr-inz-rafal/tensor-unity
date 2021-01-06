@@ -4,4 +4,26 @@ class Consts {
     public const int LEVEL_DIMENSION = 12;
     public const int MAXIMUM_AMYGDALAS_PER_LEVEL = (Consts.LEVEL_DIMENSION - 1) << 1;
     public const int ROTATION_STEP = 5;
+
+    public static readonly float[] CAMERA_DISTANCE_TABLE = {
+        -10f,
+        -10.52f,
+        -11.03f,
+        -11.5f,
+        -11.93f,
+        -12.3f,
+        -12.6f,
+        -12.82f,
+        -12.95f,
+        -13f,
+        -12.95f,
+        -12.82f,
+        -12.6f,
+        -12.3f,
+        -11.93f,
+        -11.5f,
+        -11.03f,
+        -10.52f,
+        -10f
+    };
 }
