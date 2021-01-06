@@ -116,13 +116,50 @@ public class WorldState : MonoBehaviour
         switch (WorldState.current_angle)
         {
             case 90:
+                // Below new docent position
                 {
                     var x = px+1;
                     var y = py;
                     do 
                     {
-                        WorldState.virt[x, y] = 254;
+                        EnableAmygdalaAt(x, y);
                     } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Below old docent position
+                {
+                    var x = px+1;
+                    var y = py;
+                    if (Player.last_step_to_the_left) {
+                        y += 1;
+                    }
+                    else
+                    {
+                        y -= 1;
+                    }
+                    do 
+                    {
+                        EnableAmygdalaAt(x, y);
+                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Below old docent position
+                {
+                    var x = px-1;
+                    var y = py;
+                    if (Player.last_step_to_the_left) {
+                        y += 1;
+                    }
+                    else
+                    {
+                        y -= 1;
+                    }
+                    do 
+                    {
+                        EnableAmygdalaAt(x, y);
+                        WorldState.virt[x, y] = 254;
+                    } while(--x > 0);
+                    debug_print_virtual_level();
                 }
                 break;
             case 270:
@@ -159,7 +196,6 @@ public class WorldState : MonoBehaviour
                     var y = py-1;
                     do 
                     {
-                        WorldState.virt[x, y] = 254;
                         EnableAmygdalaAt(x, y);
                     } while(--y > 0);
                     debug_print_virtual_level();
