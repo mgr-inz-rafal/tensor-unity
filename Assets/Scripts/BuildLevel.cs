@@ -133,7 +133,7 @@ public class BuildLevel : MonoBehaviour
                 break;
         }
         elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
-        WorldState.elevator_frames = WorldState.TOTAL_ELEVATOR_FRAMES;
+        Counters.elevatorFrames = Consts.TOTAL_elevatorFrames;
         switch (WorldState.current_angle)
         {
             case 90:

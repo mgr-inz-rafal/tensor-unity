@@ -8,8 +8,6 @@ public class WorldState : MonoBehaviour
 
     public static int current_level = 1;
     public const int MAX_LEVEL_NUMBER = 51;
-    public static int elevator_frames = 0;
-    public const int TOTAL_ELEVATOR_FRAMES = (int)(50 * 1.5f);
 
     public const float ELEVATOR_POSITION_CHANGE = 0.20f;
 
@@ -646,13 +644,13 @@ public class WorldState : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (elevator_frames > 0)
+        if (Counters.elevatorFrames > 0)
         {
-            if (elevator_frames == 1)
+            if (Counters.elevatorFrames == 1)
             {
                 //Debug.Log("Destroying elevator and going into intermission");
                 Destroy(BuildLevel.elevator_instance);
-                elevator_frames = 0;
+                Counters.elevatorFrames = 0;
                 WorldState.gameState = WorldState.GameState.Intermission_FloraIn;
 
                 Camera cameraObj = Camera.main;
@@ -677,7 +675,7 @@ public class WorldState : MonoBehaviour
                 intermission.SendMessage("PerformBuildIntermission");
             }
         }
-        --elevator_frames;
+        --Counters.elevatorFrames;
     }
 
 }
