@@ -136,6 +136,7 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 0:
+                // Below new docent position
                 {
                     var x = px;
                     var y = py-1;
@@ -143,6 +144,42 @@ public class WorldState : MonoBehaviour
                     {
                         EnableAmygdalaAt(x, y);
                     } while(--y > 0);
+                }
+
+                // Below old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x += 1;
+                    }
+                    else
+                    {
+                        x -= 1;
+                    }
+                    var y = py-1;
+                    do 
+                    {
+                        WorldState.virt[x, y] = 254;
+                        EnableAmygdalaAt(x, y);
+                    } while(--y > 0);
+                    debug_print_virtual_level();
+                }
+
+                // Above old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x += 1;
+                    }
+                    else
+                    {
+                        x -= 1;
+                    }
+                    var y = py+1;
+                    do 
+                    {
+                        EnableAmygdalaAt(x, y);
+                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
                 }
                 break;
             case 180:
@@ -152,10 +189,8 @@ public class WorldState : MonoBehaviour
                     do 
                     {
                         Debug.Log(x + "/" + y);
-                        WorldState.virt[x, y] = 254;
                         EnableAmygdalaAt(x, y);
                     } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
-                    debug_print_virtual_level();
                 }
                 break;
         }

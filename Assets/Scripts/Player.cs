@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     const int MOVE_COUNT = 8;
 
     bool block_next_step = false;
+    public static bool last_step_to_the_left = false;
     int player_movement_count = 0;
     Tuple<float, float> player_movement_modifier = new Tuple<float, float>(0.0f, 0.0f);
 
@@ -96,6 +97,7 @@ public class Player : MonoBehaviour
 
         if (false == obstacles_on_the_way(Move_Direction.Right))
         {
+            last_step_to_the_left = false;
             var amyg_in_way = amygdala_on_the_way(Move_Direction.Right);
             if (true == amyg_in_way.Item1) {
                 Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
@@ -120,6 +122,7 @@ public class Player : MonoBehaviour
 
         if (false == obstacles_on_the_way(Move_Direction.Left))
         {
+            last_step_to_the_left = true;
             var amyg_in_way = amygdala_on_the_way(Move_Direction.Left);
             if (true == amyg_in_way.Item1) {
                 Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
