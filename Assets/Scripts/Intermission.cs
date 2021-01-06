@@ -37,8 +37,8 @@ public class Intermission : MonoBehaviour
         flora_instance = Instantiate(
             isOnFinalLevel() ? flora_final : flora,
             new Vector3(
-                BuildLevel.LEVEL_DIMENSION + (BuildLevel.LEVEL_DIMENSION >> 1) + 1.0f + HORIZONTAL_OFFSET,
-                BuildLevel.LEVEL_DIMENSION - (BuildLevel.LEVEL_DIMENSION >> 1) - 0.5f, 1),
+                Consts.LEVEL_DIMENSION + (Consts.LEVEL_DIMENSION >> 1) + 1.0f + HORIZONTAL_OFFSET,
+                Consts.LEVEL_DIMENSION - (Consts.LEVEL_DIMENSION >> 1) - 0.5f, 1),
                 Quaternion.identity);
 
         if (isOnFinalLevel())
