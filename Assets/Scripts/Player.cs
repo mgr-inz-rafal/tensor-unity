@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
             last_step_to_the_left = false;
             var amyg_in_way = amygdala_on_the_way(Move_Direction.Right);
             if (true == amyg_in_way.Item1) {
-                Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
+                // Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
                 WorldState.destroy_amygdala_at(amyg_in_way.Item2, amyg_in_way.Item3);
             }
             if (false == block_next_step)
@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
             last_step_to_the_left = true;
             var amyg_in_way = amygdala_on_the_way(Move_Direction.Left);
             if (true == amyg_in_way.Item1) {
-                Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
+                // Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
                 WorldState.destroy_amygdala_at(amyg_in_way.Item2, amyg_in_way.Item3);
             }
             if (false == block_next_step)

@@ -97,7 +97,7 @@ public class WorldState : MonoBehaviour
     // - objects below current docent position (he could have stepped on an object and shouldn't fall through)
     // - objects above previous docent position (he could have stepped away and objects on his head should fall) <-- TODO
     public static void EnableGravitySelective() {
-        Debug.Log("EnableGravitySelective");
+        // Debug.Log("EnableGravitySelective");
         Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
         if (rigid_docent == null) {
             return;
@@ -122,6 +122,9 @@ public class WorldState : MonoBehaviour
                     var y = py;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
                 }
@@ -139,6 +142,9 @@ public class WorldState : MonoBehaviour
                     }
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
                 }
@@ -156,6 +162,9 @@ public class WorldState : MonoBehaviour
                     }
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(--x > 0);
                 }
@@ -167,6 +176,9 @@ public class WorldState : MonoBehaviour
                     var y = py;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(--x > 0);
                 }
@@ -184,6 +196,9 @@ public class WorldState : MonoBehaviour
                     }
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(--x > 0);
                 }
@@ -201,10 +216,11 @@ public class WorldState : MonoBehaviour
                     }
                     do 
                     {
-                        //WorldState.virt[x, y] = 254;
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
-                    //debug_print_virtual_level();
                 }
                 break;
             case 0:
@@ -214,6 +230,9 @@ public class WorldState : MonoBehaviour
                     var y = py-1;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(--y > 0);
                 }
@@ -231,6 +250,9 @@ public class WorldState : MonoBehaviour
                     var y = py-1;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(--y > 0);
                     debug_print_virtual_level();
@@ -249,6 +271,9 @@ public class WorldState : MonoBehaviour
                     var y = py+1;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
                 }
@@ -260,6 +285,9 @@ public class WorldState : MonoBehaviour
                     var y = py+1;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
                 }
@@ -277,6 +305,9 @@ public class WorldState : MonoBehaviour
                     var y = py+1;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
                     } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
                 }
@@ -294,13 +325,18 @@ public class WorldState : MonoBehaviour
                     var y = py-1;
                     do 
                     {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
                         EnableAmygdalaAt(x, y);
-                        WorldState.virt[x, y] = 254;
                     } while(--y > 0);
-                    debug_print_virtual_level();
                 }
                 break;
         }
+    }
+
+    public static bool IsWallAt(int x, int y) {
+        return WorldState.virt[x, y] == 1;
     }
 
     public static void EnableAmygdalaAt(int x, int y) {
@@ -481,6 +517,8 @@ public class WorldState : MonoBehaviour
     }
 
     public static void debug_print_virtual_level() {
+        return; // Inactive
+
         string lev = System.Environment.NewLine;
         Debug.Log("");
         Debug.Log("---");

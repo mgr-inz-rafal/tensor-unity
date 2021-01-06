@@ -582,19 +582,15 @@ public class ClickHandler : MonoBehaviour
         switch (WorldState.current_angle)
         {
             case 90:
-                Debug.Log(90);
                 Physics2D.gravity = new Vector3(GRAVITY_VALUE, 0.0f, 0.0f);
                 break;
             case 180:
-                Debug.Log(180);
                 Physics2D.gravity = new Vector3(0.0f, GRAVITY_VALUE, 0.0f);
                 break;
             case 270:
-                Debug.Log(270);
                 Physics2D.gravity = new Vector3(-GRAVITY_VALUE, 0.0f, 0.0f);
                 break;
             case 0:
-                Debug.Log(0);
                 Physics2D.gravity = new Vector3(0.0f, -GRAVITY_VALUE, 0.0f);
                 break;
         }
