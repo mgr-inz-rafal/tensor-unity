@@ -95,7 +95,8 @@ public class WorldState : MonoBehaviour
     // Enables gravity only for objects that have collision
     // probability after Docent made a step, i.e.:
     // - objects below current docent position (he could have stepped on an object and shouldn't fall through)
-    // - objects above previous docent position (he could have stepped away and objects on his head should fall) <-- TODO
+    // - objects above previous docent position (he could have stepped away and objects on his head should fall)
+    // - objects below previous docent position (he could have stepped away and objects on his head should fall, but not through the objects below)
     public static void EnableGravitySelective() {
         // Debug.Log("EnableGravitySelective");
         Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
