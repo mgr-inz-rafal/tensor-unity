@@ -471,27 +471,27 @@ public class ClickHandler : MonoBehaviour
             case 0:
                 break;
             case 1:
-                WorldState.currentAngle += 5;
+                WorldState.currentAngle += Consts.ROTATION_STEP;
                 if (WorldState.currentAngle == 360)
                 {
                     WorldState.currentAngle = 0;
                 }
-                do_camera_rotation();
+                DoSceneRotation();
                 if (WorldState.currentAngle == target_angle)
                 {
-                    finish_rotation();
+                    FinishRotation();
                 }
                 break;
             case -1:
-                WorldState.currentAngle -= 5;
-                if (WorldState.currentAngle == -5)
+                WorldState.currentAngle -= Consts.ROTATION_STEP;
+                if (WorldState.currentAngle == -Consts.ROTATION_STEP)
                 {
-                    WorldState.currentAngle = 360 - 5;
+                    WorldState.currentAngle = 360 - Consts.ROTATION_STEP;
                 }
-                do_camera_rotation();
+                DoSceneRotation();
                 if (WorldState.currentAngle == target_angle)
                 {
-                    finish_rotation();
+                    FinishRotation();
                 }
                 break;
         }
@@ -573,7 +573,7 @@ public class ClickHandler : MonoBehaviour
         }
     }
 
-    void finish_rotation()
+    void FinishRotation()
     {
         WorldState.rotationDirection = 0;
 
@@ -594,12 +594,15 @@ public class ClickHandler : MonoBehaviour
         }
 
         WorldState.EnableGravity();
-        DealWithActorRotations();
         WorldState.rotationDirection = 0;
     }
 
-    void DealWithActorRotations()
-    {
+    void DoSceneRotation() {
+        DoCameraRotation();
+        DoObjectsRotation();
+    }
+
+    void DoObjectsRotation() {
         string message = rotate_player_left ? "RotateLeft" : "RotateRight";
         Player playerScript = BuildLevel.docentInstance.GetComponent<Player>();
         playerScript.SendMessage(message);
@@ -610,7 +613,7 @@ public class ClickHandler : MonoBehaviour
         }
     }
 
-    void do_camera_rotation()
+    void DoCameraRotation()
     {
         Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.currentAngle));
     }
