@@ -116,6 +116,9 @@ public class ClickHandler : MonoBehaviour
                 return;
             }
             buildLevel.PerformBuild();
+            WorldState.DisableGravity();
+            WorldState.build_virtual_level_representation();
+            WorldState.debug_print_virtual_level();
         }
     }
 
@@ -515,6 +518,11 @@ public class ClickHandler : MonoBehaviour
 
     void UnlockRotation()
     {
+        if (WorldState.skip_check_docent_moving > 0) {
+            --WorldState.skip_check_docent_moving;
+            return;
+        }
+
         if (!WorldState.lock_rotation)
         {
             return;
@@ -527,8 +535,9 @@ public class ClickHandler : MonoBehaviour
 
         if (DocentNotMoving() && AmygdalasNotMoving())
         {
+            WorldState.build_virtual_level_representation();
+            WorldState.debug_print_virtual_level();
             WorldState.recalculate_amygdala_positions();
-            //Debug.Log("Unlocking rotation");
             WorldState.lock_rotation = false;
         }
     }
@@ -586,6 +595,7 @@ public class ClickHandler : MonoBehaviour
                 break;
         }
 
+        WorldState.EnableGravity();
         DealWithActorRotations();
         WorldState.rotation_direction = 0;
     }
