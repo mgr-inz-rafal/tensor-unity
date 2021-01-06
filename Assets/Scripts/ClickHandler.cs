@@ -94,7 +94,7 @@ public class ClickHandler : MonoBehaviour
         }
         intermission.SendMessage("PerformDestroyIntermission");
 
-        if (WorldState.currentLevel == WorldState.MAX_LEVEL_NUMBER + 1)
+        if (WorldState.currentLevel == Consts.MAX_LEVEL_NUMBER + 1)
         {
             WorldState.currentLevel = 1;
             BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
@@ -130,7 +130,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -221,7 +221,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -254,7 +254,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -388,7 +388,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != Consts.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }

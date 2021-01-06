@@ -5,7 +5,6 @@ using UnityEngine;
 public class WorldState : MonoBehaviour
 {
     public static int currentLevel = 1;
-    public const int MAX_LEVEL_NUMBER = 51;
 
     public const float ELEVATOR_positionChange = 0.20f;
 
@@ -411,7 +410,7 @@ public class WorldState : MonoBehaviour
         currentLevel--;
         if (0 == currentLevel)
         {
-            currentLevel = 1;
+            currentLevel = Consts.MAX_LEVEL_NUMBER;
         }
         return currentLevel;
     }
@@ -419,9 +418,9 @@ public class WorldState : MonoBehaviour
     public static int DoLevelUp()
     {
         currentLevel++;
-        if (currentLevel == MAX_LEVEL_NUMBER + 1)
+        if (currentLevel == Consts.MAX_LEVEL_NUMBER + 1)
         {
-            currentLevel = MAX_LEVEL_NUMBER;
+            currentLevel = 1;
         }
         return currentLevel;
     }

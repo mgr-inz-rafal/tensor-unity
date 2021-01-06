@@ -27,7 +27,7 @@ public class Intermission : MonoBehaviour
 
     bool isOnFinalLevel()
     {
-        return (WorldState.currentLevel == WorldState.MAX_LEVEL_NUMBER + 1);
+        return (WorldState.currentLevel == Consts.MAX_LEVEL_NUMBER + 1);
     }
 
     public void PerformBuildIntermission()
