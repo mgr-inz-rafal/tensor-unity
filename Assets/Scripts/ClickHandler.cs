@@ -78,7 +78,7 @@ public class ClickHandler : MonoBehaviour
 
     void Handle_ClickOnIntermissionScreen()
     {
-        WorldState.movement_warmup_counter = WorldState.MOVEMENT_WARMUP;
+        Counters.movementWarmupCounter = Consts.MOVEMENT_WARMUP;
 
         Camera cameraObj = Camera.main;
         if (cameraObj == null)
@@ -160,7 +160,7 @@ public class ClickHandler : MonoBehaviour
                     return;
                 }
 
-                if (WorldState.movement_warmup_counter > 0)
+                if (Counters.movementWarmupCounter > 0)
                 {
                     return;
                 }
@@ -219,7 +219,7 @@ public class ClickHandler : MonoBehaviour
                     return;
                 }
 
-                if (WorldState.movement_warmup_counter > 0)
+                if (Counters.movementWarmupCounter > 0)
                 {
                     return;
                 }
@@ -268,7 +268,7 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
-                if (WorldState.movement_warmup_counter > 0)
+                if (Counters.movementWarmupCounter > 0)
                 {
                     return;
                 }
@@ -402,7 +402,7 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
-                if (WorldState.movement_warmup_counter > 0)
+                if (Counters.movementWarmupCounter > 0)
                 {
                     return;
                 }
@@ -552,7 +552,7 @@ public class ClickHandler : MonoBehaviour
                 break;
         }
 
-        if (WorldState.movement_warmup_counter == 0)
+        if (Counters.movementWarmupCounter == 0)
         {
             if (going_left)
             {
@@ -578,7 +578,6 @@ public class ClickHandler : MonoBehaviour
     {
         WorldState.rotation_direction = 0;
 
-        BoxCollider2D collider = BuildLevel.docent_instance.GetComponent<BoxCollider2D>();
         switch (WorldState.current_angle)
         {
             case 90:

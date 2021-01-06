@@ -211,7 +211,7 @@ public class Player : MonoBehaviour
                 block_next_step = false;
                 WorldState.lock_rotation = true;
                 WorldState.EnableGravitySelective();
-                WorldState.skip_check_docent_moving = 2;
+                WorldState.skip_check_docent_moving = 1;
             }
         }
 

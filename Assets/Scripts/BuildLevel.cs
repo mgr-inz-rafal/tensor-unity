@@ -147,7 +147,6 @@ public class BuildLevel : MonoBehaviour
     {
         GameObject world = GameObject.FindWithTag("WorldMarker");
         SoundManager sm = world.GetComponent<SoundManager>();
-        //sm.PlayMusic("Ingame");
         sm.PlayRandomGameplayMusic();
 
         ShowBorders();
@@ -307,10 +306,10 @@ public class BuildLevel : MonoBehaviour
     {
         if (WorldState.gameState == WorldState.GameState.Game)
         {
-            --WorldState.movement_warmup_counter;
-            if (WorldState.movement_warmup_counter < 0)
+            --Counters.movementWarmupCounter;
+            if (Counters.movementWarmupCounter < 0)
             {
-                WorldState.movement_warmup_counter = 0;
+                Counters.movementWarmupCounter = 0;
             }
         }
     }

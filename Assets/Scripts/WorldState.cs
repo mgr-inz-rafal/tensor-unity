@@ -6,9 +6,6 @@ public class WorldState : MonoBehaviour
 {
     public static int global_debug_frames = 0;
 
-    public static int movement_warmup_counter = 0;
-    public const int MOVEMENT_WARMUP = 50;
-
     public static int current_level = 1;
     public const int MAX_LEVEL_NUMBER = 51;
     public static int elevator_frames = 0;
@@ -59,7 +56,6 @@ public class WorldState : MonoBehaviour
     public static int rotation_direction = 0;
     public static int current_angle = 0;
     public static bool lock_rotation = false;
-    public static (int, int) current_player_pos = (0, 0);
     public static Dictionary<int, (int, int)> amygdala_map_positions = new Dictionary<int, (int, int)>();
     public static Dictionary<int, (int, int)> obstacle_map_positions = new Dictionary<int, (int, int)>();
 
@@ -386,8 +382,6 @@ public class WorldState : MonoBehaviour
                 rigid_docent.simulated = false;
             }
         }
-
-        //Physics2D.gravity = Vector2.zero;
     }
 
     public static void Reset()
