@@ -92,6 +92,274 @@ public class WorldState : MonoBehaviour
         //Debug.Log("Gravity ON");
     }
 
+    // Enables gravity only for objects that have collision
+    // probability after Docent made a step, i.e.:
+    // - objects below current docent position (he could have stepped on an object and shouldn't fall through)
+    // - objects above previous docent position (he could have stepped away and objects on his head should fall)
+    // - objects below previous docent position (he could have stepped away and objects on his head should fall, but not through the objects below)
+    public static void EnableGravitySelective() {
+        // Debug.Log("EnableGravitySelective");
+        Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
+        if (rigid_docent == null) {
+            return;
+        }
+        else
+        {
+            rigid_docent.simulated = true;
+        }
+
+        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+
+        // TODO: Each call to `EnableAmygdalaAt` traverses through all amygdalas.
+        // Refactor this: precalc amygdalas to enable and
+        // then go once through the list.
+        switch (WorldState.current_angle)
+        {
+            case 90:
+                // Below new docent position
+                {
+                    var x = px+1;
+                    var y = py;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Below old docent position
+                {
+                    var x = px+1;
+                    var y = py;
+                    if (Player.last_step_to_the_left) {
+                        y += 1;
+                    }
+                    else
+                    {
+                        y -= 1;
+                    }
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Below old docent position
+                {
+                    var x = px-1;
+                    var y = py;
+                    if (Player.last_step_to_the_left) {
+                        y += 1;
+                    }
+                    else
+                    {
+                        y -= 1;
+                    }
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(--x > 0);
+                }
+                break;
+            case 270:
+                // Below new docent position
+                {
+                    var x = px-1;
+                    var y = py;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(--x > 0);
+                }
+
+                // Below old docent position
+                {
+                    var x = px-1;
+                    var y = py;
+                    if (Player.last_step_to_the_left) {
+                        y -= 1;
+                    }
+                    else
+                    {
+                        y += 1;
+                    }
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(--x > 0);
+                }
+
+                // Above old docent position
+                {
+                    var x = px+1;
+                    var y = py;
+                    if (Player.last_step_to_the_left) {
+                        y -= 1;
+                    }
+                    else
+                    {
+                        y += 1;
+                    }
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(++x < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+                break;
+            case 0:
+                // Below new docent position
+                {
+                    var x = px;
+                    var y = py-1;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(--y > 0);
+                }
+
+                // Below old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x += 1;
+                    }
+                    else
+                    {
+                        x -= 1;
+                    }
+                    var y = py-1;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(--y > 0);
+                    debug_print_virtual_level();
+                }
+
+                // Above old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x += 1;
+                    }
+                    else
+                    {
+                        x -= 1;
+                    }
+                    var y = py+1;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+                break;
+            case 180:
+                // Below new docent position
+                {
+                    var x = px;
+                    var y = py+1;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Below old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x -= 1;
+                    }
+                    else
+                    {
+                        x += 1;
+                    }
+                    var y = py+1;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Above old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x -= 1;
+                    }
+                    else
+                    {
+                        x += 1;
+                    }
+                    var y = py-1;
+                    do 
+                    {
+                        if (IsWallAt(x, y)) {
+                            break;
+                        }
+                        EnableAmygdalaAt(x, y);
+                    } while(--y > 0);
+                }
+                break;
+        }
+    }
+
+    public static bool IsWallAt(int x, int y) {
+        return WorldState.virt[x, y] == 1;
+    }
+
+    public static void EnableAmygdalaAt(int x, int y) {
+        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        {
+            float ax = amyg.transform.position.x;
+            float ay = amyg.transform.position.y;
+
+            if ((System.Math.Abs(ax - x) < 0.1f) && (System.Math.Abs(ay - y) < 0.1f)) {
+                Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
+                if (rigid == null)
+                {
+                    return;
+                }
+                else
+                {
+                    rigid.simulated = true;
+                }
+            }
+        }
+    }
+
     public static void DisableGravity() {
         //Debug.Log("Gravity OFF");
         foreach (GameObject amyg in BuildLevel.amygdalas_instances)
@@ -250,7 +518,7 @@ public class WorldState : MonoBehaviour
     }
 
     public static void debug_print_virtual_level() {
-        return;
+        return; // Inactive
 
         string lev = System.Environment.NewLine;
         Debug.Log("");
@@ -270,10 +538,13 @@ public class WorldState : MonoBehaviour
                         lev += "?";
                         break;
                     case 0:
-                        lev += "  ";
+                        lev += " ";
                         break;
                     case 200:
                         lev += "P";
+                        break;
+                    case 254:
+                        lev += "@";
                         break;
                     default:
                         lev += "#";
