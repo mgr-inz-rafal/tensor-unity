@@ -89,6 +89,12 @@ public class Intermission : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            PerformDestroyIntermission();
+            WorldState.GoBackToTitleScreen();
+        }
+
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Intermission_FloraIn:
