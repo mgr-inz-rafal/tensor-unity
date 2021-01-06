@@ -1,6 +1,6 @@
-# tensor-unity
+# Tensor Trzaskowskiego
 
-This is an Android port of the award-winning game - Tensor Trzaskowskiego - for Atari 8-bit I created in 2017.
+This is an Unity port of the award-winning game - Tensor Trzaskowskiego - for Atari 8-bit I created in 2017.
 
 Original game is here:
 https://github.com/mgr-inz-rafal/tensor
