@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class WorldState : MonoBehaviour
 {
-    public static int global_debug_frames = 0;
-
-    public static int current_level = 1;
+    public static int currentLevel = 1;
     public const int MAX_LEVEL_NUMBER = 51;
 
-    public const float ELEVATOR_POSITION_CHANGE = 0.20f;
+    public const float ELEVATOR_positionChange = 0.20f;
 
-    public static int total_amygdalas = 0;
+    public static int totalAmygdalas = 0;
     public static int skip_check_docent_moving = 0;
-    public static int skip_check_level_finished = 0;
-    public static bool should_check_level_finished = false;
+    public static int skipCheckLevelFinished = 0;
+    public static bool shouldCheckLevelFinished = false;
 
     public enum BorderState
     {
@@ -51,16 +49,16 @@ public class WorldState : MonoBehaviour
 
     public static byte[,] levelmap = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
     public static byte[,] virt = new byte[BuildLevel.LEVEL_DIMENSION, BuildLevel.LEVEL_DIMENSION];
-    public static int rotation_direction = 0;
-    public static int current_angle = 0;
-    public static bool lock_rotation = false;
-    public static Dictionary<int, (int, int)> amygdala_map_positions = new Dictionary<int, (int, int)>();
-    public static Dictionary<int, (int, int)> obstacle_map_positions = new Dictionary<int, (int, int)>();
+    public static int rotationDirection = 0;
+    public static int currentAngle = 0;
+    public static bool lockRotation = false;
+    public static Dictionary<int, (int, int)> amygdalaMapPositions = new Dictionary<int, (int, int)>();
+    public static Dictionary<int, (int, int)> obstacleMapPositions = new Dictionary<int, (int, int)>();
 
-    public static Vector3 last_amygdala_position;
+    public static Vector3 lastAmygdalaPosition;
 
     public static void EnableGravity() {
-        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        foreach (GameObject amyg in BuildLevel.amygdalaInstances)
         {
             Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
             if (rigid == null)
@@ -73,14 +71,14 @@ public class WorldState : MonoBehaviour
             }
         }
 
-        Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
-        if (rigid_docent == null)
+        Rigidbody2D rigidDocent = BuildLevel.docentInstance.GetComponent<Rigidbody2D>();
+        if (rigidDocent == null)
         {
             return;
         }
         else
         {
-            rigid_docent.simulated = true;
+            rigidDocent.simulated = true;
         }
 
         //Debug.Log("Gravity ON");
@@ -93,22 +91,22 @@ public class WorldState : MonoBehaviour
     // - objects below previous docent position (he could have stepped away and objects on his head should fall, but not through the objects below)
     public static void EnableGravitySelective() {
         // Debug.Log("EnableGravitySelective");
-        Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
-        if (rigid_docent == null) {
+        Rigidbody2D rigidDocent = BuildLevel.docentInstance.GetComponent<Rigidbody2D>();
+        if (rigidDocent == null) {
             return;
         }
         else
         {
-            rigid_docent.simulated = true;
+            rigidDocent.simulated = true;
         }
 
-        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
-        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+        var px = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
 
         // TODO: Each call to `EnableAmygdalaAt` traverses through all amygdalas.
         // Refactor this: precalc amygdalas to enable and
         // then go once through the list.
-        switch (WorldState.current_angle)
+        switch (WorldState.currentAngle)
         {
             case 90:
                 // Below new docent position
@@ -335,7 +333,7 @@ public class WorldState : MonoBehaviour
     }
 
     public static void EnableAmygdalaAt(int x, int y) {
-        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        foreach (GameObject amyg in BuildLevel.amygdalaInstances)
         {
             float ax = amyg.transform.position.x;
             float ay = amyg.transform.position.y;
@@ -356,7 +354,7 @@ public class WorldState : MonoBehaviour
 
     public static void DisableGravity() {
         //Debug.Log("Gravity OFF");
-        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        foreach (GameObject amyg in BuildLevel.amygdalaInstances)
         {
             Rigidbody2D rigid = amyg.GetComponent<Rigidbody2D>();
             if (rigid == null)
@@ -369,77 +367,77 @@ public class WorldState : MonoBehaviour
             }
         }
 
-        if (BuildLevel.docent_instance != null) {
-            Rigidbody2D rigid_docent = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
-            if (rigid_docent == null)
+        if (BuildLevel.docentInstance != null) {
+            Rigidbody2D rigidDocent = BuildLevel.docentInstance.GetComponent<Rigidbody2D>();
+            if (rigidDocent == null)
             {
                 return;
             }
             else
             {
-                rigid_docent.simulated = false;
+                rigidDocent.simulated = false;
             }
         }
     }
 
     public static void Reset()
     {
-        rotation_direction = 0;
-        current_angle = 0;
-        lock_rotation = false;
-        amygdala_map_positions.Clear();
-        obstacle_map_positions.Clear();
+        rotationDirection = 0;
+        currentAngle = 0;
+        lockRotation = false;
+        amygdalaMapPositions.Clear();
+        obstacleMapPositions.Clear();
         Physics2D.gravity = new Vector3(0.0f, -9.8f, 0.0f);
         //Debug.Log("Gravity On");
     }
 
     public static int DoLevelDown()
     {
-        current_level--;
-        if (0 == current_level)
+        currentLevel--;
+        if (0 == currentLevel)
         {
-            current_level = 1;
+            currentLevel = 1;
         }
-        return current_level;
+        return currentLevel;
     }
 
     public static int DoLevelUp()
     {
-        current_level++;
-        if (current_level == MAX_LEVEL_NUMBER + 1)
+        currentLevel++;
+        if (currentLevel == MAX_LEVEL_NUMBER + 1)
         {
-            current_level = MAX_LEVEL_NUMBER;
+            currentLevel = MAX_LEVEL_NUMBER;
         }
-        return current_level;
+        return currentLevel;
     }
 
     public static void destroy_amygdala_at(int x, int y) {
-        foreach (GameObject amyg in BuildLevel.amygdalas_instances) {
+        foreach (GameObject amyg in BuildLevel.amygdalaInstances) {
             float ax = amyg.transform.position.x;
             float ay = amyg.transform.position.y;
             float mx = x;
             float my = y;
 
             if ((System.Math.Abs(ax - mx) < 0.1f) && (System.Math.Abs(ay - my) < 0.1f)) {
-                    WorldState.last_amygdala_position = amyg.transform.position;
-                    BuildLevel.amygdalas_instances.Remove(amyg);
+                    WorldState.lastAmygdalaPosition = amyg.transform.position;
+                    BuildLevel.amygdalaInstances.Remove(amyg);
                     Destroy(amyg, 0.0f);
-                    --WorldState.total_amygdalas;
+                    --WorldState.totalAmygdalas;
                     var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-                    player.play_pickup_sound();
-                    skip_check_level_finished = 8;
-                    should_check_level_finished = true;
+                    player.playPickupSound();
+                    skipCheckLevelFinished = 8;
+                    shouldCheckLevelFinished = true;
                     break;                
             }
         }
    }
 
-    public static void check_level_finished() {
-        if (skip_check_level_finished > 0) {
-            --skip_check_level_finished;
+    public static void checkLevelFinished() {
+        if (skipCheckLevelFinished > 0) {
+            --skipCheckLevelFinished;
             return;
         }
-        if (WorldState.total_amygdalas == 0)
+        if (WorldState.totalAmygdalas == 0)
         {
             Camera cameraObj = Camera.main;
             if (cameraObj == null)
@@ -454,7 +452,7 @@ public class WorldState : MonoBehaviour
                 return;
             }
             buildLevel.SendMessage("SpawnElevator");
-            ++WorldState.current_level;
+            ++WorldState.currentLevel;
 
             GameObject world = GameObject.FindWithTag("WorldMarker");
             if (world == null)
@@ -482,7 +480,7 @@ public class WorldState : MonoBehaviour
             }
         }
 
-        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        foreach (GameObject amyg in BuildLevel.amygdalaInstances)
         {
             var x = (int)System.Math.Round(amyg.transform.position.x);
             var y = (int)System.Math.Round(amyg.transform.position.y);
@@ -495,7 +493,7 @@ public class WorldState : MonoBehaviour
             amyg.transform.position = new Vector3(x, y, 0);
         }
 
-        foreach (GameObject wall in BuildLevel.wall_instances)
+        foreach (GameObject wall in BuildLevel.wallInstances)
         {
             var x = (int)System.Math.Round(wall.transform.position.x);
             var y = (int)System.Math.Round(wall.transform.position.y);
@@ -503,10 +501,10 @@ public class WorldState : MonoBehaviour
             wall.transform.position = new Vector3(x, y, 0);
         }
 
-        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
-        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+        var px = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
         virt[px, py] = 200;
-        BuildLevel.docent_instance.transform.position = new Vector3(px, py, 0);
+        BuildLevel.docentInstance.transform.position = new Vector3(px, py, 0);
     }
 
     public static void debug_print_virtual_level() {
@@ -549,92 +547,40 @@ public class WorldState : MonoBehaviour
         Debug.Log("---");
     }
 
-    public static void recalculate_amygdala_positions()
-    {
-        // TODO: RC: Not needed with the new psychics approach?
-        return;
-
-        for (int i = 0; i < BuildLevel.LEVEL_DIMENSION; ++i)
-        {
-            for (int j = 0; j < BuildLevel.LEVEL_DIMENSION; ++j)
-            {
-                if ((levelmap[j, i] == 2) || (levelmap[j, i] == 131) || (levelmap[j, i] == 132)) // Amygdala or Obstacle
-                {
-                    if (levelmap[j, i] == 2)
-                    {
-                        // Debug.Log("Dropping amygdala at (" + j + "," + i + ")");
-                    }
-                    levelmap[j, i] = 0;
-                }
-            }
-        }
-
-        foreach (KeyValuePair<int, (int, int)> amygdala in amygdala_map_positions)
-        {
-            //Debug.Log("Respawning amygdala at (" + amygdala.Value.Item1 + "," + amygdala.Value.Item2 + ")");
-            levelmap[amygdala.Value.Item1, amygdala.Value.Item2] = 2;
-        }
-
-        foreach (KeyValuePair<int, (int, int)> obstacle in obstacle_map_positions)
-        {
-            //Debug.Log("Respawning obstacle at (" + amygdala.Value.Item1 + "," + amygdala.Value.Item2 + ")");
-            levelmap[obstacle.Value.Item1, obstacle.Value.Item2] = 131;
-        }
-    }
-
     void Update()
     {
-        /*
-        WorldState.global_debug_frames++;
-        if (WorldState.global_debug_frames == 15) {
-            for (var i=0; i < BuildLevel.amygdalas_instances.Count; ++i)
-            {
-                GameObject amyg = BuildLevel.amygdalas_instances[i];
-                if (amyg.CompareTag("Obstacle"))
-                {
-                    // This is not really an amygdala
-                    continue;
-                }
-                var x = amyg.transform.position.x;
-                var y = amyg.transform.position.y;
-                Debug.Log(i + ": (" + x + " / " + y + ")");
-            }
-            WorldState.global_debug_frames = 0;
-        }
-        */
-
         switch (WorldState.gameState)
         {
             case WorldState.GameState.Game:
-                if (should_check_level_finished) {
-                    check_level_finished();
+                if (shouldCheckLevelFinished) {
+                    checkLevelFinished();
                 }
                 break;
             case WorldState.GameState.Elevator:
-                switch (WorldState.current_angle)
+                switch (WorldState.currentAngle)
                 {
                     case 0:
                         {
-                            Vector3 position_change = new Vector3(0.0f, ELEVATOR_POSITION_CHANGE, 0.0f);
-                            BuildLevel.elevator_instance.transform.position += position_change;
+                            Vector3 positionChange = new Vector3(0.0f, ELEVATOR_positionChange, 0.0f);
+                            BuildLevel.elevatorInstance.transform.position += positionChange;
                         }
                         break;
                     case 180:
                         {
-                            Vector3 position_change = new Vector3(0.0f, -ELEVATOR_POSITION_CHANGE, 0.0f);
-                            BuildLevel.elevator_instance.transform.position += position_change;
+                            Vector3 positionChange = new Vector3(0.0f, -ELEVATOR_positionChange, 0.0f);
+                            BuildLevel.elevatorInstance.transform.position += positionChange;
                         }
                         break;
                     case 90:
                         {
-                            Vector3 position_change = new Vector3(-ELEVATOR_POSITION_CHANGE, 0.0f, 0.0f);
-                            BuildLevel.elevator_instance.transform.position += position_change;
+                            Vector3 positionChange = new Vector3(-ELEVATOR_positionChange, 0.0f, 0.0f);
+                            BuildLevel.elevatorInstance.transform.position += positionChange;
                         }
                         break;
                     case 270:
                         {
-                            Vector3 position_change = new Vector3(+ELEVATOR_POSITION_CHANGE, 0.0f, 0.0f);
-                            BuildLevel.elevator_instance.transform.position += position_change;
+                            Vector3 positionChange = new Vector3(+ELEVATOR_positionChange, 0.0f, 0.0f);
+                            BuildLevel.elevatorInstance.transform.position += positionChange;
                         }
                         break;
                 }
@@ -649,7 +595,7 @@ public class WorldState : MonoBehaviour
             if (Counters.elevatorFrames == 1)
             {
                 //Debug.Log("Destroying elevator and going into intermission");
-                Destroy(BuildLevel.elevator_instance);
+                Destroy(BuildLevel.elevatorInstance);
                 Counters.elevatorFrames = 0;
                 WorldState.gameState = WorldState.GameState.Intermission_FloraIn;
 

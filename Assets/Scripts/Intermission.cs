@@ -17,7 +17,7 @@ public class Intermission : MonoBehaviour
     public GameObject flora, flora_final, flora_instance;
     public GameObject pieczara, pieczara_instance;
     public GameObject pieczarax, pieczarax_instance;
-    public GameObject final_docent, final_docent_instance;
+    public GameObject final_docent, final_docentInstance;
 
     public GameObject title01_top, title01_bottom;
 
@@ -27,13 +27,13 @@ public class Intermission : MonoBehaviour
 
     bool isOnFinalLevel()
     {
-        return (WorldState.current_level == WorldState.MAX_LEVEL_NUMBER + 1);
+        return (WorldState.currentLevel == WorldState.MAX_LEVEL_NUMBER + 1);
     }
 
     public void PerformBuildIntermission()
     {
         WorldState.Reset();
-        Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.current_angle));
+        Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.currentAngle));
         flora_instance = Instantiate(
             isOnFinalLevel() ? flora_final : flora,
             new Vector3(
@@ -43,7 +43,7 @@ public class Intermission : MonoBehaviour
 
         if (isOnFinalLevel())
         {
-            final_docent_instance = Instantiate(final_docent, new Vector3(5.68f, -10.0f, 1), Quaternion.identity);
+            final_docentInstance = Instantiate(final_docent, new Vector3(5.68f, -10.0f, 1), Quaternion.identity);
         }
         else
         {
@@ -52,16 +52,16 @@ public class Intermission : MonoBehaviour
 
             cave_number_instance = Instantiate(no01, new Vector3(-18.0f, 6.7f, 1), Quaternion.identity);
             SpriteRenderer cave_number_renderer = cave_number_instance.GetComponent<SpriteRenderer>();
-            cave_number_renderer.sprite = Resources.Load<Sprite>("MapNumbers/no" + WorldState.current_level);
+            cave_number_renderer.sprite = Resources.Load<Sprite>("MapNumbers/no" + WorldState.currentLevel);
 
             title_top_instance = Instantiate(title01_top, new Vector3(-18.0f - (0.32f * 40), 3.44f, 1), Quaternion.identity);
             title_bottom_instance = Instantiate(title01_bottom, new Vector3(-18.0f, 2.23f, 1), Quaternion.identity);
 
             SpriteRenderer title_top_renderer = title_top_instance.GetComponent<SpriteRenderer>();
-            title_top_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.current_level + "_top");
+            title_top_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.currentLevel + "_top");
 
             SpriteRenderer title_bottom_renderer = title_bottom_instance.GetComponent<SpriteRenderer>();
-            title_bottom_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.current_level + "_bot");
+            title_bottom_renderer.sprite = Resources.Load<Sprite>("MapTitles/title" + WorldState.currentLevel + "_bot");
         }
 
         GameObject world = GameObject.FindWithTag("WorldMarker");
@@ -84,7 +84,7 @@ public class Intermission : MonoBehaviour
         Destroy(cave_number_instance);
         Destroy(title_top_instance);
         Destroy(title_bottom_instance);
-        Destroy(final_docent_instance);
+        Destroy(final_docentInstance);
     }
 
     void FixedUpdate()
@@ -172,9 +172,9 @@ public class Intermission : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_IncomingDocent:
                 {
-                    Vector3 pos = final_docent_instance.transform.position;
+                    Vector3 pos = final_docentInstance.transform.position;
                     pos.y += 0.04f;
-                    final_docent_instance.transform.position = pos;
+                    final_docentInstance.transform.position = pos;
 
                     if (pos.y > DOCENT_FINAL_POSITION)
                     {

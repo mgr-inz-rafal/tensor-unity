@@ -94,9 +94,9 @@ public class ClickHandler : MonoBehaviour
         }
         intermission.SendMessage("PerformDestroyIntermission");
 
-        if (WorldState.current_level == WorldState.MAX_LEVEL_NUMBER + 1)
+        if (WorldState.currentLevel == WorldState.MAX_LEVEL_NUMBER + 1)
         {
-            WorldState.current_level = 1;
+            WorldState.currentLevel = 1;
             BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
             if (buildMenu == null)
             {
@@ -130,7 +130,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -150,12 +150,12 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
-                if (WorldState.rotation_direction != 0)
+                if (WorldState.rotationDirection != 0)
                 {
                     return;
                 }
 
-                if (WorldState.lock_rotation)
+                if (WorldState.lockRotation)
                 {
                     return;
                 }
@@ -166,11 +166,11 @@ public class ClickHandler : MonoBehaviour
                 }
 
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
-                WorldState.lock_rotation = true;
+                WorldState.lockRotation = true;
                 GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
 
-                WorldState.rotation_direction = 1;
-                target_angle = WorldState.current_angle + 90;
+                WorldState.rotationDirection = 1;
+                target_angle = WorldState.currentAngle + 90;
                 if (target_angle == 360)
                 {
                     target_angle = 0;
@@ -189,7 +189,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -209,12 +209,12 @@ public class ClickHandler : MonoBehaviour
                 Handle_ClickOnSplashScreen();
                 break;
             case WorldState.GameState.Game:
-                if (WorldState.rotation_direction != 0)
+                if (WorldState.rotationDirection != 0)
                 {
                     return;
                 }
 
-                if (WorldState.lock_rotation)
+                if (WorldState.lockRotation)
                 {
                     return;
                 }
@@ -225,11 +225,11 @@ public class ClickHandler : MonoBehaviour
                 }
 
                 rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
-                WorldState.lock_rotation = true;
+                WorldState.lockRotation = true;
                 GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
 
-                WorldState.rotation_direction = -1;
-                target_angle = WorldState.current_angle - 90;
+                WorldState.rotationDirection = -1;
+                target_angle = WorldState.currentAngle - 90;
                 if (target_angle < 0)
                 {
                     target_angle += 360;
@@ -248,7 +248,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -273,7 +273,7 @@ public class ClickHandler : MonoBehaviour
                     return;
                 }
 
-                Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
+                Player playerScript = BuildLevel.docentInstance.GetComponent<Player>();
                 if (playerScript == null)
                 {
                     Debug.Log("Unable to find Player");
@@ -382,7 +382,7 @@ public class ClickHandler : MonoBehaviour
                 break;
             case WorldState.GameState.Intermission_FloraIn:
                 {
-                    if (WorldState.current_level != WorldState.MAX_LEVEL_NUMBER + 1)
+                    if (WorldState.currentLevel != WorldState.MAX_LEVEL_NUMBER + 1)
                     {
                         Handle_ClickOnIntermissionScreen();
                     }
@@ -406,7 +406,7 @@ public class ClickHandler : MonoBehaviour
                 {
                     return;
                 }
-                Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
+                Player playerScript = BuildLevel.docentInstance.GetComponent<Player>();
                 if (playerScript == null)
                 {
                     Debug.Log("Unable to find Player");
@@ -445,51 +445,51 @@ public class ClickHandler : MonoBehaviour
 
     public void UpdateLevelNumber()
     {
-        PlayerPrefs.SetInt("SelectedLevel", WorldState.current_level);
-        SetDigit("DigitRight", WorldState.current_level % 10);
-        SetDigit("DigitLeft", WorldState.current_level / 10);
+        PlayerPrefs.SetInt("SelectedLevel", WorldState.currentLevel);
+        SetDigit("DigitRight", WorldState.currentLevel % 10);
+        SetDigit("DigitLeft", WorldState.currentLevel / 10);
     }
 
     public void OnClick_LevelDown()
     {
-        int current_level = WorldState.DoLevelDown();
+        int currentLevel = WorldState.DoLevelDown();
         UpdateLevelNumber();
-        Debug.Log("Level down. Current level=" + current_level);
+        Debug.Log("Level down. Current level=" + currentLevel);
     }
 
     public void OnClick_LevelUp()
     {
-        int current_level = WorldState.DoLevelUp();
+        int currentLevel = WorldState.DoLevelUp();
         UpdateLevelNumber();
-        Debug.Log("Level up. Current level=" + current_level);
+        Debug.Log("Level up. Current level=" + currentLevel);
     }
 
     void AdjustRotation()
     {
-        switch (WorldState.rotation_direction)
+        switch (WorldState.rotationDirection)
         {
             case 0:
                 break;
             case 1:
-                WorldState.current_angle += 5;
-                if (WorldState.current_angle == 360)
+                WorldState.currentAngle += 5;
+                if (WorldState.currentAngle == 360)
                 {
-                    WorldState.current_angle = 0;
+                    WorldState.currentAngle = 0;
                 }
                 do_camera_rotation();
-                if (WorldState.current_angle == target_angle)
+                if (WorldState.currentAngle == target_angle)
                 {
                     finish_rotation();
                 }
                 break;
             case -1:
-                WorldState.current_angle -= 5;
-                if (WorldState.current_angle == -5)
+                WorldState.currentAngle -= 5;
+                if (WorldState.currentAngle == -5)
                 {
-                    WorldState.current_angle = 360 - 5;
+                    WorldState.currentAngle = 360 - 5;
                 }
                 do_camera_rotation();
-                if (WorldState.current_angle == target_angle)
+                if (WorldState.currentAngle == target_angle)
                 {
                     finish_rotation();
                 }
@@ -499,13 +499,13 @@ public class ClickHandler : MonoBehaviour
 
     bool DocentNotMoving()
     {
-        Rigidbody2D rb = BuildLevel.docent_instance.GetComponent<Rigidbody2D>();
+        Rigidbody2D rb = BuildLevel.docentInstance.GetComponent<Rigidbody2D>();
         return Math.Abs(rb.velocity.sqrMagnitude) <= NOT_MOVING_MAGNITUTE_THRESHOLD;
     }
 
     bool AmygdalasNotMoving()
     {
-        foreach (GameObject o in BuildLevel.amygdalas_instances)
+        foreach (GameObject o in BuildLevel.amygdalaInstances)
         {
             Rigidbody2D rb = o.GetComponent<Rigidbody2D>();
             if (Math.Abs(rb.velocity.sqrMagnitude) >= NOT_MOVING_MAGNITUTE_THRESHOLD)
@@ -523,7 +523,7 @@ public class ClickHandler : MonoBehaviour
             return;
         }
 
-        if (!WorldState.lock_rotation)
+        if (!WorldState.lockRotation)
         {
             return;
         }
@@ -537,8 +537,7 @@ public class ClickHandler : MonoBehaviour
         {
             WorldState.build_virtual_level_representation();
             WorldState.debug_print_virtual_level();
-            WorldState.recalculate_amygdala_positions();
-            WorldState.lock_rotation = false;
+            WorldState.lockRotation = false;
         }
     }
 
@@ -576,9 +575,9 @@ public class ClickHandler : MonoBehaviour
 
     void finish_rotation()
     {
-        WorldState.rotation_direction = 0;
+        WorldState.rotationDirection = 0;
 
-        switch (WorldState.current_angle)
+        switch (WorldState.currentAngle)
         {
             case 90:
                 Physics2D.gravity = new Vector3(GRAVITY_VALUE, 0.0f, 0.0f);
@@ -596,15 +595,15 @@ public class ClickHandler : MonoBehaviour
 
         WorldState.EnableGravity();
         DealWithActorRotations();
-        WorldState.rotation_direction = 0;
+        WorldState.rotationDirection = 0;
     }
 
     void DealWithActorRotations()
     {
         string message = rotate_player_left ? "RotateLeft" : "RotateRight";
-        Player playerScript = BuildLevel.docent_instance.GetComponent<Player>();
+        Player playerScript = BuildLevel.docentInstance.GetComponent<Player>();
         playerScript.SendMessage(message);
-        foreach (GameObject o in BuildLevel.amygdalas_instances)
+        foreach (GameObject o in BuildLevel.amygdalaInstances)
         {
             Amygdala amygdalaScript = o.GetComponent<Amygdala>();
             amygdalaScript.SendMessage(message);
@@ -613,6 +612,6 @@ public class ClickHandler : MonoBehaviour
 
     void do_camera_rotation()
     {
-        Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.current_angle));
+        Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.currentAngle));
     }
 }
