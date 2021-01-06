@@ -56,8 +56,8 @@ public class Player : MonoBehaviour
 
         Tuple<int, int> modifier = get_player_position_modifiers(m);
         //Debug.Log(modifier);
-        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
-        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+        var px = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
         px += modifier.Item1;
         py += modifier.Item2;
 
@@ -75,8 +75,8 @@ public class Player : MonoBehaviour
     {
         Tuple<int, int> modifier = get_player_position_modifiers(m);
         //Debug.Log(modifier);
-        var px = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.x);
-        var py = (int)System.Math.Round(BuildLevel.docent_instance.transform.position.y);
+        var px = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.x);
+        var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
         px += modifier.Item1;
         py += modifier.Item2;
 
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
     public void StepRight()
     {
-        if (WorldState.lock_rotation)
+        if (WorldState.lockRotation)
         {
             // Waiting until all rigid bodies settle on the ground
             return;
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
 
     public void StepLeft()
     {
-        if (WorldState.lock_rotation)
+        if (WorldState.lockRotation)
         {
             // Waiting until all rigid bodies settle on the ground
             return;
@@ -139,12 +139,12 @@ public class Player : MonoBehaviour
 
     Tuple<int, int> get_player_position_modifiers(Move_Direction m)
     {
-        return moves_definition[m][WorldState.current_angle];
+        return moves_definition[m][WorldState.currentAngle];
     }
 
     void initialize_player_movement(Tuple<int, int> modifiers)
     {
-        switch (WorldState.current_angle)
+        switch (WorldState.currentAngle)
         {
             case 0:
             case 180:
@@ -182,22 +182,22 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (BuildLevel.docent_instance == null)
+        if (BuildLevel.docentInstance == null)
         {
             return;
         }
 
         if (WorldState.gameState == WorldState.GameState.Elevator)
         {
-            Vector3 docentpos = BuildLevel.docent_instance.transform.position;
-            Vector3 elevpos = BuildLevel.elevator_instance.transform.position;
+            Vector3 docentpos = BuildLevel.docentInstance.transform.position;
+            Vector3 elevpos = BuildLevel.elevatorInstance.transform.position;
 
             if ((Math.Abs(elevpos.x - docentpos.x) < 0.3f) && (Math.Abs(elevpos.y - docentpos.y) < 0.3f))
             {
                 //Debug.Log("Destroying docent");
-                BuildLevel.docent_instance.transform.position = new Vector3(-1000, -1000, -1000);
-                Destroy(BuildLevel.docent_instance, 2);
-                BuildLevel.docent_instance = null;
+                BuildLevel.docentInstance.transform.position = new Vector3(-1000, -1000, -1000);
+                Destroy(BuildLevel.docentInstance, 2);
+                BuildLevel.docentInstance = null;
             }
         }
 
@@ -209,9 +209,9 @@ public class Player : MonoBehaviour
             {
                 stop_animation();
                 block_next_step = false;
-                WorldState.lock_rotation = true;
+                WorldState.lockRotation = true;
                 WorldState.EnableGravitySelective();
-                WorldState.skip_check_docent_moving = 2;
+                WorldState.skip_check_docent_moving = 1;
             }
         }
 
@@ -230,7 +230,7 @@ public class Player : MonoBehaviour
                 return;
             }
             buildLevel.PerformDestroy();
-            Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.current_angle));
+            Camera.main.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, WorldState.currentAngle));
 
             BuildMenu buildMenu = cameraObj.GetComponent<BuildMenu>();
             if (buildMenu == null)
@@ -247,8 +247,8 @@ public class Player : MonoBehaviour
 
     void perform_step()
     {
-        Vector3 position_change = new Vector3(player_movement_modifier.Item1, player_movement_modifier.Item2, 0.0f);
-        gameObject.transform.position += position_change;
+        Vector3 positionChange = new Vector3(player_movement_modifier.Item1, player_movement_modifier.Item2, 0.0f);
+        gameObject.transform.position += positionChange;
     }
 
     void RotateLeft()
@@ -279,8 +279,8 @@ public class Player : MonoBehaviour
         moves_definition.Add(Move_Direction.Right, moves_right);
     }
 
-    public void play_pickup_sound() {
-        if (WorldState.total_amygdalas == 0)
+    public void playPickupSound() {
+        if (WorldState.totalAmygdalas == 0)
         {
             GetComponent<AudioSource>().PlayOneShot(level_up, 1.0f);
         }
@@ -304,7 +304,7 @@ public class Player : MonoBehaviour
         return;
 
         // Debug.Log("OnCollisionEnter2D");
-        foreach (GameObject amyg in BuildLevel.amygdalas_instances)
+        foreach (GameObject amyg in BuildLevel.amygdalaInstances)
         {
             if (amyg.CompareTag("Obstacle"))
             {
@@ -315,7 +315,7 @@ public class Player : MonoBehaviour
             {
                 float amygdala_pos = 0;
                 float player_pos = 0;
-                switch (WorldState.current_angle)
+                switch (WorldState.currentAngle)
                 {
                     case 0:
                     case 180:
@@ -333,9 +333,9 @@ public class Player : MonoBehaviour
 
                 if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
                 {
-                    WorldState.last_amygdala_position = amyg.transform.position;
-                    --WorldState.total_amygdalas;
-                    if (WorldState.total_amygdalas == 0)
+                    WorldState.lastAmygdalaPosition = amyg.transform.position;
+                    --WorldState.totalAmygdalas;
+                    if (WorldState.totalAmygdalas == 0)
                     {
                         GetComponent<AudioSource>().PlayOneShot(level_up, 1.0f);
                     }
@@ -350,11 +350,11 @@ public class Player : MonoBehaviour
                             GetComponent<AudioSource>().PlayOneShot(pickup2, 1.0f);
                         }
                     }
-                    WorldState.amygdala_map_positions.Remove(amyg.GetInstanceID());
-                    BuildLevel.amygdalas_instances.Remove(amyg);
+                    WorldState.amygdalaMapPositions.Remove(amyg.GetInstanceID());
+                    BuildLevel.amygdalaInstances.Remove(amyg);
                     Destroy(amyg, 0.0f);
-                    //Debug.Log("Amygdalas left in this level:" + WorldState.total_amygdalas);
-                    if (WorldState.total_amygdalas == 0)
+                    //Debug.Log("Amygdalas left in this level:" + WorldState.totalAmygdalas);
+                    if (WorldState.totalAmygdalas == 0)
                     {
                         Camera cameraObj = Camera.main;
                         if (cameraObj == null)
@@ -369,7 +369,7 @@ public class Player : MonoBehaviour
                             return;
                         }
                         buildLevel.SendMessage("SpawnElevator");
-                        ++WorldState.current_level;
+                        ++WorldState.currentLevel;
 
                         GameObject world = GameObject.FindWithTag("WorldMarker");
                         if (world == null)

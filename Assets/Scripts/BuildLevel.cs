@@ -47,10 +47,10 @@ public class BuildLevel : MonoBehaviour
     public GameObject elevator;
 
     public static bool mapSpotsInstantiated = false;
-    public static GameObject elevator_instance;
-    public static GameObject docent_instance;
-    public static List<GameObject> wall_instances = new List<GameObject>();
-    public static List<GameObject> amygdalas_instances = new List<GameObject>();
+    public static GameObject elevatorInstance;
+    public static GameObject docentInstance;
+    public static List<GameObject> wallInstances = new List<GameObject>();
+    public static List<GameObject> amygdalaInstances = new List<GameObject>();
     public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
     public static Dictionary<WorldState.BorderState, string> border_textures = new Dictionary<WorldState.BorderState, string>()
     {
@@ -103,12 +103,12 @@ public class BuildLevel : MonoBehaviour
     {
         if (destroyDocent)
         {
-            Destroy(docent_instance);
+            Destroy(docentInstance);
         }
-        foreach (GameObject g in amygdalas_instances) { Destroy(g); };
-        amygdalas_instances.Clear();
-        foreach (GameObject g in wall_instances) { Destroy(g); };
-        wall_instances.Clear();
+        foreach (GameObject g in amygdalaInstances) { Destroy(g); };
+        amygdalaInstances.Clear();
+        foreach (GameObject g in wallInstances) { Destroy(g); };
+        wallInstances.Clear();
         HideBorders();
 
         WorldState.Reset();
@@ -116,8 +116,8 @@ public class BuildLevel : MonoBehaviour
 
     public void SpawnElevator()
     {
-        Vector3 pos = WorldState.last_amygdala_position;
-        switch (WorldState.current_angle)
+        Vector3 pos = WorldState.lastAmygdalaPosition;
+        switch (WorldState.currentAngle)
         {
             case 0:
                 pos.y = -3;
@@ -132,13 +132,13 @@ public class BuildLevel : MonoBehaviour
                 pos.x = -3;
                 break;
         }
-        elevator_instance = Instantiate(elevator, pos, Quaternion.identity);
-        WorldState.elevator_frames = WorldState.TOTAL_ELEVATOR_FRAMES;
-        switch (WorldState.current_angle)
+        elevatorInstance = Instantiate(elevator, pos, Quaternion.identity);
+        Counters.elevatorFrames = Consts.TOTAL_elevatorFrames;
+        switch (WorldState.currentAngle)
         {
             case 90:
             case 270:
-                elevator_instance.transform.Rotate(new Vector3(0, 0, 1), 90);
+                elevatorInstance.transform.Rotate(new Vector3(0, 0, 1), 90);
                 break;
         }
     }
@@ -147,13 +147,12 @@ public class BuildLevel : MonoBehaviour
     {
         GameObject world = GameObject.FindWithTag("WorldMarker");
         SoundManager sm = world.GetComponent<SoundManager>();
-        //sm.PlayMusic("Ingame");
         sm.PlayRandomGameplayMusic();
 
         ShowBorders();
 
-        WorldState.total_amygdalas = 0;
-        TextAsset bindata = Resources.Load("Maps/v" + WorldState.current_level) as TextAsset;
+        WorldState.totalAmygdalas = 0;
+        TextAsset bindata = Resources.Load("Maps/v" + WorldState.currentLevel) as TextAsset;
         if (bindata == null)
         {
             return;
@@ -183,7 +182,7 @@ public class BuildLevel : MonoBehaviour
                     case 0:
                         break;
                     case 2:
-                        WorldState.total_amygdalas++;
+                        WorldState.totalAmygdalas++;
                         GameObject amygdala_instance = Instantiate(amygdala_heart, new Vector3(j, i, 0), Quaternion.identity);
                         amygdala_instance.tag = "Amygdala";
 
@@ -191,107 +190,107 @@ public class BuildLevel : MonoBehaviour
                         amygdala_renderer.sprite = Resources.Load<Sprite>("Amygdalas/amygdala" + amygdala_number);
 
                         //Debug.Log("Spawning Amygdala at " + j + "," + i);
-                        amygdalas_instances.Add(amygdala_instance);
+                        amygdalaInstances.Add(amygdala_instance);
                         break;
                     case 1:
-                        docent_instance = Instantiate(docent, new Vector3(j, i, 0), Quaternion.identity);
-                        docent_instance.tag = "Player";
-                        Player playerScript = docent_instance.GetComponent<Player>();
+                        docentInstance = Instantiate(docent, new Vector3(j, i, 0), Quaternion.identity);
+                        docentInstance.tag = "Player";
+                        Player playerScript = docentInstance.GetComponent<Player>();
                         playerScript.SendMessage("stop_animation");
                         break;
                     case 5:
-                        wall_instances.Add(Instantiate(brick05, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick05, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 5 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick05p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick05p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 6:
-                        wall_instances.Add(Instantiate(brick06, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick06, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 6 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick06p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick06p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 7:
-                        wall_instances.Add(Instantiate(brick07, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick07, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 7 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick07p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick07p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 8:
-                        wall_instances.Add(Instantiate(brick08, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick08, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 8 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick08p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick08p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 9:
-                        wall_instances.Add(Instantiate(brick09, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick09, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 9 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick09p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick09p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 10:
-                        wall_instances.Add(Instantiate(brick10, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick10, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 10 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick10p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick10p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 11:
-                        wall_instances.Add(Instantiate(brick11, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick11, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 11 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick11p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick11p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 12:
-                        wall_instances.Add(Instantiate(brick12, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick12, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 12 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick12p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick12p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 13:
-                        wall_instances.Add(Instantiate(brick13, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick13, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 13 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick13p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick13p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 14:
-                        wall_instances.Add(Instantiate(brick14, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick14, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 14 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick14p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick14p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 15:
-                        wall_instances.Add(Instantiate(brick15, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick15, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 15 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick15p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick15p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 16:
-                        wall_instances.Add(Instantiate(brick16, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick16, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 16 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick16p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick16p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 17:
-                        wall_instances.Add(Instantiate(brick17, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick17, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 17 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick17p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick17p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 18:
-                        wall_instances.Add(Instantiate(brick18, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick18, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 18 + 64 + 64 + 64:
-                        wall_instances.Add(Instantiate(brick18p, new Vector3(j, i, 0), Quaternion.identity));
+                        wallInstances.Add(Instantiate(brick18p, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 131:
                         GameObject obstacle_instance_01 = Instantiate(obstacle00, new Vector3(j, i, 0), Quaternion.identity);
                         obstacle_instance_01.tag = "Obstacle";
-                        amygdalas_instances.Add(obstacle_instance_01);
+                        amygdalaInstances.Add(obstacle_instance_01);
                         break;
                     case 132:
                         GameObject obstacle_instance_02 = Instantiate(obstacle01, new Vector3(j, i, 0), Quaternion.identity);
                         obstacle_instance_02.tag = "Obstacle";
-                        amygdalas_instances.Add(obstacle_instance_02);
+                        amygdalaInstances.Add(obstacle_instance_02);
                         break;
                     default:
                         //Debug.Log("Unsupported map element: " + WorldState.levelmap[j, i]);
@@ -300,17 +299,17 @@ public class BuildLevel : MonoBehaviour
             }
         }
         mapSpotsInstantiated = true;
-        //Debug.Log("Total amygdalas in this level:" + WorldState.total_amygdalas);
+        //Debug.Log("Total amygdalas in this level:" + WorldState.totalAmygdalas);
     }
 
     void FixedUpdate()
     {
         if (WorldState.gameState == WorldState.GameState.Game)
         {
-            --WorldState.movement_warmup_counter;
-            if (WorldState.movement_warmup_counter < 0)
+            --Counters.movementWarmupCounter;
+            if (Counters.movementWarmupCounter < 0)
             {
-                WorldState.movement_warmup_counter = 0;
+                Counters.movementWarmupCounter = 0;
             }
         }
     }
