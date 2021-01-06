@@ -183,14 +183,50 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 180:
+                // Below new docent position
                 {
                     var x = px;
                     var y = py+1;
                     do 
                     {
-                        Debug.Log(x + "/" + y);
                         EnableAmygdalaAt(x, y);
                     } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Below old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x -= 1;
+                    }
+                    else
+                    {
+                        x += 1;
+                    }
+                    var y = py+1;
+                    do 
+                    {
+                        EnableAmygdalaAt(x, y);
+                    } while(++y < (BuildLevel.LEVEL_DIMENSION - 1));
+                }
+
+                // Above old docent position
+                {
+                    var x = px;
+                    if (Player.last_step_to_the_left) {
+                        x -= 1;
+                    }
+                    else
+                    {
+                        x += 1;
+                    }
+                    var y = py-1;
+                    do 
+                    {
+                        EnableAmygdalaAt(x, y);
+                        WorldState.virt[x, y] = 254;
+                    } while(--y > 0);
+                    debug_print_virtual_level();
                 }
                 break;
         }
