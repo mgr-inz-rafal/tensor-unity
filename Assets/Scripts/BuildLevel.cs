@@ -38,6 +38,7 @@ public class BuildLevel : MonoBehaviour
     public GameObject brick16p;
     public GameObject brick17p;
     public GameObject brick18p;
+    public GameObject brick05b;
     public GameObject obstacle00;
     public GameObject obstacle01;
     public GameObject docent;
@@ -199,6 +200,9 @@ public class BuildLevel : MonoBehaviour
                         break;
                     case 5:
                         wallInstances.Add(Instantiate(brick05, new Vector3(j, i, 0), Quaternion.identity));
+                        break;
+                    case 5 + 64 + 64:
+                        wallInstances.Add(Instantiate(brick05b, new Vector3(j, i, 0), Quaternion.identity));
                         break;
                     case 5 + 64 + 64 + 64:
                         wallInstances.Add(Instantiate(brick05p, new Vector3(j, i, 0), Quaternion.identity));
