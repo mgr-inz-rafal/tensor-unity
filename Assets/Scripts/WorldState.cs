@@ -111,39 +111,25 @@ public class WorldState : MonoBehaviour
 
         amygdalasToEnableIndex = 0;
 
-        // Below Docent
-        Dictionary<int, (int, int, AmygdalaActivationComparator)> belowDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)>();
-        belowDocentCoordinateModifiers.Add(90,  (1,  0, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }));
-        belowDocentCoordinateModifiers.Add(270, (-1, 0, delegate(ref int x, ref int y) { return --x > 0; }));
-        belowDocentCoordinateModifiers.Add(0,   (0, -1, delegate(ref int x, ref int y) { return --y > 0; }));
-        belowDocentCoordinateModifiers.Add(180, (0,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
-        {
-            var x = px + belowDocentCoordinateModifiers[WorldState.currentAngle].Item1;
-            var y = py + belowDocentCoordinateModifiers[WorldState.currentAngle].Item2;
-            do 
-            {
-                if (IsWallAt(x, y)) {
-                    break;
-                }
-                QueueAmygdalaToEnable(x, y);
-            } while(belowDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
-        }
-
         var XX90 = new (int, int, AmygdalaActivationComparator)[] {
             (1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }),
-            (-1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return --x > 0; }) };
+            (-1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return --x > 0; }),
+            (1,  0, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }) };
 
         var XX270 = new (int, int, AmygdalaActivationComparator)[] {
             (-1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return --x > 0; }),
-            (1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }) };
+            (1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }),
+            (-1, 0, delegate(ref int x, ref int y) { return --x > 0; }) };
 
         var XX0 = new (int, int, AmygdalaActivationComparator)[] {
             (Player.last_step_to_the_left ? 1 : -1, -1, delegate(ref int x, ref int y) { return --y > 0; }),
-            (Player.last_step_to_the_left ? 1 : -1, 1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }) };
+            (Player.last_step_to_the_left ? 1 : -1, 1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }),
+            (0, -1, delegate(ref int x, ref int y) { return --y > 0; }) };
 
         var XX180 = new (int, int, AmygdalaActivationComparator)[] {
             (Player.last_step_to_the_left ? -1 : 1,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }),
-            (Player.last_step_to_the_left ? -1 : 1, -1, delegate(ref int x, ref int y) { return --y > 0; }) };
+            (Player.last_step_to_the_left ? -1 : 1, -1, delegate(ref int x, ref int y) { return --y > 0; }),
+            (0,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }) };
 
         // Below Old Docent
         Dictionary<int, (int, int, AmygdalaActivationComparator)[]> belowOldDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)[]>();
