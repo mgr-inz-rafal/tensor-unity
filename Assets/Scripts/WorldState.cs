@@ -147,95 +147,22 @@ public class WorldState : MonoBehaviour
             } while(belowDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
         }
 
-        switch (WorldState.currentAngle)
+        // Above Old Docent
+        Dictionary<int, (int, int, AmygdalaActivationComparator)> aboveOldDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)>();
+        aboveOldDocentCoordinateModifiers.Add(90,  (-1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return --x > 0; }));
+        aboveOldDocentCoordinateModifiers.Add(270, (1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }));
+        aboveOldDocentCoordinateModifiers.Add(0,   (Player.last_step_to_the_left ? 1 : -1, 1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
+        aboveOldDocentCoordinateModifiers.Add(180, (Player.last_step_to_the_left ? -1 : 1, -1, delegate(ref int x, ref int y) { return --y > 0; }));
         {
-            case 90:
-
-                // Below old docent position
-                {
-                    var x = px-1;
-                    var y = py;
-                    if (Player.last_step_to_the_left) {
-                        y += 1;
-                    }
-                    else
-                    {
-                        y -= 1;
-                    }
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(--x > 0);
+            var x = px + aboveOldDocentCoordinateModifiers[WorldState.currentAngle].Item1;
+            var y = py + aboveOldDocentCoordinateModifiers[WorldState.currentAngle].Item2;
+            do 
+            {
+                if (IsWallAt(x, y)) {
+                    break;
                 }
-                break;
-            case 270:
-
-                // Above old docent position
-                {
-                    var x = px+1;
-                    var y = py;
-                    if (Player.last_step_to_the_left) {
-                        y -= 1;
-                    }
-                    else
-                    {
-                        y += 1;
-                    }
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(++x < (Consts.LEVEL_DIMENSION - 1));
-                }
-                break;
-            case 0:
-
-                // Above old docent position
-                {
-                    var x = px;
-                    if (Player.last_step_to_the_left) {
-                        x += 1;
-                    }
-                    else
-                    {
-                        x -= 1;
-                    }
-                    var y = py+1;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(++y < (Consts.LEVEL_DIMENSION - 1));
-                }
-                break;
-            case 180:
-                // Above old docent position
-                {
-                    var x = px;
-                    if (Player.last_step_to_the_left) {
-                        x -= 1;
-                    }
-                    else
-                    {
-                        x += 1;
-                    }
-                    var y = py-1;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(--y > 0);
-                }
-                break;
+                QueueAmygdalaToEnable(x, y);
+            } while(aboveOldDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
         }
 
         EnableQueuedAmygdalas();
