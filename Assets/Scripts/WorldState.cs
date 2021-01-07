@@ -129,40 +129,41 @@ public class WorldState : MonoBehaviour
             } while(belowDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
         }
 
-        // Below Old Docent
-        Dictionary<int, (int, int, AmygdalaActivationComparator)> belowOldDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)>();
-        belowOldDocentCoordinateModifiers.Add(90,  (1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }));
-        belowOldDocentCoordinateModifiers.Add(270, (-1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return --x > 0; }));
-        belowOldDocentCoordinateModifiers.Add(0,   (Player.last_step_to_the_left ? 1 : -1, -1, delegate(ref int x, ref int y) { return --y > 0; }));
-        belowOldDocentCoordinateModifiers.Add(180, (Player.last_step_to_the_left ? -1 : 1,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
-        {
-            var x = px + belowOldDocentCoordinateModifiers[WorldState.currentAngle].Item1;
-            var y = py + belowOldDocentCoordinateModifiers[WorldState.currentAngle].Item2;
-            do 
-            {
-                if (IsWallAt(x, y)) {
-                    break;
-                }
-                QueueAmygdalaToEnable(x, y);
-            } while(belowDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
-        }
+        var XX90 = new (int, int, AmygdalaActivationComparator)[] {
+            (1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }),
+            (-1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return --x > 0; }) };
 
-        // Above Old Docent
-        Dictionary<int, (int, int, AmygdalaActivationComparator)> aboveOldDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)>();
-        aboveOldDocentCoordinateModifiers.Add(90,  (-1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return --x > 0; }));
-        aboveOldDocentCoordinateModifiers.Add(270, (1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }));
-        aboveOldDocentCoordinateModifiers.Add(0,   (Player.last_step_to_the_left ? 1 : -1, 1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
-        aboveOldDocentCoordinateModifiers.Add(180, (Player.last_step_to_the_left ? -1 : 1, -1, delegate(ref int x, ref int y) { return --y > 0; }));
+        var XX270 = new (int, int, AmygdalaActivationComparator)[] {
+            (-1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return --x > 0; }),
+            (1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }) };
+
+        var XX0 = new (int, int, AmygdalaActivationComparator)[] {
+            (Player.last_step_to_the_left ? 1 : -1, -1, delegate(ref int x, ref int y) { return --y > 0; }),
+            (Player.last_step_to_the_left ? 1 : -1, 1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }) };
+
+        var XX180 = new (int, int, AmygdalaActivationComparator)[] {
+            (Player.last_step_to_the_left ? -1 : 1,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }),
+            (Player.last_step_to_the_left ? -1 : 1, -1, delegate(ref int x, ref int y) { return --y > 0; }) };
+
+        // Below Old Docent
+        Dictionary<int, (int, int, AmygdalaActivationComparator)[]> belowOldDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)[]>();
+        belowOldDocentCoordinateModifiers.Add(90, XX90);
+        belowOldDocentCoordinateModifiers.Add(270, XX270);
+        belowOldDocentCoordinateModifiers.Add(0, XX0);
+        belowOldDocentCoordinateModifiers.Add(180, XX180);
         {
-            var x = px + aboveOldDocentCoordinateModifiers[WorldState.currentAngle].Item1;
-            var y = py + aboveOldDocentCoordinateModifiers[WorldState.currentAngle].Item2;
-            do 
+            foreach(var angleModifier in belowOldDocentCoordinateModifiers[WorldState.currentAngle])
             {
-                if (IsWallAt(x, y)) {
-                    break;
-                }
-                QueueAmygdalaToEnable(x, y);
-            } while(aboveOldDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
+                var x = px + angleModifier.Item1;
+                var y = py + angleModifier.Item2;
+                do 
+                {
+                    if (IsWallAt(x, y)) {
+                        break;
+                    }
+                    QueueAmygdalaToEnable(x, y);
+                } while(angleModifier.Item3(ref x, ref y));
+            }
         }
 
         EnableQueuedAmygdalas();
