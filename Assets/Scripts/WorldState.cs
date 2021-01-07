@@ -109,6 +109,9 @@ public class WorldState : MonoBehaviour
         var px = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.x);
         var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
 
+        // TODO: Consider passing `last_step_to_the_left` to the delegate so that
+        // it can evaluate the direction on it's own. It will allow this dictionary
+        // to become static and initialized only once at the application start.
         amygdalasToEnableIndex = 0;
         Dictionary<int, (int, int, AmygdalaActivationComparator)[]> amygdalaActivationSpec = new Dictionary<int, (int, int, AmygdalaActivationComparator)[]>();
         amygdalaActivationSpec.Add(90, new (int, int, AmygdalaActivationComparator)[] {
