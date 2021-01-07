@@ -88,7 +88,6 @@ public class Intermission : MonoBehaviour
         {
             switch (WorldState.gameState) {
                 case WorldState.GameState.Game:
-                case WorldState.GameState.Elevator:
                 case WorldState.GameState.Intermission_FloraIn:
                 case WorldState.GameState.Intermission_PieczaraReveal:
                 case WorldState.GameState.Intermission_WaitingForNumber:
