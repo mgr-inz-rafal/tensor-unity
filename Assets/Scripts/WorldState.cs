@@ -116,7 +116,7 @@ public class WorldState : MonoBehaviour
         belowDocentCoordinateModifiers.Add(90,  (1,  0, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }));
         belowDocentCoordinateModifiers.Add(270, (-1, 0, delegate(ref int x, ref int y) { return --x > 0; }));
         belowDocentCoordinateModifiers.Add(0,   (0, -1, delegate(ref int x, ref int y) { return --y > 0; }));
-        belowDocentCoordinateModifiers.Add(180, (0, +1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
+        belowDocentCoordinateModifiers.Add(180, (0,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
         {
             var x = px + belowDocentCoordinateModifiers[WorldState.currentAngle].Item1;
             var y = py + belowDocentCoordinateModifiers[WorldState.currentAngle].Item2;
@@ -129,28 +129,27 @@ public class WorldState : MonoBehaviour
             } while(belowDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
         }
 
+        // Below Old Docent
+        Dictionary<int, (int, int, AmygdalaActivationComparator)> belowOldDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)>();
+        belowOldDocentCoordinateModifiers.Add(90,  (1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }));
+        belowOldDocentCoordinateModifiers.Add(270, (-1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return --x > 0; }));
+        belowOldDocentCoordinateModifiers.Add(0,   (Player.last_step_to_the_left ? 1 : -1, -1, delegate(ref int x, ref int y) { return --y > 0; }));
+        belowOldDocentCoordinateModifiers.Add(180, (Player.last_step_to_the_left ? -1 : 1,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
+        {
+            var x = px + belowOldDocentCoordinateModifiers[WorldState.currentAngle].Item1;
+            var y = py + belowOldDocentCoordinateModifiers[WorldState.currentAngle].Item2;
+            do 
+            {
+                if (IsWallAt(x, y)) {
+                    break;
+                }
+                QueueAmygdalaToEnable(x, y);
+            } while(belowDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
+        }
+
         switch (WorldState.currentAngle)
         {
             case 90:
-                // Below old docent position
-                {
-                    var x = px+1;
-                    var y = py;
-                    if (Player.last_step_to_the_left) {
-                        y += 1;
-                    }
-                    else
-                    {
-                        y -= 1;
-                    }
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(++x < (Consts.LEVEL_DIMENSION - 1));
-                }
 
                 // Below old docent position
                 {
@@ -173,25 +172,6 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 270:
-                // Below old docent position
-                {
-                    var x = px-1;
-                    var y = py;
-                    if (Player.last_step_to_the_left) {
-                        y -= 1;
-                    }
-                    else
-                    {
-                        y += 1;
-                    }
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(--x > 0);
-                }
 
                 // Above old docent position
                 {
@@ -214,25 +194,6 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 0:
-                // Below old docent position
-                {
-                    var x = px;
-                    if (Player.last_step_to_the_left) {
-                        x += 1;
-                    }
-                    else
-                    {
-                        x -= 1;
-                    }
-                    var y = py-1;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(--y > 0);
-                }
 
                 // Above old docent position
                 {
@@ -255,26 +216,6 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 180:
-                // Below old docent position
-                {
-                    var x = px;
-                    if (Player.last_step_to_the_left) {
-                        x -= 1;
-                    }
-                    else
-                    {
-                        x += 1;
-                    }
-                    var y = py+1;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(++y < (Consts.LEVEL_DIMENSION - 1));
-                }
-
                 // Above old docent position
                 {
                     var x = px;
