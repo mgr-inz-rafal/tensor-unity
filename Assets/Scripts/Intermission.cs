@@ -86,8 +86,20 @@ public class Intermission : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            PerformDestroyIntermission();
-            WorldState.GoBackToTitleScreen();
+            switch (WorldState.gameState) {
+                case WorldState.GameState.Game:
+                case WorldState.GameState.Elevator:
+                case WorldState.GameState.Intermission_FloraIn:
+                case WorldState.GameState.Intermission_PieczaraReveal:
+                case WorldState.GameState.Intermission_WaitingForNumber:
+                case WorldState.GameState.Intermission_TopTitle:
+                case WorldState.GameState.Intermission_BottomTitle:
+                case WorldState.GameState.Intermission_Done:
+                case WorldState.GameState.Intermission_IncomingDocent:
+                    PerformDestroyIntermission();
+                    WorldState.GoBackToTitleScreen();
+                    break;
+            }
         }
 
         switch (WorldState.gameState)
