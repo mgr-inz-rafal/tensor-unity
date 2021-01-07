@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
             var amyg_in_way = amygdala_on_the_way(Move_Direction.Right);
             if (true == amyg_in_way.Item1) {
                 // Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
-                WorldState.destroy_amygdala_at(amyg_in_way.Item2, amyg_in_way.Item3);
+                WorldState.DestroyAmygdalaAt(amyg_in_way.Item2, amyg_in_way.Item3);
             }
             if (false == block_next_step)
             {
@@ -126,7 +126,7 @@ public class Player : MonoBehaviour
             var amyg_in_way = amygdala_on_the_way(Move_Direction.Left);
             if (true == amyg_in_way.Item1) {
                 // Debug.Log("Amygdala found at " + amyg_in_way.Item2 + "/" + amyg_in_way.Item3 + "!");
-                WorldState.destroy_amygdala_at(amyg_in_way.Item2, amyg_in_way.Item3);
+                WorldState.DestroyAmygdalaAt(amyg_in_way.Item2, amyg_in_way.Item3);
             }
             if (false == block_next_step)
             {
@@ -269,100 +269,6 @@ public class Player : MonoBehaviour
             else
             {
                 GetComponent<AudioSource>().PlayOneShot(pickup2, 1.0f);
-            }
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        // TODO: RC: Must be reworked when "map_spot" approach to physics is removed.
-        //       Code responsible for removing amygdalas, spawning elevator, etc. must be retained.
-        return;
-
-        // Debug.Log("OnCollisionEnter2D");
-        foreach (GameObject amyg in BuildLevel.amygdalaInstances)
-        {
-            if (amyg.CompareTag("Obstacle"))
-            {
-                // This is not really an amygdala
-                continue;
-            }
-            if (amyg == col.gameObject)
-            {
-                float amygdala_pos = 0;
-                float player_pos = 0;
-                switch (WorldState.currentAngle)
-                {
-                    case 0:
-                    case 180:
-                        amygdala_pos = amyg.transform.position.y;
-                        player_pos = gameObject.transform.position.y;
-                        break;
-                    case 90:
-                    case 270:
-                        amygdala_pos = amyg.transform.position.x;
-                        player_pos = gameObject.transform.position.x;
-                        break;
-                }
-
-                // Debug.Log(amygdala_pos + " --- " + player_pos + " --- " + Math.Abs(amygdala_pos - player_pos));
-
-                if (Math.Abs(amygdala_pos - player_pos) < 0.2f)
-                {
-                    WorldState.lastAmygdalaPosition = amyg.transform.position;
-                    --WorldState.totalAmygdalas;
-                    if (WorldState.totalAmygdalas == 0)
-                    {
-                        GetComponent<AudioSource>().PlayOneShot(level_up, 1.0f);
-                    }
-                    else
-                    {
-                        if (rnd.Next(1, 3) == 1)
-                        {
-                            GetComponent<AudioSource>().PlayOneShot(pickup1, 1.0f);
-                        }
-                        else
-                        {
-                            GetComponent<AudioSource>().PlayOneShot(pickup2, 1.0f);
-                        }
-                    }
-                    WorldState.amygdalaMapPositions.Remove(amyg.GetInstanceID());
-                    BuildLevel.amygdalaInstances.Remove(amyg);
-                    Destroy(amyg, 0.0f);
-                    //Debug.Log("Amygdalas left in this level:" + WorldState.totalAmygdalas);
-                    if (WorldState.totalAmygdalas == 0)
-                    {
-                        Camera cameraObj = Camera.main;
-                        if (cameraObj == null)
-                        {
-                            //Debug.Log("Unable to access main Camera");
-                            return;
-                        }
-                        BuildLevel buildLevel = cameraObj.GetComponent<BuildLevel>();
-                        if (buildLevel == null)
-                        {
-                            //Debug.Log("Unable to access BuildLevel");
-                            return;
-                        }
-                        buildLevel.SendMessage("SpawnElevator");
-                        WorldState.currentLevel.Increase();
-
-                        GameObject world = GameObject.FindWithTag("WorldMarker");
-                        if (world == null)
-                        {
-                            //Debug.Log("Unable to access world");
-                        }
-                        ClickHandler ch = world.GetComponent<ClickHandler>();
-                        if (world == null)
-                        {
-                            //Debug.Log("Unable to access click handler");
-                        }
-                        ch.SendMessage("UpdateLevelNumber");
-
-                        WorldState.gameState = WorldState.GameState.Elevator;
-                    }
-                    return;
-                }
             }
         }
     }

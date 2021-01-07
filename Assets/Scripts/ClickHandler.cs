@@ -12,9 +12,9 @@ public class ClickHandler : MonoBehaviour
     const float NOT_MOVING_MAGNITUTE_THRESHOLD = 0.01f;
     const int ROTATION_LOCK_COUNT = 30;
 
-    int target_angle;
+    int targetAngle;
     bool rotate_player_left = false;
-    int rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
+    int rotationUnlockFrameCount = ROTATION_LOCK_COUNT;
 
     bool rotate_right = false;
     bool rotate_left = false;
@@ -162,7 +162,7 @@ public class ClickHandler : MonoBehaviour
         }
 
         Camera.main.orthographic = false;
-        rotation_unlock_frame_count = ROTATION_LOCK_COUNT;
+        rotationUnlockFrameCount = ROTATION_LOCK_COUNT;
         WorldState.lockRotation = true;
         WorldState.cameraDistanceIndex = 0;
         GetComponent<AudioSource>().PlayOneShot(rotate, 1.0f);
@@ -170,17 +170,17 @@ public class ClickHandler : MonoBehaviour
         switch (direction) {
             case Player.Move_Direction.Left:
                 WorldState.rotationDirection = 1;
-                target_angle = WorldState.currentAngle + 90;
-                if (target_angle == 360) {
-                    target_angle = 0;
+                targetAngle = WorldState.currentAngle + 90;
+                if (targetAngle == 360) {
+                    targetAngle = 0;
                 }
                 rotate_player_left = true;
                 break;
             case Player.Move_Direction.Right:
                 WorldState.rotationDirection = -1;
-                target_angle = WorldState.currentAngle - 90;
-                if (target_angle < 0) {
-                    target_angle += 360;
+                targetAngle = WorldState.currentAngle - 90;
+                if (targetAngle < 0) {
+                    targetAngle += 360;
                 }
                 rotate_player_left = false;
                 break;
@@ -481,7 +481,7 @@ public class ClickHandler : MonoBehaviour
                     WorldState.currentAngle = 0;
                 }
                 DoSceneRotation();
-                if (WorldState.currentAngle == target_angle)
+                if (WorldState.currentAngle == targetAngle)
                 {
                     FinishRotation();
                 }
@@ -493,7 +493,7 @@ public class ClickHandler : MonoBehaviour
                     WorldState.currentAngle = 360 - Consts.ROTATION_STEP;
                 }
                 DoSceneRotation();
-                if (WorldState.currentAngle == target_angle)
+                if (WorldState.currentAngle == targetAngle)
                 {
                     FinishRotation();
                 }
@@ -531,8 +531,8 @@ public class ClickHandler : MonoBehaviour
         {
             return;
         }
-        rotation_unlock_frame_count--;
-        if (rotation_unlock_frame_count > 0)
+        rotationUnlockFrameCount--;
+        if (rotationUnlockFrameCount > 0)
         {
             return;
         }

@@ -417,7 +417,7 @@ public class WorldState : MonoBehaviour
         return currentLevel.Get();
     }
 
-    public static void destroy_amygdala_at(int x, int y) {
+    public static void DestroyAmygdalaAt(int x, int y) {
         foreach (GameObject amyg in BuildLevel.amygdalaInstances) {
             float ax = amyg.transform.position.x;
             float ay = amyg.transform.position.y;
@@ -516,6 +516,7 @@ public class WorldState : MonoBehaviour
     public static void debug_print_virtual_level() {
         return; // Inactive
 
+        /*
         string lev = System.Environment.NewLine;
         Debug.Log("");
         Debug.Log("---");
@@ -551,6 +552,7 @@ public class WorldState : MonoBehaviour
         }
         Debug.Log(lev);
         Debug.Log("---");
+        */
     }
 
     void Update()
