@@ -110,46 +110,34 @@ public class WorldState : MonoBehaviour
         var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
 
         amygdalasToEnableIndex = 0;
-
-        var XX90 = new (int, int, AmygdalaActivationComparator)[] {
+        Dictionary<int, (int, int, AmygdalaActivationComparator)[]> amygdalaActivationSpec = new Dictionary<int, (int, int, AmygdalaActivationComparator)[]>();
+        amygdalaActivationSpec.Add(90, new (int, int, AmygdalaActivationComparator)[] {
             (1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }),
             (-1,  Player.last_step_to_the_left ? 1 : -1, delegate(ref int x, ref int y) { return --x > 0; }),
-            (1,  0, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }) };
-
-        var XX270 = new (int, int, AmygdalaActivationComparator)[] {
+            (1,  0, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }) });
+        amygdalaActivationSpec.Add(270, new (int, int, AmygdalaActivationComparator)[] {
             (-1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return --x > 0; }),
             (1, Player.last_step_to_the_left ? -1 : 1, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }),
-            (-1, 0, delegate(ref int x, ref int y) { return --x > 0; }) };
-
-        var XX0 = new (int, int, AmygdalaActivationComparator)[] {
+            (-1, 0, delegate(ref int x, ref int y) { return --x > 0; }) });
+        amygdalaActivationSpec.Add(0, new (int, int, AmygdalaActivationComparator)[] {
             (Player.last_step_to_the_left ? 1 : -1, -1, delegate(ref int x, ref int y) { return --y > 0; }),
             (Player.last_step_to_the_left ? 1 : -1, 1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }),
-            (0, -1, delegate(ref int x, ref int y) { return --y > 0; }) };
-
-        var XX180 = new (int, int, AmygdalaActivationComparator)[] {
+            (0, -1, delegate(ref int x, ref int y) { return --y > 0; }) });
+        amygdalaActivationSpec.Add(180, new (int, int, AmygdalaActivationComparator)[] {
             (Player.last_step_to_the_left ? -1 : 1,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }),
             (Player.last_step_to_the_left ? -1 : 1, -1, delegate(ref int x, ref int y) { return --y > 0; }),
-            (0,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }) };
-
-        // Below Old Docent
-        Dictionary<int, (int, int, AmygdalaActivationComparator)[]> belowOldDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)[]>();
-        belowOldDocentCoordinateModifiers.Add(90, XX90);
-        belowOldDocentCoordinateModifiers.Add(270, XX270);
-        belowOldDocentCoordinateModifiers.Add(0, XX0);
-        belowOldDocentCoordinateModifiers.Add(180, XX180);
+            (0,  1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }) });
+        foreach(var angleModifier in amygdalaActivationSpec[WorldState.currentAngle])
         {
-            foreach(var angleModifier in belowOldDocentCoordinateModifiers[WorldState.currentAngle])
+            var x = px + angleModifier.Item1;
+            var y = py + angleModifier.Item2;
+            do 
             {
-                var x = px + angleModifier.Item1;
-                var y = py + angleModifier.Item2;
-                do 
-                {
-                    if (IsWallAt(x, y)) {
-                        break;
-                    }
-                    QueueAmygdalaToEnable(x, y);
-                } while(angleModifier.Item3(ref x, ref y));
-            }
+                if (IsWallAt(x, y)) {
+                    break;
+                }
+                QueueAmygdalaToEnable(x, y);
+            } while(angleModifier.Item3(ref x, ref y));
         }
 
         EnableQueuedAmygdalas();
