@@ -50,6 +50,7 @@ public class ClickHandler : MonoBehaviour
 
     void Handle_ClickOnMenuScreen()
     {
+        WorldState.currentLevel.ResetFinal();
         Camera cameraObj = Camera.main;
         if (cameraObj == null)
         {

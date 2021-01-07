@@ -13,7 +13,7 @@ public class LevelCounter {
 
     public void Set(int level) {
         if (level == 1) {
-            reachedFinal = false;
+            ResetFinal();
         }
         currentLevel = level;
     }
@@ -24,6 +24,10 @@ public class LevelCounter {
 
     public bool ReachedFinal() {
         return reachedFinal;
+    }
+
+    public void ResetFinal() {
+        reachedFinal = false;
     }
 
     public void Decrease() {
