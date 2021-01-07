@@ -88,6 +88,8 @@ public class WorldState : MonoBehaviour
         //Debug.Log("Gravity ON");
     }
 
+    public delegate bool AmygdalaActivationComparator(ref int x, ref int y);
+
     // Enables gravity only for objects that have collision
     // probability after Docent made a step, i.e.:
     // - objects below current docent position (he could have stepped on an object and shouldn't fall through)
@@ -108,22 +110,28 @@ public class WorldState : MonoBehaviour
         var py = (int)System.Math.Round(BuildLevel.docentInstance.transform.position.y);
 
         amygdalasToEnableIndex = 0;
+
+        // Below Docent
+        Dictionary<int, (int, int, AmygdalaActivationComparator)> belowDocentCoordinateModifiers = new Dictionary<int, (int, int, AmygdalaActivationComparator)>();
+        belowDocentCoordinateModifiers.Add(90,  (1,  0, delegate(ref int x, ref int y) { return ++x < (Consts.LEVEL_DIMENSION - 1); }));
+        belowDocentCoordinateModifiers.Add(270, (-1, 0, delegate(ref int x, ref int y) { return --x > 0; }));
+        belowDocentCoordinateModifiers.Add(0,   (0, -1, delegate(ref int x, ref int y) { return --y > 0; }));
+        belowDocentCoordinateModifiers.Add(180, (0, +1, delegate(ref int x, ref int y) { return ++y < (Consts.LEVEL_DIMENSION - 1); }));
+        {
+            var x = px + belowDocentCoordinateModifiers[WorldState.currentAngle].Item1;
+            var y = py + belowDocentCoordinateModifiers[WorldState.currentAngle].Item2;
+            do 
+            {
+                if (IsWallAt(x, y)) {
+                    break;
+                }
+                QueueAmygdalaToEnable(x, y);
+            } while(belowDocentCoordinateModifiers[WorldState.currentAngle].Item3(ref x, ref y));
+        }
+
         switch (WorldState.currentAngle)
         {
             case 90:
-                // Below new docent position
-                {
-                    var x = px+1;
-                    var y = py;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(++x < (Consts.LEVEL_DIMENSION - 1));
-                }
-
                 // Below old docent position
                 {
                     var x = px+1;
@@ -165,19 +173,6 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 270:
-                // Below new docent position
-                {
-                    var x = px-1;
-                    var y = py;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(--x > 0);
-                }
-
                 // Below old docent position
                 {
                     var x = px-1;
@@ -219,19 +214,6 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 0:
-                // Below new docent position
-                {
-                    var x = px;
-                    var y = py-1;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(--y > 0);
-                }
-
                 // Below old docent position
                 {
                     var x = px;
@@ -273,19 +255,6 @@ public class WorldState : MonoBehaviour
                 }
                 break;
             case 180:
-                // Below new docent position
-                {
-                    var x = px;
-                    var y = py+1;
-                    do 
-                    {
-                        if (IsWallAt(x, y)) {
-                            break;
-                        }
-                        QueueAmygdalaToEnable(x, y);
-                    } while(++y < (Consts.LEVEL_DIMENSION - 1));
-                }
-
                 // Below old docent position
                 {
                     var x = px;
