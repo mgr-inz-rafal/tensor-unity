@@ -34,16 +34,19 @@ public class LevelCounter {
         }
     }
 
-    public void Increase() {
+    public void Increase(bool fromWinningLevel) {
         currentLevel++;
-        if (IsLast())
+        if (fromWinningLevel && IsLast())
         {
             reachedFinal = true;
-            currentLevel = 1;
         }
         else
         {
             reachedFinal = false;
+        }
+
+        if (IsLast()) {
+            currentLevel = 1;
         }
     }
 };

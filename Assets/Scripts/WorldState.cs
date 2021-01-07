@@ -413,7 +413,7 @@ public class WorldState : MonoBehaviour
 
     public static int DoLevelUp()
     {
-        currentLevel.Increase();
+        currentLevel.Increase(false);
         return currentLevel.Get();
     }
 
@@ -458,7 +458,7 @@ public class WorldState : MonoBehaviour
                 return;
             }
             buildLevel.SendMessage("SpawnElevator");
-            currentLevel.Increase();
+            currentLevel.Increase(true);
 
             GameObject world = GameObject.FindWithTag("WorldMarker");
             if (world == null)
