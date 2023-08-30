@@ -58,3 +58,5 @@ Assets/StreamingAssets/crashlytics-build.properties
 # End of https://www.gitignore.io/api/unity
 
 settings.json
+
+UserSettings/*
