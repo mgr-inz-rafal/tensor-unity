@@ -10,7 +10,7 @@ public class Ptasior : MonoBehaviour
 
     public void Fly()
     {
-        return;
+//        return;
         var pos = BuildLevel.ptasiorInstance.transform.position;
         pos.x += 0.05f;
         pos.y += (float)yacc;
@@ -32,10 +32,9 @@ public class Ptasior : MonoBehaviour
 
     public static void InitPos() {
         var posy = BuildLevel.rng.NextDouble() * 11;
-//        var pos = new Vector3(-10, (float)posy, 0);
+        var pos = new Vector3(-10, (float)posy, 0);
 
-        var pos = new Vector3(5, 5, 0);
-
+        //var pos = new Vector3(5, 5, 0);
 
         var randomYacc = BuildLevel.rng.NextDouble() * 0.025;
         if (posy > 5.5) {
