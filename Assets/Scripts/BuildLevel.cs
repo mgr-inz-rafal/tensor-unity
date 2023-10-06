@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class BuildLevel : MonoBehaviour
 {
-    System.Random rng = new System.Random();
+    public static System.Random rng = new System.Random();
 
     public CanvasGroup levelBorders;
 
@@ -322,17 +322,8 @@ public class BuildLevel : MonoBehaviour
             // y=11 - at the top
             // y=5.5 - mid point
             if (!ptasiorInstance) {
-                var posy = rng.NextDouble() * 11;
-                var pos = new Vector3(-10, (float)posy, 0);
-                var randomYacc = rng.NextDouble() * 0.025;
-                Debug.Log(randomYacc);
-                if (posy > 5.5) {
-                    Ptasior.yacc = -randomYacc;
-                }
-                else {
-                    Ptasior.yacc = randomYacc;
-                }
-                ptasiorInstance = Instantiate(ptasior, pos, Quaternion.identity);
+                ptasiorInstance = Instantiate(ptasior, new Vector3(0, 0, 0), Quaternion.identity);
+                Ptasior.InitPos();
             }
         }
     }
