@@ -60,11 +60,9 @@ public class Ptasior : MonoBehaviour
 
     public static void InitPos() {
         var posy = BuildLevel.rng.NextDouble() * 11;
-        var pos = new Vector3(-10, (float)posy, 0);
+        var pos = new Vector3((float)-11.5, (float)posy, 0);
 
-        //var pos = new Vector3(5, 5, 0);
-
-        var randomYacc = BuildLevel.rng.NextDouble() * 0.019;
+        var randomYacc = BuildLevel.rng.NextDouble() * 0.017;
         if (posy > 5.5) {
             Ptasior.yacc = -randomYacc;
         }
