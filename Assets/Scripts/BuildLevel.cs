@@ -45,10 +45,12 @@ public class BuildLevel : MonoBehaviour
     public GameObject amygdala_heart;
     public GameObject location_spot;
     public GameObject elevator;
+    public GameObject ptasior;
 
     public static bool mapSpotsInstantiated = false;
     public static GameObject elevatorInstance;
     public static GameObject docentInstance;
+    public static GameObject ptasiorInstance;
     public static List<GameObject> wallInstances = new List<GameObject>();
     public static List<GameObject> amygdalaInstances = new List<GameObject>();
     public static Dictionary<int, (int, int)> map_spots = new Dictionary<int, (int, int)>();
@@ -105,6 +107,7 @@ public class BuildLevel : MonoBehaviour
         {
             Destroy(docentInstance);
         }
+        Destroy(ptasiorInstance);
         foreach (GameObject g in amygdalaInstances) { Destroy(g); };
         amygdalaInstances.Clear();
         foreach (GameObject g in wallInstances) { Destroy(g); };
@@ -313,6 +316,23 @@ public class BuildLevel : MonoBehaviour
             if (Counters.movementWarmupCounter < 0)
             {
                 Counters.movementWarmupCounter = 0;
+            }
+
+            // y=0 - at the bottom
+            // y=11 - at the top
+            // y=5.5 - mid point
+            if (!ptasiorInstance) {
+                var posy = rng.NextDouble() * 11;
+                var pos = new Vector3(-10, (float)posy, 0);
+                var randomYacc = rng.NextDouble() * 0.025;
+                Debug.Log(randomYacc);
+                if (posy > 5.5) {
+                    Ptasior.yacc = -randomYacc;
+                }
+                else {
+                    Ptasior.yacc = randomYacc;
+                }
+                ptasiorInstance = Instantiate(ptasior, pos, Quaternion.identity);
             }
         }
     }
